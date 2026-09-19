@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BitGreb — Learn the skills. Build the system.</title>
+  <meta name="description" content="Practical education for beginners using AI, freelancing, social media and digital products to build a legitimate online income system — without the hype." />
+
+  <!-- Icons -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --red: #b71c1c;
+      --red2:#ff2b2b;
+      --charcoal:#0f1115;
+      --charcoal2:#141821;
+      --ink:#d6dae5;
+      --muted:#aab1c3;
+      --glass: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1120px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 700px at 10% 5%, rgba(183,28,28,.22), transparent 60%),
+        radial-gradient(900px 520px at 85% 20%, rgba(255,43,43,.14), transparent 55%),
+        radial-gradient(900px 600px at 50% 110%, rgba(183,28,28,.18), transparent 60%),
+        linear-gradient(180deg, var(--charcoal), var(--charcoal2));
+      color:var(--ink);
+      overflow-x:hidden;
+    }
+
+    /* Subtle animated grain + glow */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(183,28,28,.12), transparent 35%),
+        radial-gradient(circle at 75% 30%, rgba(255,43,43,.10), transparent 40%),
+        radial-gradient(circle at 50% 70%, rgba(183,28,28,.08), transparent 45%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.35;
+      filter: blur(18px);
+      animation: drift 14s ease-in-out infinite alternate;
+      pointer-events:none;
+      z-index:-1;
+    }
+    @keyframes drift{
+      from{ transform: translate3d(-2%, -1%, 0) scale(1.03); }
+      to{ transform: translate3d(2%, 1.5%, 0) scale(1.06); }
+    }
+
+    a{color:inherit}
+    .container{max-width:var(--max); margin:0 auto; padding:0 22px}
+    .row{display:flex; gap:18px}
+    .stack{display:grid; gap:18px}
+
+    /* Nav */
+    .nav{
+      position:sticky; top:0;
+      z-index:50;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(15,17,21,.74), rgba(15,17,21,.35));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; text-decoration:none;
+      font-weight:800; letter-spacing:-.02em;
+    }
+    .logoMark{
+      width:34px; height:34px; border-radius:12px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,43,43,.9), rgba(183,28,28,.9));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.12) inset,
+        0 12px 30px rgba(183,28,28,.35),
+        0 0 24px rgba(183,28,28,.35);
+      position:relative;
+      overflow:hidden;
+    }
+    .logoMark::after{
+      content:"";
+      position:absolute; inset:-60%;
+      background: conic-gradient(from 180deg, transparent, rgba(255,255,255,.28), transparent);
+      animation: sweep 4.8s linear infinite;
+    }
+    @keyframes sweep{ to{ transform:rotate(360deg);} }
+
+    .nav-links{
+      display:flex; align-items:center; gap:14px;
+      color:var(--muted);
+      font-weight:600;
+      font-size:14px;
+    }
+    .nav-links a{
+      text-decoration:none;
+      padding:10px 10px;
+      border-radius:12px;
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+    .nav-links a:hover{
+      background: rgba(255,255,255,.06);
+      color:var(--ink);
+      transform: translateY(-1px);
+    }
+    .nav-cta{
+      display:flex; align-items:center; gap:10px;
+    }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color:var(--ink);
+      text-decoration:none;
+      font-weight:700;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
+    .btn-primary{
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(183,28,28,.95), rgba(255,43,43,.75));
+      box-shadow:
+        0 12px 40px rgba(183,28,28,.35),
+        0 0 0 1px rgba(255,255,255,.10) inset;
+    }
+    .btn-primary:hover{
+      box-shadow:
+        0 18px 60px rgba(183,28,28,.45),
+        0 0 0 1px rgba(255,255,255,.14) inset;
+    }
+    .btn .dot{
+      width:9px; height:9px; border-radius:999px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 0 22px rgba(255,255,255,.55);
+    }
+
+    /* Hero */
+    .hero{
+      padding:64px 0 28px;
+      position:relative;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    .hero-card{
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(900px 400px at 20% 0%, rgba(183,28,28,.33), transparent 55%),
+                  radial-gradient(650px 340px at 95% 10%, rgba(255,43,43,.18), transparent 55%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .hero-main{
+      padding:28px;
+      position:relative;
+    }
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      color:var(--muted);
+      font-weight:700;
+      font-size:13px;
+      letter-spacing:.01em;
+    }
+    .kicker i{
+      color: rgba(255,255,255,.9);
+      text-shadow: 0 0 24px rgba(183,28,28,.55);
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size: clamp(34px, 4.2vw, 56px);
+      line-height:1.05;
+      letter-spacing:-.03em;
+    }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height:1.6;
+      max-width: 60ch;
+    }
+    .hero-actions{
+      display:flex; flex-wrap:wrap; gap:12px;
+      margin-top:18px;
+    }
+    .hero-note{
+      margin-top:14px;
+      color: rgba(214,218,229,.85);
+      font-size: 13px;
+      line-height:1.5;
+    }
+
+    /* Side panel */
+    .hero-side{
+      padding:18px;
+      display:grid;
+      gap:14px;
+      position:relative;
+    }
+    .mini{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .mini::before{
+      content:"";
+      position:absolute;
+      inset:-80%;
+      background: conic-gradient(from 180deg,
+        transparent 0 40%,
+        rgba(255,43,43,.20) 50%,
+        transparent 60% 100%);
+      animation: sweep 6.5s linear infinite;
+      opacity:.55;
+      filter: blur(1px);
+    }
+    .mini > *{position:relative}
+    .mini h3{
+      margin:0 0 6px;
+      font-size:14px;
+      letter-spacing:-.01em;
+    }
+    .mini p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+    .pill-grid{
+      display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;
+    }
+    .pill{
+      font-size:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color: rgba(214,218,229,.9);
+    }
+
+    /* Sections */
+    section{padding:44px 0}
+    .section-title{
+      margin:0 0 10px;
+      font-size: 24px;
+      letter-spacing:-.02em;
+    }
+    .section-lead{
+      margin:0 0 18px;
+      color:var(--muted);
+      line-height:1.7;
+      max-width: 85ch;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+      align-items:start;
+    }
+    .panel{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      padding:20px;
+      position:relative;
+      overflow:hidden;
+    }
+    .panel::after{
+      content:"";
+      position:absolute; inset:auto -30% -60% -30%;
+      height:180px;
+      background: radial-gradient(closest-side, rgba(183,28,28,.30), transparent 65%);
+      filter: blur(2px);
+      opacity:.9;
+      pointer-events:none;
+    }
+
+    .list{
+      margin:0;
+      padding-left: 18px;
+      color: rgba(214,218,229,.9);
+      line-height:1.85;
+    }
+    .list li{ margin:6px 0; }
+    .callout{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:14px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      margin-top:14px;
+    }
+    .callout .ic{
+      width:42px; height:42px; border-radius:14px;
+      display:grid; place-items:center;
+      background: radial-gradient(circle at 30% 30%, rgba(255,43,43,.85), rgba(183,28,28,.75));
+      box-shadow: 0 14px 40px rgba(183,28,28,.35), 0 0 22px rgba(183,28,28,.35);
+      border:1px solid rgba(255,255,255,.12);
+      flex:0 0 auto;
+    }
+    .callout .ic i{ color:white; }
+    .callout strong{ display:block; margin-bottom:4px; }
+    .callout p{ margin:0; color:var(--muted); line-height:1.6; font-size:14px; }
+
+    /* Framework */
+    .timeline{
+      display:grid;
+      gap:12px;
+      margin-top:16px;
+    }
+    .step{
+      display:flex; gap:14px; align-items:flex-start;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      position:relative;
+      overflow:hidden;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .step:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.16);
+    }
+    .badge{
+      width:40px; height:40px; border-radius:14px;
+      display:grid; place-items:center;
+      background: rgba(183,28,28,.20);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset, 0 0 22px rgba(183,28,28,.22);
+      flex:0 0 auto;
+      position:relative;
+    }
+    .badge::after{
+      content:"";
+      position:absolute; inset:-2px;
+      border-radius:16px;
+      background: radial-gradient(circle, rgba(255,43,43,.25), transparent 60%);
+      filter: blur(2px);
+      opacity:.9;
+      z-index:-1;
+    }
+    .badge span{
+      font-weight:900;
+      color: rgba(255,255,255,.92);
+      text-shadow: 0 0 18px rgba(183,28,28,.55);
+      font-size: 14px;
+    }
+    .step h4{ margin:2px 0 4px; font-size:15px; }
+    .step p{ margin:0; color:var(--muted); line-height:1.6; font-size:13.5px; }
+
+    /* Topics Cards */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 20px 70px rgba(0,0,0,.45);
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-60% -20% auto -20%;
+      height:160px;
+      background: radial-gradient(closest-side, rgba(183,28,28,.32), transparent 70%);
+      filter: blur(0px);
+      opacity:.9;
+      pointer-events:none;
+      transform: translateY(-30px);
+      transition: transform .35s ease;
+    }
+    .card:hover::before{ transform: translateY(-10px); }
+
+    .card-top{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:12px;
+      position:relative;
+    }
+    .iconGlow{
+      width:46px; height:46px; border-radius:16px;
+      display:grid; place-items:center;
+      background: rgba(0,0,0,.20);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.05) inset,
+        0 0 26px rgba(183,28,28,.25);
+    }
+    .iconGlow i{
+      color: rgba(255,255,255,.92);
+      text-shadow: 0 0 24px rgba(183,28,28,.55);
+      font-size: 18px;
+    }
+    .tag{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color: rgba(214,218,229,.92);
+      white-space:nowrap;
+    }
+    .card h3{ margin:0 0 6px; font-size:16px; letter-spacing:-.01em; }
+    .card p{ margin:0 0 14px; color:var(--muted); line-height:1.6; font-size:13.5px; }
+    .card a{
+      display:inline-flex; align-items:center; gap:10px;
+      text-decoration:none;
+      font-weight:800;
+      font-size:13px;
+      color: rgba(255,255,255,.92);
+    }
+    .card a .chev{
+      width:28px; height:28px; border-radius:12px;
+      display:grid; place-items:center;
+      background: rgba(183,28,28,.25);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 0 18px rgba(183,28,28,.30);
+      transition: transform .18s ease;
+    }
+    .card:hover a .chev{ transform: translateX(3px); }
+
+    /* “No hype” list */
+    .split{
+      display:grid; grid-template-columns: 1fr 1fr; gap:18px;
+    }
+    .bullets{
+      margin:0; padding-left: 18px; line-height:1.9; color: rgba(214,218,229,.92);
+    }
+    .muted{ color: var(--muted); }
+
+    /* Footer */
+    footer{
+      padding:36px 0 44px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.10);
+    }
+    .foot{
+      display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between;
+      gap:16px;
+    }
+    .foot small{ color: var(--muted); line-height:1.6; }
+    .foot a{ color: rgba(214,218,229,.92); text-decoration:none; }
+    .foot a:hover{ text-decoration:underline; }
+
+    /* Social floating buttons */
+    .socialDock{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      display:grid;
+      gap:10px;
+      z-index:70;
+    }
+    .socialBtn{
+      width:48px; height:48px;
+      border-radius: 16px;
+      display:grid; place-items:center;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.35), 0 0 24px rgba(183,28,28,.22);
+      color: rgba(255,255,255,.92);
+      text-decoration:none;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .socialBtn::before{
+      content:"";
+      position:absolute; inset:-70%;
+      background: conic-gradient(from 180deg, transparent 0 35%, rgba(255,43,43,.22) 50%, transparent 65% 100%);
+      animation: sweep 5.2s linear infinite;
+      opacity:.9;
+    }
+    .socialBtn i{ position:relative; font-size:18px; text-shadow: 0 0 20px rgba(183,28,28,.55); }
+    .socialBtn:hover{
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.09);
+      box-shadow: 0 24px 80px rgba(0,0,0,.45), 0 0 30px rgba(183,28,28,.34);
+    }
+
+    /* Scroll reveal */
+    .reveal{
+      opacity:0;
+      transform: translateY(14px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.in{
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .cards{ grid-template-columns: 1fr 1fr; }
+      .split{ grid-template-columns: 1fr; }
+      .grid-2{ grid-template-columns: 1fr; }
+      .nav-links{ display:none; }
+    }
+    @media (max-width: 640px){
+      .cards{ grid-template-columns: 1fr; }
+      .hero-main{ padding:22px; }
+      .hero{ padding-top: 46px; }
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior:auto; }
+      body::before{ animation:none; }
+      .logoMark::after, .mini::before, .socialBtn::before{ animation:none; }
+      .reveal{ transition:none; opacity:1; transform:none; }
+      .btn, .card, .step, .socialBtn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="BitGreb home">
+        <span class="logoMark" aria-hidden="true"></span>
+        <span>BitGreb</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#framework">Framework</a>
+        <a href="#learn">What You'll Learn</a>
+        <a href="#beginners">Beginners</a>
+        <a href="#no-hype">No Hype</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn" href="#learn"><span class="dot" aria-hidden="true"></span>Explore Resources</a>
+        <a class="btn btn-primary" href="#start"><i class="fa-solid fa-bolt"></i>Start Learning</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="top" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-card reveal">
+        <div class="hero-main">
+          <span class="kicker"><i class="fa-solid fa-shield-halved"></i> Practical education for beginners — without the hype</span>
+          <h1>Learn the skills. Build the system. Create your first legitimate online income stream.</h1>
+          <p class="subtitle">
+            BitGreb helps beginners use AI, freelancing, social media and digital products to build an online income system you actually understand.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#start"><i class="fa-solid fa-graduation-cap"></i>Start Learning</a>
+            <a class="btn" href="#learn"><i class="fa-solid fa-compass"></i>Explore Resources</a>
+          </div>
+          <p class="hero-note">
+            The internet is full of shortcuts. BitGreb takes a different approach: learn fundamentals, create value, build proof, then monetize ethically.
+          </p>
+        </div>
+      </div>
+
+      <aside class="hero-card hero-side reveal" aria-label="Quick overview">
+        <div class="mini">
+          <h3>Online Income Doesn’t Start With Money</h3>
+          <p>It starts with value — a useful skill, a real problem, and a system for reaching the right people.</p>
+          <div class="pill-grid" aria-label="Highlights">
+            <span class="pill">Skills</span>
+            <span class="pill">Proof</span>
+            <span class="pill">Audience</span>
+            <span class="pill">Offers</span>
+            <span class="pill">Systems</span>
+          </div>
+        </div>
+
+        <div class="mini">
+          <h3>Stop trend-hopping</h3>
+          <p>Understand tools, strategies, and workflows so you can build repeatably — not randomly.</p>
+          <div class="callout">
+            <div class="ic" aria-hidden="true"><i class="fa-solid fa-diagram-project"></i></div>
+            <div>
+              <strong>One framework, many paths</strong>
+              <p>Freelancing, content, SEO, digital products, and simple funnels — connected into one system.</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- VALUE SECTION -->
+  <section>
+    <div class="container grid-2">
+      <div class="panel reveal">
+        <h2 class="section-title">Online Income Doesn’t Start With Money</h2>
+        <p class="section-lead">It starts with value. You don’t need another list of “easy ways to make money.” You need clarity.</p>
+        <ul class="list">
+          <li>What skill should I learn?</li>
+          <li>How can I use AI effectively?</li>
+          <li>How do I find people who need what I can do?</li>
+          <li>How can I build an audience?</li>
+          <li>What could I eventually sell?</li>
+          <li>How do I turn activities into a repeatable system?</li>
+        </ul>
+        <div class="callout">
+          <div class="ic" aria-hidden="true"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+          <div>
+            <strong>Beginner-friendly steps</strong>
+            <p>BitGreb breaks these questions down into practical actions you can execute and measure.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="framework" class="panel reveal">
+        <h2 class="section-title">The BitGreb Online Income Framework</h2>
+        <p class="section-lead">Learn → Build → Publish → Connect → Monetize → Systemize. That’s the foundation.</p>
+
+        <div class="timeline" role="list">
+          <div class="step" role="listitem">
+            <div class="badge"><span>01</span></div>
+            <div>
+              <h4>Learn</h4>
+              <p>Develop a useful, marketable skill.</p>
+            </div>
+          </div>
+          <div class="step" role="listitem">
+            <div class="badge"><span>02</span></div>
+            <div>
+              <h4>Build</h4>
+              <p>Use that skill to create something valuable.</p>
+            </div>
+          </div>
+          <div class="step" role="listitem">
+            <div class="badge"><span>03</span></div>
+            <div>
+              <h4>Publish</h4>
+              <p>Use content and social platforms to get discovered.</p>
+            </div>
+          </div>
+          <div class="step" role="listitem">
+            <div class="badge"><span>04</span></div>
+            <div>
+              <h4>Connect</h4>
+              <p>Build relationships with an audience, clients or customers.</p>
+            </div>
+          </div>
+          <div class="step" role="listitem">
+            <div class="badge"><span>05</span></div>
+            <div>
+              <h4>Monetize</h4>
+              <p>Turn genuine value into a service, product or carefully selected recommendation.</p>
+            </div>
+          </div>
+          <div class="step" role="listitem">
+            <div class="badge"><span>06</span></div>
+            <div>
+              <h4>Systemize</h4>
+              <p>Use AI, automation and processes to make repetitive work more efficient.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOPICS -->
+  <section id="learn">
+    <div class="container">
+      <h2 class="section-title reveal">What You’ll Learn</h2>
+      <p class="section-lead reveal">
+        AI is not a magic money machine. It’s a tool that helps you work faster and think more effectively when used properly.
+      </p>
+
+      <div class="cards">
+        <article class="card reveal">
+          <div class="card-top">
+            <div class="iconGlow" aria-hidden="true"><i class="fa-solid fa-robot"></i></div>
+            <span class="tag">AI</span>
+          </div>
+          <h3>AI Workflows</h3>
+          <p>Research, brainstorming, writing, content creation, analysis, productivity, and business workflows.</p>
+          <a href="#start">Explore AI <span class="chev" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span></a>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-top">
+            <div class="iconGlow" aria-hidden="true"><i class="fa-solid fa-laptop-code"></i></div>
+            <span class="tag">Freelancing</span>
+          </div>
+          <h3>Freelancing Foundations</h3>
+          <p>Skill selection, portfolios, positioning, proposals, client communication, and delivery.</p>
+          <a href="#start">Explore Freelancing <span class="chev" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span></a>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-top">
+            <div class="iconGlow" aria-hidden="true"><i class="fa-solid fa-hashtag"></i></div>
+            <span class="tag">Social</span>
+          </div>
+          <h3>Social Media Systems</h3>
+          <p>Build attention around useful content: strategy, distribution, audience research, ethical monetization.</p>
+          <a href="#start">Explore Social Media <span class="chev" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span></a>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-top">
+            <div class="iconGlow" aria-hidden="true"><i class="fa-solid fa-box-open"></i></div>
+            <span class="tag">Products</span>
+          </div>
+          <h3>Digital Products</h3>
+          <p>Package knowledge into guides, templates, resources, and systems — validate, create, distribute.</p>
+          <a href="#start">Explore Products <span class="chev" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span></a>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-top">
+            <div class="iconGlow" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <span class="tag">SEO</span>
+          </div>
+          <h3>SEO & Content</h3>
+          <p>Search intent, useful content, and site structure that helps people discover your work.</p>
+          <a href="#start">Explore SEO <span class="chev" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span></a>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-top">
+            <div class="iconGlow" aria-hidden="true"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <span class="tag">Funnels</span>
+          </div>
+          <h3>Email & Funnels</h3>
+          <p>Turn attention into an owned audience: lead magnets, landing pages, simple conversion systems.</p>
+          <a href="#start">Explore Funnels <span class="chev" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS / BEGINNERS -->
+  <section id="beginners">
+    <div class="container split">
+      <div class="panel reveal">
+        <h2 class="section-title">You Don’t Need 50 Tools</h2>
+        <p class="section-lead">You need the right tools for the right problems — and you need to understand how they fit together.</p>
+        <ul class="bullets">
+          <li>Which tools are useful</li>
+          <li>What each tool actually does</li>
+          <li>When you need one (and when you don’t)</li>
+          <li>How tools connect into workflows</li>
+          <li>Where free or simpler alternatives exist</li>
+        </ul>
+        <p class="muted" style="margin-top:12px">Collecting software isn’t the same as building a business.</p>
+      </div>
+
+      <div class="panel reveal">
+        <h2 class="section-title">Built for Beginners</h2>
+        <p class="section-lead">BitGreb is for people starting from the beginning. You don’t need to know everything. You need a place to start.</p>
+        <ul class="bullets">
+          <li>Learning your first AI tools</li>
+          <li>Exploring freelancing</li>
+          <li>Building your first theme page</li>
+          <li>Understanding social monetization</li>
+          <li>Creating your first digital product</li>
+          <li>Learning SEO and building a website</li>
+          <li>Looking for your first online client</li>
+          <li>Understanding how online businesses work</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- NO HYPE -->
+  <section id="no-hype">
+    <div class="container grid-2">
+      <div class="panel reveal">
+        <h2 class="section-title">What We Don’t Promise</h2>
+        <p class="section-lead">No fake guarantees. No “passive income” buzzwords. No magical AI tool claims.</p>
+        <ul class="bullets">
+          <li>No guaranteed income numbers in a fixed timeline</li>
+          <li>No pretending every strategy works for everyone</li>
+          <li>No calling every side hustle “passive income”</li>
+          <li>No “buy this tool and you’ll have a business” nonsense</li>
+        </ul>
+      </div>
+
+      <div class="panel reveal" id="start">
+        <h2 class="section-title">Your First Goal Isn’t to Get Rich</h2>
+        <p class="section-lead">Your first goal is to become useful.</p>
+        <ul class="bullets">
+          <li>Learn something</li>
+          <li>Practice it</li>
+          <li>Create something</li>
+          <li>Share it</li>
+          <li>Help someone</li>
+          <li>Get feedback</li>
+          <li>Improve</li>
+          <li>Repeat</li>
+        </ul>
+
+        <div class="callout">
+          <div class="ic" aria-hidden="true"><i class="fa-solid fa-seedling"></i></div>
+          <div>
+            <strong>Start small. Build momentum.</strong>
+            <p>One skill. One project. One piece of useful content. One problem worth solving. Then build from there.</p>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px">
+          <a class="btn btn-primary" href="#learn"><i class="fa-solid fa-play"></i>Start Learning</a>
+          <a class="btn" href="#top"><i class="fa-solid fa-arrow-up"></i>Back to top</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container foot">
+      <div class="stack" style="max-width: 60ch;">
+        <div class="brand" style="gap:10px">
+          <span class="logoMark" aria-hidden="true"></span>
+          <span>BitGreb</span>
+        </div>
+        <small>
+          Educational disclaimer: BitGreb provides educational and informational content. Online income is not guaranteed.
+          Results vary based on skills, experience, effort, market conditions, audience, business model and many other factors.
+        </small>
+      </div>
+
+      <div class="stack" style="min-width: 220px">
+        <small><strong>Learn smarter. Build practically. Grow ethically.</strong></small>
+        <small class="muted">
+          <a href="#framework">Framework</a> ·
+          <a href="#learn">Resources</a> ·
+          <a href="#no-hype">Principles</a>
+        </small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Social Buttons -->
+  <div class="socialDock" aria-label="Social media">
+    <a class="socialBtn" href="https://instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
+      <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+    </a>
+    <a class="socialBtn" href="https://pinterest.com/" target="_blank" rel="noreferrer" aria-label="Pinterest">
+      <i class="fa-brands fa-pinterest-p" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <script>
+    // Scroll reveal
+    const items = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      }
+    }, { threshold: 0.12 });
+
+    items.forEach(el => io.observe(el));
+
+    // Micro-interaction: CTA pulse on first load (subtle)
+    window.addEventListener('load', () => {
+      const cta = document.querySelector('.btn-primary');
+      if (!cta) return;
+      cta.animate([
+        { transform: 'translateY(0)', filter: 'brightness(1)' },
+        { transform: 'translateY(-2px)', filter: 'brightness(1.08)' },
+        { transform: 'translateY(0)', filter: 'brightness(1)' }
+      ], { duration: 900, easing: 'ease-in-out' });
+    });
+  </script>
+</body>
+                                       </html>
