@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Why Your Theme Page Isn’t Growing — The Problems Most Theme-Page Runners Face</title>
+  <meta name="description" content="A practical breakdown of why theme pages stall, what to fix, and a simple audience-building system to grow consistently." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" referrerpolicy="no-referrer" />
+
+  <style>
+    :root{
+      --brand:#b71c1c;          /* requested brand theme */
+      --charcoal:#151515;       /* requested charcoal */
+      --charcoal-2:#1d1d1d;
+      --muted:#bdbdbd;
+      --text:#f4f4f4;
+      --card: rgba(255,255,255,.06);
+      --card-2: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius-sm: 14px;
+      --max: 1120px;
+      --ease: cubic-bezier(.2,.9,.2,1);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 10% -10%, rgba(183,28,28,.55), transparent 60%),
+        radial-gradient(900px 700px at 110% 20%, rgba(183,28,28,.28), transparent 60%),
+        radial-gradient(800px 600px at 40% 120%, rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(180deg, #0f0f0f 0%, var(--charcoal) 40%, #0f0f0f 100%);
+      overflow-x:hidden;
+    }
+
+    /* Subtle noise overlay (no external assets) */
+    body:before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.22;
+    }
+
+    /* Top progress bar */
+    .progress{
+      position:fixed; top:0; left:0;
+      height:3px;
+      width:0%;
+      background: linear-gradient(90deg, rgba(183,28,28,.2), var(--brand), rgba(255,255,255,.2));
+      z-index:1000;
+      box-shadow: 0 8px 26px rgba(183,28,28,.28);
+    }
+
+    /* Floating icon layer */
+    .float-layer{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:0;
+      opacity:.55;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,.25));
+    }
+    .float{
+      position:absolute;
+      width:56px; height:56px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(135deg, rgba(183,28,28,.18), rgba(255,255,255,.06));
+      display:grid; place-items:center;
+      color: rgba(255,255,255,.78);
+      backdrop-filter: blur(8px);
+      transform: translate3d(0,0,0);
+      animation: drift var(--t, 18s) var(--d, 0s) ease-in-out infinite alternate;
+    }
+    .float i{ font-size:20px; opacity:.9; }
+    @keyframes drift{
+      from{ transform: translate3d(0,0,0) rotate(-6deg); }
+      to  { transform: translate3d(var(--x, 60px), var(--y, -80px),0) rotate(8deg); }
+    }
+
+    /* Layout */
+    .wrap{ position:relative; z-index:1; }
+    .container{ width:min(var(--max), calc(100% - 40px)); margin:0 auto; }
+
+    /* Header */
+    header{
+      position:sticky; top:0;
+      z-index:900;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(15,15,15,.85), rgba(15,15,15,.35));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      text-decoration:none; color:var(--text);
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .logo{
+      width:36px; height:36px; border-radius:12px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 45%),
+                  linear-gradient(135deg, rgba(183,28,28,.95), rgba(255,255,255,.10));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 18px 42px rgba(183,28,28,.18);
+    }
+    .nav-actions{ display:flex; align-items:center; gap:10px; }
+    .chip{
+      display:flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.86);
+      font-size:13px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(135deg, rgba(183,28,28,.95), rgba(183,28,28,.35));
+      color:white;
+      text-decoration:none;
+      font-weight:700;
+      box-shadow: 0 20px 60px rgba(183,28,28,.18);
+      transition: transform .25s var(--ease), filter .25s var(--ease);
+    }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.06); }
+    .btn.secondary{
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      box-shadow:none;
+    }
+
+    /* Hero */
+    .hero{
+      padding:54px 0 26px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns:1fr; }
+    }
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:999px;
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.86);
+      font-size:13px;
+    }
+    h1{
+      font-family: Fraunces, serif;
+      font-size: clamp(34px, 4vw, 56px);
+      line-height:1.02;
+      margin:14px 0 10px;
+      letter-spacing: -0.6px;
+    }
+    .grad{
+      background: linear-gradient(90deg, rgba(255,255,255,.95), rgba(255,255,255,.70), rgba(183,28,28,.95));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .sub{
+      color: rgba(255,255,255,.78);
+      font-size: 16px;
+      line-height:1.65;
+      margin: 0 0 18px;
+      max-width: 70ch;
+    }
+    .meta{
+      display:flex; flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-aside{
+      padding:18px;
+      position:sticky; top:78px;
+    }
+    .aside-title{
+      font-weight:800;
+      margin:2px 0 10px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+    }
+    .toc{
+      display:grid;
+      gap:10px;
+      margin:0; padding:0;
+      list-style:none;
+    }
+    .toc a{
+      display:flex; align-items:center; justify-content:space-between;
+      text-decoration:none;
+      color: rgba(255,255,255,.84);
+      padding:10px 12px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.08);
+      transition: transform .22s var(--ease), border-color .22s var(--ease), background .22s var(--ease);
+      font-size:14px;
+    }
+    .toc a:hover{
+      transform: translateY(-1px);
+      border-color: rgba(183,28,28,.45);
+      background: rgba(183,28,28,.10);
+    }
+    .toc small{ color: rgba(255,255,255,.55); }
+
+    /* Article */
+    main{
+      padding: 10px 0 70px;
+    }
+    article{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:18px;
+    }
+    .section{
+      padding: 22px;
+    }
+    .section h2{
+      font-size: 22px;
+      margin: 0 0 10px;
+      letter-spacing:-.2px;
+    }
+    .section h3{
+      font-size: 18px;
+      margin: 18px 0 8px;
+      color: rgba(255,255,255,.92);
+    }
+    .section p{
+      margin: 0 0 12px;
+      color: rgba(255,255,255,.78);
+      line-height:1.75;
+    }
+    .section ul, .section ol{
+      margin: 10px 0 12px 20px;
+      color: rgba(255,255,255,.78);
+      line-height:1.75;
+    }
+    .section li{ margin: 6px 0; }
+
+    .callout{
+      padding: 16px 16px;
+      border-radius: 16px;
+      border:1px solid rgba(183,28,28,.35);
+      background: linear-gradient(135deg, rgba(183,28,28,.20), rgba(255,255,255,.04));
+      margin: 14px 0;
+    }
+    .callout strong{ color: rgba(255,255,255,.95); }
+
+    .grid-2{
+      display:grid; grid-template-columns: 1fr 1fr;
+      gap:14px;
+      margin-top:10px;
+    }
+    @media (max-width: 860px){
+      .grid-2{ grid-template-columns:1fr; }
+    }
+
+    .mini{
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+    }
+    .mini .t{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800;
+      margin-bottom:6px;
+    }
+    .mini .t i{
+      color: rgba(255,255,255,.9);
+      background: rgba(183,28,28,.22);
+      border:1px solid rgba(183,28,28,.35);
+      width:32px; height:32px;
+      border-radius:10px;
+      display:grid; place-items:center;
+    }
+
+    /* Problem list */
+    .problems{
+      display:grid;
+      gap:12px;
+      margin-top:10px;
+    }
+    .problem{
+      padding:16px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.06));
+      transition: transform .22s var(--ease), border-color .22s var(--ease);
+    }
+    .problem:hover{
+      transform: translateY(-2px);
+      border-color: rgba(183,28,28,.40);
+    }
+    .problem .h{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+      margin-bottom:8px;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(183,28,28,.14);
+      color: rgba(255,255,255,.88);
+      white-space:nowrap;
+    }
+    .problem h3{ margin:0; font-size:17px; }
+    .problem p{ margin:0; color: rgba(255,255,255,.74); }
+
+    /* Flow diagram */
+    .flow{
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+    }
+    .flow-row{
+      display:flex; flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .node{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+    }
+    .node i{
+      width:30px; height:30px;
+      border-radius: 12px;
+      display:grid; place-items:center;
+      background: rgba(183,28,28,.20);
+      border:1px solid rgba(183,28,28,.30);
+      color: rgba(255,255,255,.9);
+    }
+    .arrow{
+      opacity:.6;
+      margin: 0 2px;
+    }
+
+    /* CTA block */
+    .cta{
+      padding: 20px;
+      border-radius: var(--radius);
+      border:1px solid rgba(183,28,28,.35);
+      background:
+        radial-gradient(1000px 500px at 20% 20%, rgba(183,28,28,.35), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.06), rgba(0,0,0,.10));
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .cta h3{ margin:0 0 6px; font-size:18px; }
+    .cta p{ margin:0; max-width:70ch; }
+    .cta-actions{ display:flex; gap:10px; align-items:center; }
+
+    /* Footer */
+    footer{
+      padding: 24px 0 40px;
+      color: rgba(255,255,255,.6);
+      border-top:1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.18));
+    }
+    .footer-grid{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .links{ display:flex; gap:12px; flex-wrap:wrap; }
+    .links a{ color: rgba(255,255,255,.70); text-decoration:none; }
+    .links a:hover{ color:white; }
+
+    /* Scroll reveal */
+    .reveal{
+      opacity:0;
+      transform: translateY(12px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+    }
+    .reveal.in{
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    /* Selection */
+    ::selection{
+      background: rgba(183,28,28,.55);
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress" id="progress"></div>
+
+  <!-- Floating icons -->
+  <div class="float-layer" id="floatLayer" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="container">
+        <div class="nav">
+          <a class="brand" href="#top">
+            <span class="logo" aria-hidden="true"></span>
+            <span>Theme Page Systems</span>
+          </a>
+
+          <div class="nav-actions">
+            <span class="chip" title="Estimated reading time">
+              <i class="fa-regular fa-clock"></i>
+              <span id="readingTime">— min read</span>
+            </span>
+            <a class="btn secondary" href="#framework">
+              <i class="fa-solid fa-layer-group"></i> Jump to Framework
+            </a>
+            <a class="btn" href="#get-framework">
+              <i class="fa-solid fa-arrow-right"></i> Get Free Framework
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div id="top" class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="reveal">
+            <span class="kicker">
+              <i class="fa-solid fa-chart-line"></i>
+              Growth + Positioning + Systems
+            </span>
+
+            <h1><span class="grad">Why Your Theme Page Isn’t Growing</span>: The Problems Most Theme-Page Runners Face</h1>
+
+            <p class="sub">
+              Posting consistently isn’t the same as building a system. This guide breaks down the most common
+              reasons theme pages stall—and how to fix the journey from <strong>view → interest → profile visit → follow</strong>.
+            </p>
+
+            <div class="meta">
+              <span class="chip"><i class="fa-solid fa-tag"></i> Theme Pages</span>
+              <span class="chip"><i class="fa-solid fa-bullseye"></i> Audience Building</span>
+              <span class="chip"><i class="fa-solid fa-wand-magic-sparkles"></i> Content Systems</span>
+            </div>
+
+            <div class="callout" style="margin-top:16px;">
+              <strong>Core idea:</strong> If your page has activity but not growth, the issue is often
+              <em>relevance + positioning + conversion</em>, not effort.
+            </div>
+          </div>
+
+          <aside class="card hero-aside reveal">
+            <div class="aside-title">
+              <span><i class="fa-solid fa-list"></i> Table of contents</span>
+              <small>Quick navigation</small>
+            </div>
+
+            <ol class="toc">
+              <li><a href="#changed"><span>The Theme-Page Game Has Changed</span><small>Context</small></a></li>
+              <li><a href="#problems"><span>10 Common Problems</span><small>Diagnosis</small></a></li>
+              <li><a href="#system"><span>The Simple System</span><small>Foundation</small></a></li>
+              <li><a href="#ecosystem"><span>One Idea → Content Ecosystem</span><small>Repurpose</small></a></li>
+              <li><a href="#dont"><span>What You Should NOT Do</span><small>Avoid traps</small></a></li>
+              <li><a href="#framework"><span>Advanced Framework Layers</span><small>Next step</small></a></li>
+            </ol>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <div class="container">
+        <article>
+
+          <section id="changed" class="card section reveal">
+            <h2>The Theme-Page Game Has Changed</h2>
+            <p>
+              There was a time when reposting popular content and publishing frequently could be enough to grow.
+              Today, competition is higher, audiences are more saturated, and platforms constantly adjust distribution.
+            </p>
+            <p>
+              Volume helps, but a theme page needs <strong>relevance, positioning, recognizable value, and a reason to stay</strong>.
+            </p>
+
+            <div class="grid-2">
+              <div class="mini">
+                <div class="t"><i class="fa-solid fa-bullseye"></i> What works now</div>
+                <p>Clear audience, clear promise, consistent execution, and a page that converts viewers into followers.</p>
+              </div>
+              <div class="mini">
+                <div class="t"><i class="fa-solid fa-circle-xmark"></i> What breaks</div>
+                <p>Random content, vague niche, chasing virality, reposting without added value, and no learning loop.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="problems" class="card section reveal">
+            <h2>10 Problems Most Theme-Page Runners Face</h2>
+            <p>
+              If you’re stuck, it’s usually one (or several) of these:
+            </p>
+
+            <div class="problems">
+              <div class="problem">
+                <div class="h">
+                  <h3>Problem #1: “I Don’t Know What to Post”</h3>
+                  <span class="badge"><i class="fa-solid fa-lightbulb"></i> Ideas</span>
+                </div>
+                <p>
+                  Stop searching for topics—search for <strong>problems</strong>. Each audience problem can generate multiple posts.
+                </p>
+              </div>
+
+              <div class="problem">
+                <div class="h">
+                  <h3>Problem #2: The Page Is Too Broad</h3>
+                  <span class="badge"><i class="fa-solid fa-compass"></i> Positioning</span>
+                </div>
+                <p>
+                  If people can’t instantly tell what they’ll get by following, you have a clarity issue.
+                  Build a “center of gravity.”
+                </p>
+              </div>
+
+              <div class="problem">
+                <div class="h">
+                  <h3>Problem #3: Content Gets Views, But the Page Doesn’t Grow</h3>
+                  <span class="badge"><i class="fa-solid fa-user-plus"></i> Conversion</span>
+                </div>
+                <p>
+                  The funnel matters: <strong>View → Interest → Profile Visit → Follow</strong>. Align content with bio/pinned/recent posts.
+                </p>
+              </div>
+
+              <div class="problem">
+                <div class="h">
+                  <h3>Problem #4: The Hook Is Doing Too Much—or Too Little</h3>
+                  <span class="badge"><i class="fa-solid fa-fish-fins"></i> Hooks</span>
+                </div>
+                <p>
+                  Hooks should create <strong>relevant curiosity</strong>, not generic clickbait. Match hook to audience awareness.
+                </p>
+              </div>
+
+              <div class="problem">
+                <div class="h">
+                  <h3>Problem #5: Chasing Viral Content</h3>
+                  <span class="badge"><i class="fa-solid fa-fire"></i> Virality</span>
+                </div>
+                <p>
+                  Reach is useful, but relevance is what builds an audience that stays—and buys later.
+                </p>
+              </div>
+
+              <div class="problem">
+                <div class="h">
+                  <h3>Problem #6: Content Saturation</h3>
+                  <span class="badge"><i class="fa-solid fa-layer-group"></i> Differentiation</span>
+                </div>
+                <p>
+                  You don’t need a unique topic; you need a unique <strong>execution</strong> (examples, structure, angle, visuals).
+                </p>
+              </div>
+
+              <div class="problem">
+                <div class="h">
+                  <h3>Problem #7: Reposting Without Adding Value</h3>
+                  <span class="badge"><i class="fa-solid fa-repeat"></i> Editorial identity</span>
+                </div>
+                <p>
+                  Distribution alone is replaceable. Transformation + context + consistency builds a brand.
+                  Also consider permissions/attribution/platform rules.
+                </p>
+              </div>
+
+              <div class="problem">
+                <div class="h">
+                  <h3>Problem #8: Posting Consistently but Not Learning</h3>
+                  <span class="badge"><i class="fa-solid fa-magnifying-glass-chart"></i> Feedback</span>
+                </div>
+                <p>
+                  Consistency without iteration becomes repetition. Use patterns in saves/shares/follows—not one-off posts.
+                </p>
+              </div>
+
+              <div class="problem">
+                <div class="h">
+                  <h3>Problem #9: Followers but No Business</h3>
+                  <span class="badge"><i class="fa-solid fa-bag-shopping"></i> Monetization</span>
+                </div>
+                <p>
+                  Growth and monetization are different skills. You need a bridge: content → lead → relationship → offer.
+                </p>
+              </div>
+
+              <div class="problem">
+                <div class="h">
+                  <h3>Problem #10: Depending Entirely on One Platform</h3>
+                  <span class="badge"><i class="fa-solid fa-network-wired"></i> Distribution</span>
+                </div>
+                <p>
+                  Platforms change. Build additional channels (Pinterest, website, email) so you’re not fully dependent.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="system" class="card section reveal">
+            <h2>The Simple System Behind a Stronger Theme Page</h2>
+            <p>
+              Before posting more, improve the system behind what you post:
+            </p>
+
+            <div class="flow" role="group" aria-label="Theme page system flow">
+              <div class="flow-row">
+                <span class="node"><i class="fa-solid fa-users"></i> Audience</span>
+                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                <span class="node"><i class="fa-solid fa-triangle-exclamation"></i> Problems</span>
+                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                <span class="node"><i class="fa-solid fa-pen-nib"></i> Content</span>
+                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                <span class="node"><i class="fa-solid fa-box"></i> Packaging</span>
+              </div>
+              <div class="flow-row" style="margin-top:10px;">
+                <span class="node"><i class="fa-solid fa-share-nodes"></i> Distribution</span>
+                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                <span class="node"><i class="fa-solid fa-comment-dots"></i> Feedback</span>
+                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                <span class="node"><i class="fa-solid fa-screwdriver-wrench"></i> Optimization</span>
+                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                <span class="node"><i class="fa-solid fa-envelope-open-text"></i> Lead Gen</span>
+                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                <span class="node"><i class="fa-solid fa-credit-card"></i> Monetization</span>
+              </div>
+            </div>
+
+            <div class="callout">
+              <strong>Key distinction:</strong> posting is an activity; growth is a system with conversion points.
+            </div>
+          </section>
+
+          <section id="ecosystem" class="card section reveal">
+            <h2>One Idea Can Become an Entire Content Ecosystem</h2>
+            <p>
+              If your audience’s major problem is “I don’t know what to post,” you can create multiple assets from one insight:
+            </p>
+            <ul>
+              <li><strong>Reel:</strong> Why you’re running out of content ideas</li>
+              <li><strong>Carousel:</strong> 5 ways to turn audience problems into content</li>
+              <li><strong>Stories:</strong> Ask followers what they’re struggling with</li>
+              <li><strong>Pinterest pin:</strong> Beginner content idea framework</li>
+              <li><strong>Blog post:</strong> Deeper explanation + examples</li>
+              <li><strong>Free resource:</strong> Content-planning checklist</li>
+              <li><strong>Email:</strong> Practical lesson expanding the topic</li>
+            </ul>
+            <p>
+              This beats waking up each day asking: “What should I post tomorrow?”
+            </p>
+          </section>
+
+          <section id="dont" class="card section reveal">
+            <h2>What You Should NOT Do</h2>
+            <ul>
+              <li>Don’t buy followers.</li>
+              <li>Don’t copy competitors word-for-word.</li>
+              <li>Don’t promise guaranteed income.</li>
+              <li>Don’t promote every product that offers a commission.</li>
+              <li>Don’t rely on one viral post.</li>
+              <li>Don’t use misleading clickbait.</li>
+              <li>Don’t build everything at once.</li>
+            </ul>
+
+            <div class="callout">
+              <strong>Start with the basics:</strong> clear audience + focused theme + 3–5 content pillars + useful content + better hooks + consistent distribution + basic analytics.
+            </div>
+          </section>
+
+          <section id="framework" class="card section reveal">
+            <h2>Want to Go Beyond the Basics?</h2>
+            <p>
+              The deeper system is where most of the complexity (and leverage) lives:
+            </p>
+
+            <div class="grid-2">
+              <div class="mini">
+                <div class="t"><i class="fa-solid fa-magnifying-glass"></i> Strategy</div>
+                <ul style="margin:8px 0 0 20px;">
+                  <li>Audience research</li>
+                  <li>Content pillars + opportunity mapping</li>
+                  <li>Competitor analysis</li>
+                  <li>Hooks + packaging systems</li>
+                </ul>
+              </div>
+              <div class="mini">
+                <div class="t"><i class="fa-solid fa-sitemap"></i> Business</div>
+                <ul style="margin:8px 0 0 20px;">
+                  <li>Lead magnets + landing pages</li>
+                  <li>Email funnels + nurture</li>
+                  <li>Affiliate selection + trust</li>
+                  <li>Digital products + conversions</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="cta" id="get-framework">
+              <div>
+                <h3>Get the Advanced Theme-Page Growth Framework (Free)</h3>
+                <p>
+                  Covers: Audience Research → Content Strategy → Hooks → Distribution → Lead Generation → Email → Monetization.
+                </p>
+              </div>
+              <div class="cta-actions">
+                <a class="btn" href="#" onclick="alert('Connect this button to your real signup/landing page URL.'); return false;">
+                  <i class="fa-solid fa-download"></i> Get the Free Framework
+                </a>
+                <a class="btn secondary" href="#top"><i class="fa-solid fa-arrow-up"></i> Back to top</a>
+              </div>
+            </div>
+          </section>
+
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <strong style="color:rgba(255,255,255,.85);">Theme Page Systems</strong><br>
+            <small>Brand theme: <span style="color:rgba(255,255,255,.8);">#b71c1c</span> + charcoal.</small>
+          </div>
+          <div class="links">
+            <a href="#changed">Overview</a>
+            <a href="#problems">Problems</a>
+            <a href="#system">System</a>
+            <a href="#framework">Framework</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Progress bar
+    const progress = document.getElementById('progress');
+    const updateProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const p = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progress.style.width = p.toFixed(2) + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive:true });
+    updateProgress();
+
+    // Reading time (rough)
+    const text = document.body.innerText || "";
+    const words = text.trim().split(/\s+/).filter(Boolean).length;
+    const minutes = Math.max(4, Math.round(words / 220)); // minimum 4 for long-form feel
+    document.getElementById('readingTime').textContent = `${minutes} min read`;
+
+    // Scroll reveal animations
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) e.target.classList.add('in');
+      }
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Floating icons generator
+    const floatLayer = document.getElementById('floatLayer');
+    const icons = [
+      'fa-chart-line','fa-bullseye','fa-lightbulb','fa-hashtag','fa-rocket',
+      'fa-pen-nib','fa-layer-group','fa-share-nodes','fa-envelope','fa-magnifying-glass-chart'
+    ];
+
+    const count = 12; // number of floating icons
+    const rand = (min,max) => Math.random()*(max-min)+min;
+
+    for(let i=0;i<count;i++){
+      const d = document.createElement('div');
+      d.className = 'float';
+      const icon = icons[Math.floor(Math.random()*icons.length)];
+      d.innerHTML = `<i class="fa-solid ${icon}"></i>`;
+
+      const top = rand(6, 92);
+      const left = rand(4, 94);
+
+      d.style.top = top + 'vh';
+      d.style.left = left + 'vw';
+
+      d.style.setProperty('--x', rand(-90, 90) + 'px');
+      d.style.setProperty('--y', rand(-120, 120) + 'px');
+      d.style.setProperty('--t', rand(12, 26) + 's');
+      d.style.setProperty('--d', rand(-18, 0) + 's');
+
+      // vary size slightly
+      const size = rand(44, 68);
+      d.style.width = size + 'px';
+      d.style.height = size + 'px';
+      d.style.borderRadius = rand(14, 20) + 'px';
+
+      d.style.opacity = rand(0.16, 0.38);
+
+      floatLayer.appendChild(d);
+    }
+  </script>
+</body>
+  </html>
