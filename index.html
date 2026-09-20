@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeStream | Premium Motion Showcase</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://tailwindcss.com"></script>
+    <!-- FontAwesome for Consistent Iconography -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <!-- Google Fonts: Inter for strong readability -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #09090b;
+        }
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(24, 24, 27, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-nav {
+            background: rgba(9, 9, 11, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="text-zinc-100 min-h-screen flex flex-col justify-between selection:bg-fuchsia-500 selection:text-white">
+
+    <!-- Premium Glassmorphic Navigation -->
+    <nav class="glass-nav fixed top-0 left-0 w-full z-50 px-6 py-4 lg:px-16 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="bg-gradient-to-tr from-violet-600 to-fuchsia-600 p-2.5 rounded-xl shadow-lg shadow-fuchsia-500/20">
+                <i class="fa-solid fa-bolt text-lg text-white"></i>
+            </div>
+            <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">VIBESTREAM</span>
+        </div>
+        <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-zinc-400">
+            <a href="#" class="text-zinc-100 transition-colors duration-200">Trending</a>
+            <a href="#" class="hover:text-zinc-100 transition-colors duration-200">Categories</a>
+            <a href="#" class="hover:text-zinc-100 transition-colors duration-200">Premium VR</a>
+            <a href="#" class="hover:text-zinc-100 transition-colors duration-200">Creators</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button class="text-sm font-semibold hover:text-fuchsia-400 transition-colors px-4 py-2">Sign In</button>
+            <button class="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-lg shadow-fuchsia-600/20 transition-all duration-300 dynamic-pulse">Get Unlimited</button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area with Generous Whitespace -->
+    <main class="max-w-7xl mx-auto px-6 pt-32 pb-24 w-full">
+        
+        <!-- Hero Section with Large Typography & Strong Contrast -->
+        <header class="text-center max-w-3xl mx-auto mb-20">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-fuchsia-500/10 text-fuchsia-400 mb-6 border border-fuchsia-500/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-fuchsia-400 animate-ping"></span> Live Discoveries
+            </span>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6">
+                Premium Motion <br>
+                <span class="bg-gradient-to-r from-violet-400 via-fuchsia-500 to-amber-400 bg-clip-text text-transparent">In High Definition.</span>
+            </h1>
+            <p class="text-zinc-400 text-lg md:text-xl font-light leading-relaxed">
+                Experience high-curation loop aesthetics. Zero lag, seamless previews, and striking visual depth engineered for mature audiences.
+            </p>
+        </header>
+
+        <!-- Category Pills Bar -->
+        <div class="flex items-center space-x-3 overflow-x-auto pb-6 mb-12 scrollbar-none">
+            <button class="glass-panel text-xs uppercase tracking-wider font-bold px-5 py-3 rounded-full text-fuchsia-400 border-fuchsia-500/30 whitespace-nowrap">🔥 All Trending</button>
+            <button class="glass-panel text-xs uppercase tracking-wider font-bold px-5 py-3 rounded-full hover:border-zinc-700 text-zinc-400 hover:text-zinc-200 transition-all whitespace-nowrap">✨ Cyberpunk</button>
+            <button class="glass-panel text-xs uppercase tracking-wider font-bold px-5 py-3 rounded-full hover:border-zinc-700 text-zinc-400 hover:text-zinc-200 transition-all whitespace-nowrap">⚡ Neon Boudoir</button>
+            <button class="glass-panel text-xs uppercase tracking-wider font-bold px-5 py-3 rounded-full hover:border-zinc-700 text-zinc-400 hover:text-zinc-200 transition-all whitespace-nowrap">🌌 Cinematic Loop</button>
+            <button class="glass-panel text-xs uppercase tracking-wider font-bold px-5 py-3 rounded-full hover:border-zinc-700 text-zinc-400 hover:text-zinc-200 transition-all whitespace-nowrap">🔮 Sensual Art</button>
+        </div>
+
+        <!-- GIF Showcase Responsive Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Card 1 -->
+            <div class="group relative bg-zinc-900/40 rounded-3xl overflow-hidden border border-zinc-800/60 shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-fuchsia-500/40 hover:shadow-fuchsia-500/5">
+                <div class="relative aspect-[4/5] w-full overflow-hidden bg-zinc-950">
+                    <!-- Standard high-quality placeholder image that replicates a luxury look. Replace URLs with your dynamic GIF API sources -->
+                    <img src="https://digiskills52.wordpress.com/wp-content/uploads/2026/09/tumblr_mek4xr3d3p1ryji6oo1_500.gif" alt="Showcase Preview" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-80"></div>
+                    <span class="absolute top-4 left-4 glass-panel text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-lg text-zinc-300">4K Loop</span>
+                </div>
+                <div class="p-6 absolute bottom-0 left-0 w-full">
+                    <h3 class="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-fuchsia-400 transition-colors">Neon Euphoria #01</h3>
+                    <div class="flex items-center justify-between text-zinc-400 text-xs">
+                        <span class="flex items-center gap-1.5"><i class="fa-regular fa-user text-zinc-500"></i> @MidnightVixen</span>
+                        <span class="flex items-center gap-1.5"><i class="fa-regular fa-heart text-zinc-500"></i> 14.2k</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="group relative bg-zinc-900/40 rounded-3xl overflow-hidden border border-zinc-800/60 shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-fuchsia-500/40 hover:shadow-fuchsia-500/5">
+                <div class="relative aspect-[4/5] w-full overflow-hidden bg-zinc-950">
+                    <img src="https://digiskills52.wordpress.com/wp-content/uploads/2026/09/tumblr_mek4xr3d3p1ryji6oo1_500.gif" alt="Showcase Preview" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-80"></div>
+                    <span class="absolute top-4 left-4 glass-panel text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-lg text-amber-400 border-amber-500/30">Premium</span>
+                </div>
+                <div class="p-6 absolute bottom-0 left-0 w-full">
+                    <h3 class="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-fuchsia-400 transition-colors">Liquid Satin Waves</h3>
+                    <div class="flex items-center justify-between text-zinc-400 text-xs">
+                        <span class="flex items-center gap-1.5"><i class="fa-regular fa-user text-zinc-500"></i> @StudioNoir</span>
+                        <span class="flex items-center gap-1.5"><i class="fa-regular fa-heart text-zinc-500"></i> 9.8k</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="group relative bg-zinc-900/40 rounded-3xl overflow-hidden border border-zinc-800/60 shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-fuchsia-500/40 hover:shadow-fuchsia-500/5">
+                <div class="relative aspect-[4/5] w-full overflow-hidden bg-zinc-950">
+                    <img src="https://unsplash.com" alt="Showcase Preview" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-80"></div>
+                    <span class="absolute top-4 left-4 glass-panel text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-lg text-zinc-300">60 FPS</span>
+                </div>
+                <div class="p-6 absolute bottom-0 left-0 w-full">
+                    <h3 class="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-fuchsia-400 transition-colors">Crimson Velvet Pulse</h3>
+                    <div class="flex items-center justify-between text-zinc-400 text-xs">
+                        <span class="flex items-center gap-1.5"><i class="fa-regular fa-user text-zinc-500"></i> @GlowSensual</span>
