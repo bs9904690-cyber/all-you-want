@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BitGreb — Online Income Carousel</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --red:#B71C1C;
+    --red2:#E53935;
+    --cream:#FFF9C4;
+    --white:#FFFFFF;
+    --black:#111111;
+    --muted:#BDBDBD;
+    --card:#1A1A1A;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(183,28,28,.20), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(255,249,196,.08), transparent 30%),
+        #090909;
+    color:white;
+    font-family:Inter,Arial,sans-serif;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:24px 12px 50px;
+}
+
+/* ---------- TOP BAR ---------- */
+
+.topbar{
+    width:min(1080px,100%);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.brand-mark{
+    width:34px;
+    height:34px;
+    border-radius:10px;
+    background:var(--red);
+    display:grid;
+    place-items:center;
+    box-shadow:0 0 25px rgba(183,28,28,.45);
+}
+
+.brand-mark::after{
+    content:"B";
+    font-weight:900;
+    color:white;
+}
+
+.slide-counter{
+    font-size:13px;
+    color:#aaa;
+    font-weight:700;
+}
+
+/* ---------- STAGE ---------- */
+
+.stage{
+    width:min(1080px,100%);
+    display:flex;
+    justify-content:center;
+}
+
+.carousel{
+    width:min(1080px,100%);
+}
+
+/* ---------- SLIDE ---------- */
+
+.slide{
+    width:100%;
+    aspect-ratio:4/5;
+    position:relative;
+    overflow:hidden;
+    display:none;
+    border-radius:24px;
+    background:
+        radial-gradient(circle at 85% 10%, rgba(183,28,28,.40), transparent 25%),
+        radial-gradient(circle at 15% 90%, rgba(255,249,196,.08), transparent 25%),
+        #101010;
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.65),
+        inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+.slide.active{
+    display:block;
+    animation:slideIn .45s ease;
+}
+
+@keyframes slideIn{
+    from{
+        opacity:0;
+        transform:translateY(10px) scale(.985);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+/* ---------- DECORATION ---------- */
+
+.grid{
+    position:absolute;
+    inset:0;
+    opacity:.08;
+    background-image:
+        linear-gradient(rgba(255,255,255,.4) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.4) 1px,transparent 1px);
+    background-size:70px 70px;
+    mask-image:linear-gradient(to bottom,black,transparent 80%);
+}
+
+.glow{
+    position:absolute;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    background:rgba(183,28,28,.20);
+    filter:blur(70px);
+    pointer-events:none;
+}
+
+.glow.one{
+    top:-120px;
+    right:-80px;
+}
+
+.glow.two{
+    bottom:-150px;
+    left:-100px;
+    background:rgba(255,249,196,.08);
+}
+
+.number{
+    position:absolute;
+    top:7%;
+    right:7%;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:clamp(70px,12vw,150px);
+    line-height:.8;
+    color:rgba(255,255,255,.055);
+    letter-spacing:2px;
+}
+
+/* ---------- CONTENT ---------- */
+
+.content{
+    position:relative;
+    z-index:3;
+    height:100%;
+    padding:8% 8%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.eyebrow{
+    color:var(--cream);
+    text-transform:uppercase;
+    font-size:clamp(10px,1.4vw,15px);
+    letter-spacing:3px;
+    font-weight:800;
+    margin-bottom:18px;
+}
+
+h1,h2{
+    font-family:"Bebas Neue",sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    line-height:.94;
+}
+
+h1{
+    font-size:clamp(58px,9vw,112px);
+}
+
+h2{
+    font-size:clamp(48px,7vw,82px);
+}
+
+.red{
+    color:var(--red2);
+}
+
+.cream{
+    color:var(--cream);
+}
+
+p{
+    font-size:clamp(16px,2vw,25px);
+    line-height:1.5;
+    color:#E8E8E8;
+}
+
+strong{
+    color:white;
+    font-weight:900;
+}
+
+/* ---------- SLIDE 1 ---------- */
+
+.hero-title{
+    max-width:850px;
+}
+
+.hero-title span{
+    color:var(--red2);
+}
+
+.question{
+    font-size:clamp(18px,2.4vw,28px);
+    color:#bbb;
+    margin-top:25px;
+    max-width:650px;
+}
+
+.swipe{
+    position:absolute;
+    bottom:8%;
+    left:8%;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:800;
+    letter-spacing:2px;
+    font-size:13px;
+}
+
+.swipe-line{
+    width:65px;
+    height:2px;
+    background:var(--red2);
+}
+
+/* ---------- CARDS ---------- */
+
+.cards{
+    display:grid;
+    gap:13px;
+    margin-top:25px;
+}
+
+.mini-card{
+    padding:17px 20px;
+    border:1px solid rgba(255,255,255,.09);
+    background:rgba(255,255,255,.045);
+    border-radius:15px;
+    backdrop-filter:blur(10px);
+    font-size:clamp(14px,1.8vw,20px);
+}
+
+.mini-card b{
+    color:var(--cream);
+}
+
+/* ---------- BIG STATEMENT ---------- */
+
+.statement{
+    margin-top:30px;
+    padding:25px;
+    border-left:5px solid var(--red2);
+    background:rgba(183,28,28,.10);
+    border-radius:0 18px 18px 0;
+}
+
+.statement p{
+    font-size:clamp(22px,3.1vw,36px);
+    font-weight:800;
+}
+
+/* ---------- FLOW ---------- */
+
+.flow{
+    margin-top:35px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.flow span{
+    padding:12px 15px;
+    border-radius:999px;
+    background:#191919;
+    border:1px solid rgba(255,255,255,.12);
+    font-size:13px;
+    font-weight:800;
+}
+
+.flow span:not(:last-child)::after{
+    content:" →";
+    color:var(--red2);
+}
+
+/* ---------- BIG LIST ---------- */
+
+.list{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.list div{
+    padding:15px 18px;
+    border-radius:14px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    font-weight:700;
+}
+
+/* ---------- WARNING ---------- */
+
+.warning{
+    margin-top:25px;
+    padding:20px;
+    border-radius:18px;
+    background:rgba(183,28,28,.13);
+    border:1px solid rgba(229,57,53,.35);
+}
+
+.warning-title{
+    color:#FF6B6B;
+    font-weight:900;
+    letter-spacing:2px;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
+/* ---------- QUESTION BOX ---------- */
+
+.question-box{
+    margin-top:35px;
+    padding:30px;
+    border-radius:24px;
+    background:
+        linear-gradient(135deg,rgba(183,28,28,.18),rgba(255,249,196,.04));
+    border:1px solid rgba(255,255,255,.10);
+}
+
+.question-box p{
+    font-size:clamp(22px,3vw,35px);
+    font-weight:800;
+}
+
+/* ---------- FINAL ---------- */
+
+.final{
+    text-align:center;
+    align-items:center;
+}
+
+.final h2{
+    max-width:800px;
+}
+
+.values{
+    margin-top:35px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+}
+
+.value{
+    padding:13px 18px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.05);
+    font-size:14px;
+    font-weight:800;
+}
+
+.cta{
+    margin-top:35px;
+    display:inline-flex;
+    padding:17px 26px;
+    background:var(--red);
+    border-radius:999px;
+    font-weight:900;
+    box-shadow:0 12px 35px rgba(183,28,28,.35);
+}
+
+/* ---------- CONTROLS ---------- */
+
+.controls{
+    width:min(1080px,100%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    margin-top:20px;
+}
+
+.controls button{
+    border:1px solid rgba(255,255,255,.12);
+    background:#161616;
+    color:white;
+    border-radius:12px;
+    padding:12px 18px;
+    cursor:pointer;
+    font-weight:800;
+}
+
+.controls button:hover{
+    background:#222;
+}
+
+.dots{
+    display:flex;
+    gap:6px;
+    margin:0 8px;
+}
+
+.dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#555;
+    cursor:pointer;
+}
+
+.dot.active{
+    width:24px;
+    border-radius:20px;
+    background:var(--red2);
+}
+
+/* ---------- EXPORT ---------- */
+
+.export{
+    margin-top:16px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.export button{
+    background:var(--cream);
+    color:#111;
+    border:0;
+    padding:13px 19px;
+    border-radius:12px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.export button.secondary{
+    background:#191919;
+    color:white;
+    border:1px solid rgba(255,255,255,.12);
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media(max-width:600px){
+
+    body{
+        padding:10px 7px 35px;
+    }
+
+    .slide{
+        border-radius:16px;
+    }
+
+    .content{
+        padding:8%;
+    }
+
+    .list{
+        grid-template-columns:1fr;
+    }
+
+    .mini-card{
+        padding:13px 15px;
+    }
+
+    .flow{
+        gap:6px;
+    }
+
+    .flow span{
+        padding:9px 11px;
+        font-size:10px;
+    }
+
+    .controls button{
+        padding:10px 13px;
+    }
+}
+
+/* ---------- EXPORT MODE ---------- */
+
+.exporting{
+    border-radius:0 !important;
+    box-shadow:none !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <div class="brand">
+        <div class="brand-mark"></div>
+        BITGREB
+    </div>
+
+    <div class="slide-counter" id="counter">01 / 10</div>
+</div>
+
+<div class="stage">
+<div class="carousel">
+
+<!-- SLIDE 1 -->
+<section class="slide active">
+    <div class="grid"></div>
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <div class="number">01</div>
+
+    <div class="content">
+        <div class="eyebrow">THE ONLINE INCOME REALITY</div>
+
+        <h1 class="hero-title">
+            Making money online
+            <span>isn't everyone's</span>
+            cup of tea.
+        </h1>
+
+        <p class="question">
+            And the reason might surprise you…
+        </p>
+
+        <div class="swipe">
+            SWIPE
+            <div class="swipe-line"></div>
+            →
+        </div>
+    </div>
+</section>
+
+
+<!-- SLIDE 2 -->
+<section class="slide">
+    <div class="grid"></div>
+    <div class="glow one"></div>
+    <div class="number">02</div>
+
+    <div class="content">
+        <div class="eyebrow">EVERYONE WANTS THE RESULT</div>
+
+        <h2>
+            More income.<br>
+            More freedom.<br>
+            <span class="red">More options.</span>
+        </h2>
+
+        <div class="cards">
+            <div class="mini-card">💰 <b>More income</b></div>
+            <div class="mini-card">🌎 <b>More freedom</b></div>
+            <div class="mini-card">📱 <b>Work from anywhere</b></div>
+        </div>
+
+        <div class="statement">
+            <p>
+                But very few people want to go through what comes
+                <span class="red">before the result.</span>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- SLIDE 3 -->
+<section class="slide">
+    <div class="grid"></div>
+    <div class="glow two"></div>
+    <div class="number">03</div>
+
+    <div class="content">
+        <div class="eyebrow">THE INTERNET MAKES IT LOOK EASY</div>
+
+        <h2>
+            “Just”<br>
+            <span class="red">start.</span>
+        </h2>
+
+        <div class="cards">
+            <div class="mini-card">“Just start a page.”</div>
+            <div class="mini-card">“Just use AI.”</div>
+            <div class="mini-card">“Just sell a digital product.”</div>
+            <div class="mini-card">“Just freelance.”</div>
+        </div>
+
+        <div class="statement">
+            <p>
+                But there's always a
+                <span class="red">“just”</span>
+                hiding a lot of work.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- SLIDE 4 -->
+<section class="slide">
+    <div class="grid"></div>
+    <div class="glow one"></div>
+    <div class="number">04</div>
+
+    <div class="content">
+        <div class="eyebrow">FIRST PROBLEM</div>
+
+        <h2>
+            You actually have to
+            <span class="red">learn something valuable.</span>
+        </h2>
+
+        <div class="list">
+            <div>Writing</div>
+            <div>Design</div>
+            <div>Editing</div>
+            <div>Marketing</div>
+            <div>Sales</div>
+            <div>AI</div>
+            <div>Communication</div>
+        </div>
+
+        <div class="statement">
+            <p>
+                There is no shortcut around
+                <span class="cream">becoming useful.</span>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- SLIDE 5 -->
+<section class="slide">
+    <div class="grid"></div>
+    <div class="glow two"></div>
+    <div class="number">05</div>
+
+    <div class="content">
+        <div class="eyebrow">THEN COMES THE FRUSTRATING PART</div>
+
+        <h2>
+            What if<br>
+            <span class="red">nobody cares?</span>
+        </h2>
+
+        <div class="cards">
+            <div class="mini-card">You try something → Nobody buys.</div>
+            <div class="mini-card">You post → Nobody cares.</div>
+            <div class="mini-card">You apply → You get rejected.</div>
+            <div class="mini-card">Your idea fails → Start again.</div>
+        </div>
+
+        <div class="warning">
+            <div class="warning-title">THE REAL TEST</div>
+            <p>
+                And you have to
+                <strong>keep going anyway.</strong>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- SLIDE 6 -->
+<section class="slide">
+    <div class="grid"></div>
+    <div class="glow one"></div>
+    <div class="number">06</div>
+
+    <div class="content">
+        <div class="eyebrow">THE ACTUAL PROCESS</div>
+
+        <h2>
+            Online income<br>
+            isn't
+            <span class="red">TRY → MONEY</span>
+        </h2>
+
+        <div class="flow">
+            <span>LEARN</span>
+            <span>PRACTICE</span>
+            <span>BUILD</span>
+            <span>PUBLISH</span>
+            <span>FAIL</span>
+            <span>IMPROVE</span>
+            <span>REPEAT</span>
+        </div>
+
+        <div class="statement">
+            <p>
+                And that process
+                <span class="cream">isn't exciting every day.</span>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- SLIDE 7 -->
+<section class="slide">
+    <div class="grid"></div>
+    <div class="glow two"></div>
+    <div class="number">07</div>
+
+    <div class="content">
+        <div class="eyebrow">THE PART NOBODY POSTS ABOUT</div>
+
+        <h2>
+            You also need
+            <span class="red">self-discipline.</span>
+        </h2>
+
+        <div class="cards">
+            <div class="mini-card">“Go learn.”</div>
+            <div class="mini-card">“Go create.”</div>
+            <div class="mini-card">“Go publish.”</div>
+            <div class="mini-card">“Go improve.”</div>
+        </div>
+
+        <div class="statement">
+            <p>
+                You have to become
+                <span class="cream">your own boss</span>
+                before you can enjoy the freedom.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- SLIDE 8 -->
+<section class="slide">
+    <div class="grid"></div>
+    <div class="glow one"></div>
+    <div class="number">08</div>
+
+    <div class="content">
+        <div class="eyebrow">ANOTHER TRAP</div>
+
+        <h2>
+            <span class="red">TREND</span><br>
+            HOPPING.
+        </h2>
+
+        <div class="cards">
+            <div class="mini-card">Today → AI automation</div>
+            <div class="mini-card">Tomorrow → Theme pages</div>
+            <div class="mini-card">Next week → Dropshipping</div>
+            <div class="mini-card">Then → Crypto</div>
+            <div class="mini-card">Then → Faceless YouTube</div>
+        </div>
+
+        <div class="warning">
+            <div class="warning-title">THE RESULT</div>
+            <p>
+                <strong>You keep starting.</strong><br>
+                You never build.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- SLIDE 9 -->
+<section class="slide">
+    <div class="grid"></div>
+    <div class="glow two"></div>
+    <div class="number">09</div>
+
+    <div class="content">
+        <div class="eyebrow">ASK A BETTER QUESTION</div>
+
+        <h2>
+            Stop asking:
+        </h2>
+
+        <div class="question-box">
+            <p>
+                “How can I make money online?”
+            </p>
+        </div>
+
+        <div class="question-box">
+            <p>
+                Start asking:
+            </p>
+
+            <p class="cream" style="margin-top:15px;">
+                “What valuable skill can I build that someone would actually pay for?”
+            </p>
+        </div>
+
+        <p style="margin-top:25px;">
+            That question changes everything.
+        </p>
+    </div>
+</section>
+
+
+<!-- SLIDE 10 -->
+<section class="slide">
+    <div class="grid"></div>
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <div class="number">10</div>
+
+    <div class="content final">
+
+        <div class="eyebrow">THE TAKEAWAY</div>
+
+        <h2>
+            It's difficult because it requires
+            <span class="red">more than a shortcut.</span>
+        </h2>
+
+        <div class="values">
+            <div class="value">SKILL</div>
+            <div class="value">PATIENCE</div>
+            <div class="value">CONSISTENCY</div>
+            <div class="value">VALUE</div>
+        </div>
+
+        <div class="statement">
+            <p>
+                No hype.<br>
+                No magic button.<br>
+                No guaranteed shortcut.
+            </p>
+        </div>
+
+        <div class="cta">
+            LEARN THE SKILL → BUILD THE SYSTEM → CREATE VALUE
+        </div>
+
+        <p style="margin-top:20px;font-size:14px;color:#999;">
+            Follow @BitGreb for practical online-income education.
+        </p>
+
+    </div>
+</section>
+
+</div>
+</div>
+
+
+<!-- CONTROLS -->
+
+<div class="controls">
+    <button onclick="prevSlide()">← Prev</button>
+
+    <div class="dots" id="dots"></div>
+
+    <button onclick="nextSlide()">Next →</button>
+</div>
+
+<div class="export">
+    <button onclick="downloadCurrent()">Download Current PNG</button>
+    <button class="secondary" onclick="downloadAll()">Download All Slides</button>
+</div>
+
+
+<script>
+
+/* =====================================================
+   CAROUSEL CONTROLLER
+===================================================== */
+
+const slides = document.querySelectorAll(".slide");
+const dotsContainer = document.getElementById("dots");
+const counter = document.getElementById("counter");
+
+let current = 0;
+
+
+/* CREATE DOTS */
+
+slides.forEach((slide,index)=>{
+
+    const dot = document.createElement("div");
+
+    dot.className = "dot";
+
+    dot.addEventListener("click",()=>{
+        showSlide(index);
+    });
+
+    dotsContainer.appendChild(dot);
+
+});
+
+
+const dots = document.querySelectorAll(".dot");
+
+
+function showSlide(index){
+
+    if(index < 0) index = slides.length - 1;
+
+    if(index >= slides.length) index = 0;
+
+    slides.forEach(slide=>{
+        slide.classList.remove("active");
+    });
+
+    dots.forEach(dot=>{
+        dot.classList.remove("active");
+    });
+
+    slides[index].classList.add("active");
+    dots[index].classList.add("active");
+
+    current = index;
+
+    counter.textContent =
+        String(index + 1).padStart(2,"0")
+        + " / "
+        + String(slides.length).padStart(2,"0");
+}
+
+
+function nextSlide(){
+    showSlide(current + 1);
+}
+
+
+function prevSlide(){
+    showSlide(current - 1);
+}
+
+
+showSlide(0);
+
+
+/* =====================================================
+   KEYBOARD CONTROLS
+===================================================== */
+
+document.addEventListener("keydown",(e)=>{
+
+    if(e.key === "ArrowRight"){
+        nextSlide();
+    }
+
+    if(e.key === "ArrowLeft"){
+        prevSlide();
+    }
+
+});
+
+
+/* =====================================================
+   TOUCH SWIPE
+===================================================== */
+
+let startX = 0;
+
+document.querySelector(".carousel").addEventListener("touchstart",(e)=>{
+    startX = e.touches[0].clientX;
+});
+
+
+document.querySelector(".carousel").addEventListener("touchend",(e)=>{
+
+    const endX = e.changedTouches[0].clientX;
+
+    const difference = startX - endX;
+
+    if(Math.abs(difference) > 50){
+
+        if(difference > 0){
+            nextSlide();
+        }else{
+            prevSlide();
+        }
+
+    }
+
+});
+
+
+/* =====================================================
+   PNG EXPORT
+===================================================== */
+
+async function createPNG(slide,index){
+
+    /*
+      Uses html2canvas from CDN.
+      The carousel itself remains fully self-contained
+      apart from this export library.
+    */
+
+    if(typeof html2canvas === "undefined"){
+
+        const script = document.createElement("script");
+
+        script.src =
+        "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+
+        document.head.appendChild(script);
+
+        await new Promise(resolve=>{
+            script.onload = resolve;
+        });
+
+    }
+
+    const originalDisplay = slide.style.display;
+
+    slide.style.display = "block";
+
+    slide.classList.add("exporting");
+
+    const canvas = await html2canvas(slide,{
+        width:1080,
+        height:1350,
+        scale:1,
+        useCORS:true,
+        backgroundColor:"#101010"
+    });
+
+    slide.style.display = originalDisplay;
+
+    slide.classList.remove("exporting");
+
+    const link = document.createElement("a");
+
+    link.download =
+        `bitgreb-online-income-carousel-${String(index+1).padStart(2,"0")}.png`;
+
+    link.href = canvas.toDataURL("image/png");
+
+    link.click();
+}
+
+
+/* CURRENT SLIDE */
+
+async function downloadCurrent(){
+
+    await createPNG(slides[current],current);
+
+}
+
+
+/* ALL SLIDES */
+
+async function downloadAll(){
+
+    const original = current;
+
+    for(let i=0;i<slides.length;i++){
+
+        showSlide(i);
+
+        await new Promise(resolve=>setTimeout(resolve,200));
+
+        await createPNG(slides[i],i);
+
+        await new Promise(resolve=>setTimeout(resolve,300));
+    }
+
+    showSlide(original);
+
+}
+
+</script>
+
+</body>
+  </html>
