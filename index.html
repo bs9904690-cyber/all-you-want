@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<title>Premium 9:16 Motion Background Studio</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    min-height:100%;
+    background:#050507;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+}
+
+.app{
+    width:min(100%,1100px);
+    padding:18px;
+}
+
+header{
+    margin-bottom:16px;
+}
+
+h1{
+    margin:0;
+    font-size:clamp(22px,4vw,38px);
+    letter-spacing:-1px;
+}
+
+.sub{
+    color:#999;
+    margin-top:6px;
+    font-size:13px;
+}
+
+.workspace{
+    display:grid;
+    grid-template-columns:340px 1fr;
+    gap:18px;
+}
+
+.panel{
+    background:
+        linear-gradient(145deg,
+        rgba(255,255,255,.065),
+        rgba(255,255,255,.018));
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:20px;
+    padding:16px;
+    backdrop-filter:blur(18px);
+}
+
+.controls{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+}
+
+label{
+    display:block;
+    font-size:11px;
+    color:#aaa;
+    margin-bottom:6px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+select,
+input,
+button{
+    width:100%;
+    border:none;
+    outline:none;
+    border-radius:11px;
+    min-height:43px;
+    color:#fff;
+    background:#111116;
+    border:1px solid rgba(255,255,255,.1);
+    padding:0 12px;
+}
+
+select{
+    appearance:auto;
+}
+
+input[type="range"]{
+    padding:0;
+    accent-color:#d22;
+}
+
+button{
+    cursor:pointer;
+    font-weight:700;
+    transition:.18s;
+}
+
+button:hover{
+    transform:translateY(-1px);
+    border-color:rgba(255,255,255,.25);
+}
+
+.primary{
+    background:linear-gradient(135deg,#8d1010,#d52a2a);
+}
+
+.secondary{
+    background:#17171d;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+}
+
+.info{
+    color:#777;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.status{
+    padding:10px;
+    border-radius:10px;
+    background:#0b0b0f;
+    color:#aaa;
+    font-size:11px;
+    line-height:1.5;
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.previewArea{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:700px;
+    background:
+        radial-gradient(circle at center,
+        rgba(150,20,20,.08),
+        transparent 50%),
+        #020204;
+    border-radius:20px;
+    padding:20px;
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.canvasWrap{
+    position:relative;
+    width:min(100%,430px);
+    aspect-ratio:9/16;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.7),
+        0 0 80px rgba(150,20,20,.08);
+}
+
+canvas{
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+.badge{
+    position:absolute;
+    top:10px;
+    left:10px;
+    padding:5px 8px;
+    border-radius:20px;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(10px);
+    font-size:9px;
+    color:#aaa;
+    pointer-events:none;
+}
+
+@media(max-width:800px){
+    .workspace{
+        grid-template-columns:1fr;
+    }
+
+    .previewArea{
+        min-height:auto;
+        padding:15px;
+    }
+
+    .canvasWrap{
+        width:min(100%,390px);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+    <h1>Premium Motion Background Studio</h1>
+    <div class="sub">
+        10 cinematic 9:16 glowing backgrounds · 1080 × 1920 · procedural animation
+    </div>
+</header>
+
+<div class="workspace">
+
+<div class="panel">
+
+<div class="controls">
+
+<div>
+<label>Motion Background</label>
+
+<select id="scene">
+
+<option value="aurora">01 — Crimson Aurora</option>
+<option value="particles">02 — Floating Particles</option>
+<option value="orbital">03 — Orbital Energy</option>
+<option value="grid">04 — Cyber Grid</option>
+<option value="waves">05 — Liquid Waves</option>
+<option value="streaks">06 — Velocity Streaks</option>
+<option value="rings">07 — Infinite Rings</option>
+<option value="nebula">08 — Deep Nebula</option>
+<option value="network">09 — Digital Network</option>
+<option value="luxury">10 — Luxury Glow</option>
+
+</select>
+</div>
+
+<div>
+<label>Duration</label>
+<select id="duration">
+<option value="5">5 seconds</option>
+<option value="8" selected>8 seconds</option>
+<option value="10">10 seconds</option>
+<option value="15">15 seconds</option>
+<option value="20">20 seconds</option>
+</select>
+</div>
+
+<div>
+<label>FPS</label>
+<select id="fps">
+<option value="24">24 FPS</option>
+<option value="30" selected>30 FPS</option>
+<option value="60">60 FPS</option>
+</select>
+</div>
+
+<div>
+<label>Glow Intensity</label>
+<input id="glow" type="range" min="0.3" max="2.5" step=".05" value="1.2">
+</div>
+
+<div>
+<label>Motion Speed</label>
+<input id="speed" type="range" min=".15" max="3" step=".05" value="1">
+</div>
+
+<div>
+<label>Particle Density</label>
+<input id="density" type="range" min=".2" max="2.5" step=".05" value="1">
+</div>
+
+<div class="row">
+<button class="secondary" id="randomBtn">Randomize</button>
+<button class="secondary" id="snapshotBtn">PNG Frame</button>
+</div>
+
+<button class="primary" id="recordBtn">
+    Export Motion Video
+</button>
+
+<div class="status" id="status">
+Ready — choose a background and export.
+</div>
+
+<div class="info">
+Video is rendered from the 1080×1920 canvas.
+If the browser supports MP4 MediaRecorder,
+MP4 is selected automatically. Otherwise the
+studio falls back to WebM.
+</div>
+
+</div>
+</div>
+
+<div class="previewArea">
+
+<div class="canvasWrap">
+
+<canvas id="canvas"
+        width="1080"
+        height="1920">
+</canvas>
+
+<div class="badge">1080 × 1920 · 9:16</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   PREMIUM 9:16 MOTION BACKGROUND STUDIO
+   ========================================================= */
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d", {
+    alpha:false,
+    desynchronized:true
+});
+
+const W = 1080;
+const H = 1920;
+
+let scene = "aurora";
+let speed = 1;
+let glow = 1.2;
+let density = 1;
+
+let startTime = performance.now();
+let lastTime = startTime;
+
+let seed = Math.random()*100000;
+
+const TAU = Math.PI*2;
+
+
+/* =========================================================
+   UTILITIES
+   ========================================================= */
+
+function rand(min,max){
+    return min + Math.random()*(max-min);
+}
+
+function seededRandom(){
+    seed = (seed * 9301 + 49297) % 233280;
+    return seed / 233280;
+}
+
+function clamp(v,a,b){
+    return Math.max(a,Math.min(b,v));
+}
+
+function lerp(a,b,t){
+    return a+(b-a)*t;
+}
+
+function hsla(h,s,l,a=1){
+    return `hsla(${h},${s}%,${l}%,${a})`;
+}
+
+function clear(color="#030305"){
+    ctx.globalCompositeOperation="source-over";
+    ctx.fillStyle=color;
+    ctx.fillRect(0,0,W,H);
+}
+
+function glowCircle(x,y,r,color,alpha=1){
+
+    ctx.save();
+
+    ctx.globalCompositeOperation="lighter";
+
+    const g=ctx.createRadialGradient(
+        x,y,0,
+        x,y,r
+    );
+
+    g.addColorStop(
+        0,
+        color.replace("ALPHA",alpha)
+    );
+
+    g.addColorStop(
+        .18,
+        color.replace("ALPHA",alpha*.65)
+    );
+
+    g.addColorStop(
+        .55,
+        color.replace("ALPHA",alpha*.12)
+    );
+
+    g.addColorStop(
+        1,
+        color.replace("ALPHA",0)
+    );
+
+    ctx.fillStyle=g;
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,TAU);
+    ctx.fill();
+
+    ctx.restore();
+}
+
+function vignette(){
+
+    const g=ctx.createRadialGradient(
+        W/2,H*.45,H*.1,
+        W/2,H*.45,H*.8
+    );
+
+    g.addColorStop(0,"rgba(0,0,0,0)");
+    g.addColorStop(.65,"rgba(0,0,0,.15)");
+    g.addColorStop(1,"rgba(0,0,0,.82)");
+
+    ctx.fillStyle=g;
+    ctx.fillRect(0,0,W,H);
+}
+
+function grain(t){
+
+    ctx.save();
+
+    ctx.globalAlpha=.035;
+
+    for(let i=0;i<900;i++){
+
+        const x=Math.random()*W;
+        const y=Math.random()*H;
+
+        const a=Math.random();
+
+        ctx.fillStyle=
+            a>.5
+            ?"rgba(255,255,255,.8)"
+            :"rgba(0,0,0,.8)";
+
+        ctx.fillRect(x,y,1,1);
+    }
+
+    ctx.restore();
+}
+
+
+/* =========================================================
+   01 — CRIMSON AURORA
+   ========================================================= */
+
+function drawAurora(t){
+
+    clear("#030305");
+
+    const blobs=[
+        [W*.18,H*.25,420,345],
+        [W*.8,H*.35,500,315],
+        [W*.48,H*.72,520,355],
+        [W*.18,H*.82,380,25]
+    ];
+
+    blobs.forEach((b,i)=>{
+
+        const x=b[0]+
+            Math.sin(t*(.35+i*.1)+i)*130;
+
+        const y=b[1]+
+            Math.cos(t*(.27+i*.08)+i)*170;
+
+        glowCircle(
+            x,
+            y,
+            b[2],
+            `hsla(${b[3]},100%,55%,ALPHA)`,
+            .30*glow
+        );
+    });
+
+    ctx.save();
+
+    ctx.globalCompositeOperation="screen";
+
+    for(let i=0;i<12;i++){
+
+        const y=
+            H*(.15+i*.07)+
+            Math.sin(t*.7+i)*90;
+
+        const grad=ctx.createLinearGradient(
+            0,y-100,
+            W,y+100
+        );
+
+        grad.addColorStop(
+            0,
+            "rgba(255,20,40,0)"
+        );
+
+        grad.addColorStop(
+            .5,
+            `rgba(255,30,55,${.045*glow})`
+        );
+
+        grad.addColorStop(
+            1,
+            "rgba(255,20,40,0)"
+        );
+
+        ctx.fillStyle=grad;
+
+        ctx.beginPath();
+
+        ctx.moveTo(0,y);
+
+        for(let x=0;x<=W;x+=30){
+
+            const yy=
+                y+
+                Math.sin(x*.009+t*.8+i)*55+
+                Math.sin(x*.018-t*.3)*25;
+
+            ctx.lineTo(x,yy);
+        }
+
+        ctx.lineTo(W,H);
+        ctx.lineTo(0,H);
+
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    ctx.restore();
+
+    vignette();
+}
+
+
+/* =========================================================
+   02 — FLOATING PARTICLES
+   ========================================================= */
+
+let particles=[];
+
+function initParticles(){
+
+    particles=[];
+
+    const count=Math.floor(190*density);
+
+    for(let i=0;i<count;i++){
+
+        particles.push({
+            x:Math.random()*W,
+            y:Math.random()*H,
+            r:rand(1,4),
+            vx:rand(-.15,.15),
+            vy:rand(-.8,-.1),
+            hue:Math.random()>.7?345:15,
+            phase:Math.random()*TAU
+        });
+    }
+}
+
+function drawParticles(t){
+
+    clear("#020204");
+
+    glowCircle(
+        W*.5,
+        H*.52,
+        700,
+        "hsla(350,100%,55%,ALPHA)",
+        .10*glow
+    );
+
+    ctx.save();
+
+    ctx.globalCompositeOperation="lighter";
+
+    particles.forEach((p,i)=>{
+
+        const x=
+            p.x+
+            Math.sin(t*.6+p.phase)*30;
+
+        const y=
+            (p.y+
+            t*65*speed)%H;
+
+        const pulse=
+            .5+
+            .5*Math.sin(t*2+p.phase);
+
+        ctx.shadowBlur=25*glow;
+        ctx.shadowColor=
+            hsla(p.hue,100,60,.8);
+
+        ctx.fillStyle=
+            hsla(
+                p.hue,
+                100,
+                70,
+                .25+.7*pulse
+            );
+
+        ctx.beginPath();
+        ctx.arc(
+            x,
+            y,
+            p.r*(.7+pulse*.7),
+            0,
+            TAU
+        );
+        ctx.fill();
+    });
+
+    ctx.restore();
+
+    vignette();
+}
+
+
+/* =========================================================
+   03 — ORBITAL ENERGY
+   ========================================================= */
+
+function drawOrbital(t){
+
+    clear("#020204");
+
+    const cx=W/2;
+    const cy=H*.5;
+
+    glowCircle(
+        cx,
+        cy,
+        500,
+        "hsla(350,100%,55%,ALPHA)",
+        .18*glow
+    );
+
+    ctx.save();
+
+    ctx.translate(cx,cy);
+
+    ctx.globalCompositeOperation="lighter";
+
+    for(let i=0;i<9;i++){
+
+        const rx=
+            150+i*45;
+
+        const ry=
+            400+i*75;
+
+        ctx.save();
+
+        ctx.rotate(
+            i*.28+
+            Math.sin(t*.2+i)*.2
+        );
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            0,
+            0,
+            rx,
+            ry,
+            0,
+            0,
+            TAU
+        );
+
+        ctx.strokeStyle=
+            `rgba(255,${40+i*10},${70+i*8},${.08+.035*i})`;
+
+        ctx.lineWidth=
+            2+
+            (i%3);
+
+        ctx.shadowBlur=
+            15*glow;
+
+        ctx.shadowColor=
+            "rgba(255,30,50,.8)";
+
+        ctx.stroke();
+
+        ctx.restore();
+    }
+
+    for(let i=0;i<12;i++){
+
+        const a=
+            t*(.4+i*.025)+
+            i*.53;
+
+        const r=
+            230+
+            (i%5)*95;
+
+        const x=
+            Math.cos(a)*r;
+
+        const y=
+            Math.sin(a)*r*1.9;
+
+        ctx.fillStyle=
+            "rgba(255,70,80,.9)";
+
+        ctx.shadowBlur=
+            30*glow;
+
+        ctx.shadowColor=
+            "#ff2035";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            5+(i%3)*3,
+            0,
+            TAU
+        );
+
+        ctx.fill();
+    }
+
+    ctx.restore();
+
+    vignette();
+}
+
+
+/* =========================================================
+   04 — CYBER GRID
+   ========================================================= */
+
+function drawGrid(t){
+
+    clear("#020307");
+
+    const horizon=H*.48;
+
+    glowCircle(
+        W*.5,
+        horizon,
+        600,
+        "hsla(345,100%,55%,ALPHA)",
+        .12*glow
+    );
+
+    ctx.save();
+
+    ctx.globalCompositeOperation="lighter";
+
+    /* horizon */
+
+    const hg=ctx.createLinearGradient(
+        0,horizon-100,
+        0,horizon+100
+    );
+
+    hg.addColorStop(
+        0,
+        "rgba(255,20,40,0)"
+    );
+
+    hg.addColorStop(
+        .5,
+        `rgba(255,35,55,${.5*glow})`
+    );
+
+    hg.addColorStop(
+        1,
+        "rgba(255,20,40,0)"
+    );
+
+    ctx.fillStyle=hg;
+
+    ctx.fillRect(
+        0,
+        horizon-100,
+        W,
+        200
+    );
+
+    /* vertical perspective lines */
+
+    for(let i=-15;i<=15;i++){
+
+        const bottomX=
+            W/2+
+            i*90;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            W/2,
+            horizon
+        );
+
+        ctx.lineTo(
+            bottomX,
+            H
+        );
+
+        ctx.strokeStyle=
+            `rgba(255,35,55,${.09*glow})`;
+
+        ctx.lineWidth=1.5;
+
+        ctx.stroke();
+    }
+
+    /* horizontal moving lines */
+
+    for(let i=0;i<30;i++){
+
+        const p=
+            ((i/30+
+            t*.035*speed)%1);
+
+        const y=
+            horizon+
+            Math.pow(p,2.2)*(H-horizon);
+
+        const width=
+            60+
+            p*W*.95;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            W/2-width/2,
+            y
+        );
+
+        ctx.lineTo(
+            W/2+width/2,
+            y
+        );
+
+        ctx.strokeStyle=
+            `rgba(255,40,60,${(.025+p*.10)*glow})`;
+
+        ctx.lineWidth=
+            1+
+            p*2;
+
+        ctx.stroke();
+    }
+
+    ctx.restore();
+
+    vignette();
+}
+
+
+/* =========================================================
+   05 — LIQUID WAVES
+   ========================================================= */
+
+function drawWaves(t){
+
+    clear("#030204");
+
+    for(let layer=0;layer<9;layer++){
+
+        ctx.save();
+
+        ctx.globalCompositeOperation="lighter";
+
+        ctx.beginPath();
+
+        const base=
+            H*.25+
+            layer*180;
+
+        ctx.moveTo(0,H);
+
+        ctx.lineTo(0,base);
+
+        for(let x=0;x<=W;x+=20){
+
+            const y=
+                base+
+                Math.sin(
+                    x*.008+
+                    t*.7+
+                    layer
+                )*75+
+                Math.sin(
+                    x*.019-
+                    t*.4
+                )*30;
+
+            ctx.lineTo(x,y);
+        }
+
+        ctx.lineTo(W,H);
+
+        ctx.closePath();
+
+        const g=
+            ctx.createLinearGradient(
+                0,
+                base-150,
+                0,
+                H
+            );
+
+        g.addColorStop(
+            0,
+            `rgba(255,${20+layer*5},${40+layer*4},${.025*glow})`
+        );
+
+        g.addColorStop(
+            .45,
+            `rgba(150,20,40,${.018*glow})`
+        );
+
+        g.addColorStop(
+            1,
+            "rgba(0,0,0,0)"
+        );
+
+        ctx.fillStyle=g;
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    for(let i=0;i<5;i++){
+
+        glowCircle(
+            W*.2+i*180,
+            H*.25+
+            Math.sin(t*.5+i)*100,
+            300,
+            `hsla(${345+i*4},100%,55%,ALPHA)`,
+            .045*glow
+        );
+    }
+
+    vignette();
+}
+
+
+/* =========================================================
+   06 — VELOCITY STREAKS
+   ========================================================= */
+
+let streaks=[];
+
+function initStreaks(){
+
+    streaks=[];
+
+    for(let i=0;i<150*density;i++){
+
+        streaks.push({
+            x:Math.random()*W,
+            y:Math.random()*H,
+            length:rand(50,400),
+            speed:rand(2,8),
+            width:rand(1,5),
+            alpha:rand(.05,.35),
+            angle:rand(-.2,.2)
+        });
+    }
+}
+
+function drawStreaks(t){
+
+    clear("#020204");
+
+    ctx.save();
+
+    ctx.globalCompositeOperation="lighter";
+
+    streaks.forEach((s,i)=>{
+
+        const y=
+            (s.y+
+            t*100*s.speed*speed)%H;
+
+        const x=
+            s.x+
+            Math.sin(t*.2+i)*80;
+
+        const g=
+            ctx.createLinearGradient(
+                x,
+                y,
+                x,
+                y-s.length
+            );
+
+        g.addColorStop(
+            0,
+            "rgba(255,30,45,0)"
+        );
+
+        g.addColorStop(
+            .7,
+            `rgba(255,45,60,${s.alpha*glow})`
+        );
+
+        g.addColorStop(
+            1,
+            "rgba(255,100,100,0)"
+        );
+
+        ctx.strokeStyle=g;
+        ctx.lineWidth=s.width;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x,
+            y
+        );
+
+        ctx.lineTo(
+            x+
+            Math.sin(s.angle)*100,
+            y-s.length
+        );
+
+        ctx.stroke();
+    });
+
+    ctx.restore();
+
+    glowCircle(
+        W*.5,
+        H*.45,
+        550,
+        "hsla(350,100%,55%,ALPHA)",
+        .08*glow
+    );
+
+    vignette();
+}
+
+
+/* =========================================================
+   07 — INFINITE RINGS
+   ========================================================= */
+
+function drawRings(t){
+
+    clear("#010103");
+
+    const cx=W/2;
+    const cy=H*.5;
+
+    glowCircle(
+        cx,
+        cy,
+        550,
+        "hsla(350,100%,55%,ALPHA)",
+        .12*glow
+    );
+
+    ctx.save();
+
+    ctx.globalCompositeOperation="lighter";
+
+    for(let i=0;i<18;i++){
+
+        const p=
+            ((i/18+
+            t*.06*speed)%1);
+
+        const r=
+            30+
+            p*750;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            cx,
+            cy,
+            r,
+            0,
+            TAU
+        );
+
+        ctx.strokeStyle=
+            `rgba(255,${30+80*p},${45+80*p},${(.35*(1-p))*glow})`;
+
+        ctx.lineWidth=
+            2+
+            4*(1-p);
+
+        ctx.shadowBlur=
+            25*glow;
+
+        ctx.shadowColor=
+            "rgba(255,20,40,.7)";
+
+        ctx.stroke();
+    }
+
+    ctx.restore();
+
+    vignette();
+}
+
+
+/* =========================================================
+   08 — DEEP NEBULA
+   ========================================================= */
+
+function drawNebula(t){
+
+    clear("#010104");
+
+    for(let i=0;i<20;i++){
+
+        const x=
+            W*.5+
+            Math.sin(t*.1+i*1.3)*
+            (200+i*20);
+
+        const y=
+            H*.5+
+            Math.cos(t*.13+i)*
+            (350+i*30);
+
+        const r=
+            150+
+            i*35;
+
+        glowCircle(
+            x,
+            y,
+            r,
+            `hsla(${330+i*3},100%,${45+i}%,ALPHA)`,
+            .035*glow
+        );
+    }
+
+    ctx.save();
+
+    ctx.globalCompositeOperation="lighter";
+
+    for(let i=0;i<350*density;i++){
+
+        const a=
+            seededRandom()*TAU;
+
+        const r=
+            Math.pow(seededRandom(),.55)*
+            700;
+
+        const x=
+            W*.5+
+            Math.cos(a)*r;
+
+        const y=
+            H*.5+
+            Math.sin(a)*r*1.7;
+
+        const twinkle=
+            .2+
+            .8*
+            Math.abs(
+                Math.sin(
+                    t*2+
+                    i
+                )
+            );
+
+        ctx.fillStyle=
+            `rgba(255,${50+Math.random()*100},${70+Math.random()*100},${twinkle*.5})`;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            .7+
+            Math.random()*2,
+            0,
+            TAU
+        );
+
+        ctx.fill();
+    }
+
+    ctx.restore();
+
+    vignette();
+}
+
+
+/* =========================================================
+   09 — DIGITAL NETWORK
+   ========================================================= */
+
+let nodes=[];
+
+function initNetwork(){
+
+    nodes=[];
+
+    const count=Math.floor(70*density);
+
+    for(let i=0;i<count;i++){
+
+        nodes.push({
+            x:Math.random()*W,
+            y:Math.random()*H,
+            vx:rand(-.15,.15),
+            vy:rand(-.15,.15),
+            r:rand(2,5)
+        });
+    }
+}
+
+function drawNetwork(t){
+
+    clear("#020306");
+
+    ctx.save();
+
+    ctx.globalCompositeOperation="lighter";
+
+    nodes.forEach((n,i)=>{
+
+        n.x+=n.vx*speed;
+        n.y+=n.vy*speed;
+
+        if(n.x<0||n.x>W)n.vx*=-1;
+        if(n.y<0||n.y>H)n.vy*=-1;
+
+        for(let j=i+1;j<nodes.length;j++){
+
+            const m=nodes[j];
+
+            const dx=n.x-m.x;
+            const dy=n.y-m.y;
+
+            const d=Math.sqrt(
+                dx*dx+
+                dy*dy
+            );
+
+            if(d<240){
+
+                const a=
+                    (1-d/240)*.18*glow;
+
+                ctx.strokeStyle=
+                    `rgba(255,40,60,${a})`;
+
+                ctx.lineWidth=1;
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    n.x,
+                    n.y
+                );
+
+                ctx.lineTo(
+                    m.x,
+                    m.y
+                );
+
+                ctx.stroke();
+            }
+        }
+
+        ctx.shadowBlur=
+            25*glow;
+
+        ctx.shadowColor=
+            "rgba(255,20,40,.8)";
+
+        ctx.fillStyle=
+            "rgba(255,70,85,.8)";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            n.x,
+            n.y,
+            n.r,
+            0,
+            TAU
+        );
+
+        ctx.fill();
+    });
+
+    ctx.restore();
+
+    vignette();
+}
+
+
+/* =========================================================
+   10 — LUXURY GLOW
+   ========================================================= */
+
+function drawLuxury(t){
+
+    clear("#030303");
+
+    /* central soft illumination */
+
+    glowCircle(
+        W*.5,
+        H*.45,
+        650,
+        "hsla(35,100%,70%,ALPHA)",
+        .08*glow
+    );
+
+    glowCircle(
+        W*.2,
+        H*.2,
+        350,
+        "hsla(345,100%,55%,ALPHA)",
+        .07*glow
+    );
+
+    glowCircle(
+        W*.8,
+        H*.7,
+        450,
+        "hsla(345,100%,55%,ALPHA)",
+        .06*glow
+    );
+
+    ctx.save();
+
+    ctx.globalCompositeOperation="lighter";
+
+    /* elegant diagonal light ribbons */
+
+    for(let i=0;i<7;i++){
+
+        const offset=
+            i*230;
+
+        ctx.beginPath();
+
+        for(let x=-200;x<W+200;x+=20){
+
+            const y=
+                H*.25+
+                offset+
+                Math.sin(
+                    x*.006+
+                    t*.25+
+                    i
+                )*100;
+
+            if(x===-200)
+                ctx.moveTo(x,y);
+            else
+                ctx.lineTo(x,y);
+        }
+
+        ctx.strokeStyle=
+            `rgba(255,${80+i*10},${90+i*8},${.025*glow})`;
+
+        ctx.lineWidth=
+            80+
+            i*15;
+
+        ctx.shadowBlur=
+            60*glow;
+
+        ctx.shadowColor=
+            "rgba(255,40,50,.25)";
+
+        ctx.stroke();
+    }
+
+    /* thin gold/red highlights */
+
+    for(let i=0;i<4;i++){
+
+        const y=
+            H*.2+
+            i*420+
+            Math.sin(t*.4+i)*30;
+
+        const g=
+            ctx.createLinearGradient(
+                0,
+                y,
+                W,
+                y
+            );
+
+        g.addColorStop(
+            0,
+            "rgba(255,30,40,0)"
+        );
+
+        g.addColorStop(
+            .5,
+            `rgba(255,180,100,${.25*glow})`
+        );
+
+        g.addColorStop(
+            1,
+            "rgba(255,30,40,0)"
+        );
+
+        ctx.strokeStyle=g;
+
+        ctx.lineWidth=2;
+
+        ctx.beginPath();
+
+        ctx.moveTo(0,y);
+        ctx.lineTo(W,y);
+
+        ctx.stroke();
+    }
+
+    ctx.restore();
+
+    vignette();
+}
+
+
+/* =========================================================
+   SCENE ROUTER
+   ========================================================= */
+
+function render(t){
+
+    switch(scene){
+
+        case "aurora":
+            drawAurora(t);
+            break;
+
+        case "particles":
+            drawParticles(t);
+            break;
+
+        case "orbital":
+            drawOrbital(t);
+            break;
+
+        case "grid":
+            drawGrid(t);
+            break;
+
+        case "waves":
+            drawWaves(t);
+            break;
+
+        case "streaks":
+            drawStreaks(t);
+            break;
+
+        case "rings":
+            drawRings(t);
+            break;
+
+        case "nebula":
+            drawNebula(t);
+            break;
+
+        case "network":
+            drawNetwork(t);
+            break;
+
+        case "luxury":
+            drawLuxury(t);
+            break;
+    }
+
+    grain(t);
+}
+
+
+/* =========================================================
+   ANIMATION LOOP
+   ========================================================= */
+
+function animate(now){
+
+    const t=
+        (now-startTime)/
+        1000;
+
+    render(t);
+
+    requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+
+
+/* =========================================================
+   INITIALIZE SYSTEMS
+   ========================================================= */
+
+initParticles();
+initStreaks();
+initNetwork();
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
+document.getElementById("scene")
+.addEventListener("change",e=>{
+
+    scene=e.target.value;
+
+    seed=Math.random()*100000;
+
+    initParticles();
+    initStreaks();
+    initNetwork();
+});
+
+document.getElementById("speed")
+.addEventListener("input",e=>{
+    speed=parseFloat(e.target.value);
+});
+
+document.getElementById("glow")
+.addEventListener("input",e=>{
+    glow=parseFloat(e.target.value);
+});
+
+document.getElementById("density")
+.addEventListener("input",e=>{
+
+    density=parseFloat(e.target.value);
+
+    initParticles();
+    initStreaks();
+    initNetwork();
+});
+
+
+/* =========================================================
+   RANDOMIZE
+   ========================================================= */
+
+document.getElementById("randomBtn")
+.addEventListener("click",()=>{
+
+    const scenes=[
+        "aurora",
+        "particles",
+        "orbital",
+        "grid",
+        "waves",
+        "streaks",
+        "rings",
+        "nebula",
+        "network",
+        "luxury"
+    ];
+
+    scene=
+        scenes[
+            Math.floor(
+                Math.random()*scenes.length
+            )
+        ];
+
+    document.getElementById("scene").value=
+        scene;
+
+    speed=
+        rand(.5,1.7);
+
+    glow=
+        rand(.8,1.8);
+
+    density=
+        rand(.7,1.7);
+
+    document.getElementById("speed").value=
+        speed;
+
+    document.getElementById("glow").value=
+        glow;
+
+    document.getElementById("density").value=
+        density;
+
+    seed=Math.random()*100000;
+
+    initParticles();
+    initStreaks();
+    initNetwork();
+});
+
+
+/* =========================================================
+   PNG SNAPSHOT
+   ========================================================= */
+
+document.getElementById("snapshotBtn")
+.addEventListener("click",()=>{
+
+    const link=
+        document.createElement("a");
+
+    link.download=
+        `motion-background-${scene}-1080x1920.png`;
+
+    link.href=
+        canvas.toDataURL(
+            "image/png",
+            1
+        );
+
+    link.click();
+
+    setStatus(
+        "PNG frame exported successfully."
+    );
+});
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+function setStatus(message){
+
+    document.getElementById("status")
+        .textContent=message;
+}
+
+
+/* =========================================================
+   VIDEO FORMAT DETECTION
+   ========================================================= */
+
+function getVideoMime(){
+
+    const formats=[
+        "video/mp4;codecs=avc1.42E01E",
+        "video/mp4",
+        "video/webm;codecs=vp9",
+        "video/webm;codecs=vp8",
+        "video/webm"
+    ];
+
+    if(
+        typeof MediaRecorder ===
+        "undefined"
+    ){
+        return null;
+    }
+
+    for(const format of formats){
+
+        if(
+            MediaRecorder.isTypeSupported(
+                format
+            )
+        ){
+            return format;
+        }
+    }
+
+    return null;
+}
+
+
+/* =========================================================
+   VIDEO EXPORT
+   ========================================================= */
+
+document.getElementById("recordBtn")
+.addEventListener("click",async()=>{
+
+    if(
+        typeof MediaRecorder ===
+        "undefined"
+    ){
+
+        setStatus(
+            "This browser does not support video recording."
+        );
+
+        return;
+    }
+
+    const duration=
+        parseInt(
+            document.getElementById(
+                "duration"
+            ).value
+        );
+
+    const fps=
+        parseInt(
+            document.getElementById(
+                "fps"
+            ).value
+        );
+
+    const mime=
+        getVideoMime();
+
+    if(!mime){
+
+        setStatus(
+            "No supported video encoder was found."
+        );
+
+        return;
+    }
+
+    const isMP4=
+        mime.includes("mp4");
+
+    const extension=
+        isMP4
+        ?"mp4"
+        :"webm";
+
+    const bitrate=
+        fps>=60
+        ?18000000
+        :14000000;
+
+    const stream=
+        canvas.captureStream(fps);
+
+    let recorder;
+
+    try{
+
+        recorder=
+            new MediaRecorder(
+                stream,
+                {
+                    mimeType:mime,
+                    videoBitsPerSecond:
+                        bitrate
+                }
+            );
+
+    }catch(error){
+
+        setStatus(
+            "Could not initialize the video encoder."
+        );
+
+        return;
+    }
+
+    const chunks=[];
+
+    recorder.ondataavailable=e=>{
+
+        if(e.data && e.data.size>0){
+            chunks.push(e.data);
+        }
+    };
+
+    recorder.onerror=e=>{
+
+        setStatus(
+            "Video recording error."
+        );
+    };
+
+    recorder.onstop=()=>{
+
+        const blob=
+            new Blob(
+                chunks,
+                {
+                    type:mime
+                }
+            );
+
+        const url=
+            URL.createObjectURL(blob);
+
+        const link=
+            document.createElement("a");
+
+        link.href=url;
+
+        link.download=
+            `premium-${scene}-1080x1920.${extension}`;
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+        setTimeout(
+            ()=>URL.revokeObjectURL(url),
+            5000
+        );
+
+        setStatus(
+            `${extension.toUpperCase()} exported · `+
+            `${duration}s · ${fps} FPS · `+
+            `1080×1920`
+        );
+    };
+
+    setStatus(
+        `Rendering ${duration}s ${extension.toUpperCase()}...`
+    );
+
+    recorder.start(250);
+
+    const start=
+        performance.now();
+
+    function monitor(){
+
+        const elapsed=
+            (performance.now()-start)/
+            1000;
+
+        const percent=
+            Math.min(
+                100,
+                elapsed/duration*100
+            );
+
+        setStatus(
+            `Rendering ${extension.toUpperCase()} · `+
+            `${percent.toFixed(0)}% · `+
+            `${fps} FPS`
+        );
+
+        if(elapsed<duration){
+
+            requestAnimationFrame(
+                monitor
+            );
+
+        }else{
+
+            recorder.stop();
+        }
+    }
+
+    requestAnimationFrame(monitor);
+});
+
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(e.code==="Space"){
+
+            e.preventDefault();
+
+            document
+                .getElementById(
+                    "recordBtn"
+                )
+                .click();
+        }
+    }
+);
+
+</script>
+
+</body>
+  </html>
