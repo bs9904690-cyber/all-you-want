@@ -2,1902 +2,2337 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
-<title>Premium 9:16 Motion Background Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#050507">
+<title>PREMIUM 9:16 MOTION BACKGROUND STUDIO V2</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#050507;color:#f4f4f4;font-family:Arial,Helvetica,sans-serif}
+body{overflow-x:hidden}
+button,select,input{font:inherit}
+button{cursor:pointer}
 
-html,body{
-    margin:0;
-    min-height:100%;
-    background:#050507;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-    display:flex;
-    justify-content:center;
+:root{
+  --bg:#050507;
+  --panel:#0b0c11;
+  --panel2:#11131a;
+  --line:#252832;
+  --text:#f4f4f4;
+  --muted:#9296a3;
+  --red:#b71c1c;
+  --bright:#ff2638;
+  --gold:#ffb56b;
 }
 
 .app{
-    width:min(100%,1100px);
-    padding:18px;
+  width:min(1500px,100%);
+  margin:auto;
+  padding:18px;
 }
 
-header{
-    margin-bottom:16px;
+.header{
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  align-items:center;
+  margin-bottom:18px;
 }
 
-h1{
-    margin:0;
-    font-size:clamp(22px,4vw,38px);
-    letter-spacing:-1px;
+.brand small{
+  display:block;
+  color:#ff5b68;
+  letter-spacing:.18em;
+  font-size:10px;
+  font-weight:700;
+  margin-bottom:7px;
 }
-
-.sub{
-    color:#999;
-    margin-top:6px;
-    font-size:13px;
+.brand h1{
+  margin:0;
+  font-size:clamp(20px,3vw,34px);
+  letter-spacing:-.035em;
 }
-
-.workspace{
-    display:grid;
-    grid-template-columns:340px 1fr;
-    gap:18px;
-}
-
-.panel{
-    background:
-        linear-gradient(145deg,
-        rgba(255,255,255,.065),
-        rgba(255,255,255,.018));
-    border:1px solid rgba(255,255,255,.09);
-    border-radius:20px;
-    padding:16px;
-    backdrop-filter:blur(18px);
-}
-
-.controls{
-    display:flex;
-    flex-direction:column;
-    gap:13px;
-}
-
-label{
-    display:block;
-    font-size:11px;
-    color:#aaa;
-    margin-bottom:6px;
-    text-transform:uppercase;
-    letter-spacing:1px;
-}
-
-select,
-input,
-button{
-    width:100%;
-    border:none;
-    outline:none;
-    border-radius:11px;
-    min-height:43px;
-    color:#fff;
-    background:#111116;
-    border:1px solid rgba(255,255,255,.1);
-    padding:0 12px;
-}
-
-select{
-    appearance:auto;
-}
-
-input[type="range"]{
-    padding:0;
-    accent-color:#d22;
-}
-
-button{
-    cursor:pointer;
-    font-weight:700;
-    transition:.18s;
-}
-
-button:hover{
-    transform:translateY(-1px);
-    border-color:rgba(255,255,255,.25);
-}
-
-.primary{
-    background:linear-gradient(135deg,#8d1010,#d52a2a);
-}
-
-.secondary{
-    background:#17171d;
-}
-
-.row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:9px;
-}
-
-.info{
-    color:#777;
-    font-size:11px;
-    line-height:1.5;
+.brand p{
+  color:var(--muted);
+  margin:7px 0 0;
+  font-size:12px;
 }
 
 .status{
-    padding:10px;
-    border-radius:10px;
-    background:#0b0b0f;
-    color:#aaa;
-    font-size:11px;
-    line-height:1.5;
-    border:1px solid rgba(255,255,255,.06);
+  min-width:250px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:linear-gradient(145deg,#101116,#08090d);
+}
+.status strong{font-size:12px}
+.status div{margin-top:5px;color:var(--muted);font-size:11px}
+
+.workspace{
+  display:grid;
+  grid-template-columns:minmax(280px,440px) minmax(300px,1fr);
+  gap:18px;
 }
 
-.previewArea{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:700px;
-    background:
-        radial-gradient(circle at center,
-        rgba(150,20,20,.08),
-        transparent 50%),
-        #020204;
-    border-radius:20px;
-    padding:20px;
-    border:1px solid rgba(255,255,255,.06);
+.panel{
+  background:linear-gradient(145deg,#101116,#08090c);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:16px;
+  box-shadow:0 18px 60px rgba(0,0,0,.25);
 }
 
-.canvasWrap{
-    position:relative;
-    width:min(100%,430px);
-    aspect-ratio:9/16;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.7),
-        0 0 80px rgba(150,20,20,.08);
+.preview-panel{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
 }
 
-canvas{
-    width:100%;
-    height:100%;
-    display:block;
+.preview-wrap{
+  position:relative;
+  width:min(100%,520px);
+  margin:auto;
+  aspect-ratio:9/16;
+  background:#020204;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid #252731;
+  box-shadow:0 30px 100px rgba(0,0,0,.5);
 }
 
+#preview{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.preview-overlay{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  display:flex;
+  justify-content:space-between;
+  pointer-events:none;
+}
 .badge{
-    position:absolute;
-    top:10px;
-    left:10px;
-    padding:5px 8px;
-    border-radius:20px;
-    background:rgba(0,0,0,.45);
-    backdrop-filter:blur(10px);
-    font-size:9px;
-    color:#aaa;
-    pointer-events:none;
+  padding:7px 9px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:999px;
+  background:rgba(0,0,0,.42);
+  backdrop-filter:blur(8px);
+  color:#cfd1d8;
+  font-size:10px;
 }
 
-@media(max-width:800px){
-    .workspace{
-        grid-template-columns:1fr;
-    }
+.controls{
+  display:grid;
+  gap:12px;
+}
 
-    .previewArea{
-        min-height:auto;
-        padding:15px;
-    }
+.control-group{
+  padding:13px;
+  border:1px solid #20222a;
+  background:#0c0d12;
+  border-radius:14px;
+}
 
-    .canvasWrap{
-        width:min(100%,390px);
-    }
+label{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#c9cbd1;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.04em;
+  margin-bottom:8px;
+}
+
+select,input[type=number]{
+  width:100%;
+  background:#15171e;
+  color:#eee;
+  border:1px solid #2a2d36;
+  border-radius:10px;
+  min-height:42px;
+  padding:0 11px;
+  outline:none;
+}
+select:focus,input:focus{border-color:#a92b35}
+
+input[type=range]{
+  width:100%;
+  accent-color:#e02737;
+}
+
+.range-value{
+  color:#ff5662;
+  font-variant-numeric:tabular-nums;
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.button-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.btn{
+  min-height:44px;
+  border:1px solid #2c2f38;
+  border-radius:11px;
+  background:#15171e;
+  color:#eee;
+  font-weight:800;
+  font-size:11px;
+  letter-spacing:.03em;
+}
+.btn:hover{background:#1b1e27}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+
+.btn-primary{
+  border-color:#9e202a;
+  background:linear-gradient(135deg,#b71c1c,#76131a);
+  box-shadow:0 9px 30px rgba(183,28,28,.22);
+}
+.btn-primary:hover{background:linear-gradient(135deg,#cc2027,#86151c)}
+
+.btn-secondary{
+  background:#11131a;
+}
+
+.export-card{
+  padding:14px;
+  border-radius:15px;
+  border:1px solid #342126;
+  background:linear-gradient(145deg,#171014,#0b0b0f);
+}
+
+.export-main{
+  width:100%;
+  min-height:52px;
+  font-size:12px;
+}
+
+.progress{
+  margin-top:12px;
+  height:6px;
+  background:#1c1e25;
+  border-radius:99px;
+  overflow:hidden;
+}
+.progress-bar{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#9e151e,#ff3a49);
+  transition:width .08s linear;
+}
+
+.export-text{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:8px;
+  color:#999daa;
+  font-size:10px;
+}
+
+.info{
+  color:#777b87;
+  font-size:10px;
+  line-height:1.55;
+}
+
+.feature-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:10px;
+}
+.feature{
+  border:1px solid #1e2028;
+  border-radius:9px;
+  padding:8px;
+  color:#9296a1;
+  font-size:9px;
+}
+.feature b{color:#ddd}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%) translateY(20px);
+  background:#15171d;
+  border:1px solid #343741;
+  border-radius:12px;
+  padding:11px 14px;
+  font-size:11px;
+  color:#e8e8e8;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:20;
+  max-width:min(92vw,600px);
+  text-align:center;
+}
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+@media(max-width:820px){
+  .app{padding:10px}
+  .header{align-items:flex-start}
+  .status{min-width:0}
+  .workspace{grid-template-columns:1fr}
+  .preview-panel{order:-1}
+  .preview-wrap{width:min(82vw,420px)}
+}
+@media(max-width:480px){
+  .header{display:block}
+  .status{margin-top:12px}
+  .grid2{grid-template-columns:1fr}
+  .feature-list{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
-<header>
-    <h1>Premium Motion Background Studio</h1>
-    <div class="sub">
-        10 cinematic 9:16 glowing backgrounds · 1080 × 1920 · procedural animation
+  <header class="header">
+    <div class="brand">
+      <small>PROCEDURAL MOTION DESIGN SYSTEM</small>
+      <h1>PREMIUM 9:16 MOTION BACKGROUND STUDIO <span style="color:#ff3344">V2</span></h1>
+      <p>Deterministic frame rendering · WebCodecs H.264 · 1080×1920 vertical video</p>
     </div>
-</header>
 
-<div class="workspace">
+    <div class="status">
+      <strong id="engineStatus">Checking encoder…</strong>
+      <div id="engineDetail">Detecting browser video capabilities.</div>
+    </div>
+  </header>
 
-<div class="panel">
+  <main class="workspace">
 
-<div class="controls">
+    <section class="panel controls">
 
-<div>
-<label>Motion Background</label>
+      <div class="control-group">
+        <label>SCENE</label>
+        <select id="scene">
+          <option value="0">01 — Crimson Aurora</option>
+          <option value="1">02 — Floating Particles</option>
+          <option value="2">03 — Orbital Energy</option>
+          <option value="3">04 — Cyber Perspective Grid</option>
+          <option value="4">04 — Liquid Light</option>
+          <option value="5">06 — Velocity Light</option>
+          <option value="6">07 — Infinite Rings</option>
+          <option value="7">08 — Deep Nebula</option>
+          <option value="8">09 — Digital Network</option>
+          <option value="9">10 — Luxury Light</option>
+        </select>
+      </div>
 
-<select id="scene">
+      <div class="grid2">
+        <div class="control-group">
+          <label>FPS</label>
+          <select id="fps">
+            <option value="24">24 FPS</option>
+            <option value="30" selected>30 FPS</option>
+            <option value="60">60 FPS</option>
+          </select>
+        </div>
 
-<option value="aurora">01 — Crimson Aurora</option>
-<option value="particles">02 — Floating Particles</option>
-<option value="orbital">03 — Orbital Energy</option>
-<option value="grid">04 — Cyber Grid</option>
-<option value="waves">05 — Liquid Waves</option>
-<option value="streaks">06 — Velocity Streaks</option>
-<option value="rings">07 — Infinite Rings</option>
-<option value="nebula">08 — Deep Nebula</option>
-<option value="network">09 — Digital Network</option>
-<option value="luxury">10 — Luxury Glow</option>
+        <div class="control-group">
+          <label>DURATION</label>
+          <select id="duration">
+            <option value="5">5 seconds</option>
+            <option value="8" selected>8 seconds</option>
+            <option value="10">10 seconds</option>
+            <option value="15">15 seconds</option>
+            <option value="20">20 seconds</option>
+          </select>
+        </div>
+      </div>
 
-</select>
+      <div class="control-group">
+        <label>
+          GLOW
+          <span class="range-value" id="glowValue">100%</span>
+        </label>
+        <input id="glow" type="range" min="0" max="200" value="100">
+      </div>
+
+      <div class="control-group">
+        <label>
+          MOTION SPEED
+          <span class="range-value" id="speedValue">100%</span>
+        </label>
+        <input id="speed" type="range" min="0" max="200" value="100">
+      </div>
+
+      <div class="grid2">
+        <div class="control-group">
+          <label>PARTICLE DENSITY</label>
+          <select id="density">
+            <option value="0">Low</option>
+            <option value="1" selected>Medium</option>
+            <option value="2">High</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label>FILM GRAIN</label>
+          <select id="grain">
+            <option value="0" selected>OFF</option>
+            <option value="1">ON</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>DETERMINISTIC SEED</label>
+        <div class="button-row">
+          <input id="seed" type="number" value="47291" min="1" max="999999999">
+          <button class="btn btn-secondary" id="randomSeed">RANDOMIZE</button>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button class="btn btn-secondary" id="play">PLAY PREVIEW</button>
+        <button class="btn btn-secondary" id="png">EXPORT CURRENT FRAME PNG</button>
+      </div>
+
+      <div class="export-card">
+        <button class="btn btn-primary export-main" id="export">EXPORT MP4</button>
+
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="export-text">
+          <span id="progressText">Ready</span>
+          <span id="progressPercent">0%</span>
+        </div>
+
+        <div class="info" style="margin-top:10px">
+          Export is offline and deterministic. Frames are rendered from
+          <b>frameIndex / FPS</b>, then encoded sequentially. Export speed does
+          not control final video timing.
+        </div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature"><b>OUTPUT</b><br>1080 × 1920</div>
+        <div class="feature"><b>CODEC</b><br>H.264 / AVC</div>
+        <div class="feature"><b>TIMING</b><br>Constant FPS</div>
+        <div class="feature"><b>ENGINE</b><br>WebCodecs</div>
+      </div>
+
+    </section>
+
+    <section class="panel preview-panel">
+      <div class="preview-wrap">
+        <canvas id="preview"></canvas>
+        <div class="preview-overlay">
+          <div class="badge" id="sceneBadge">01 · CRIMSON AURORA</div>
+          <div class="badge">9:16 · PREVIEW</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
 
-<div>
-<label>Duration</label>
-<select id="duration">
-<option value="5">5 seconds</option>
-<option value="8" selected>8 seconds</option>
-<option value="10">10 seconds</option>
-<option value="15">15 seconds</option>
-<option value="20">20 seconds</option>
-</select>
-</div>
-
-<div>
-<label>FPS</label>
-<select id="fps">
-<option value="24">24 FPS</option>
-<option value="30" selected>30 FPS</option>
-<option value="60">60 FPS</option>
-</select>
-</div>
-
-<div>
-<label>Glow Intensity</label>
-<input id="glow" type="range" min="0.3" max="2.5" step=".05" value="1.2">
-</div>
-
-<div>
-<label>Motion Speed</label>
-<input id="speed" type="range" min=".15" max="3" step=".05" value="1">
-</div>
-
-<div>
-<label>Particle Density</label>
-<input id="density" type="range" min=".2" max="2.5" step=".05" value="1">
-</div>
-
-<div class="row">
-<button class="secondary" id="randomBtn">Randomize</button>
-<button class="secondary" id="snapshotBtn">PNG Frame</button>
-</div>
-
-<button class="primary" id="recordBtn">
-    Export Motion Video
-</button>
-
-<div class="status" id="status">
-Ready — choose a background and export.
-</div>
-
-<div class="info">
-Video is rendered from the 1080×1920 canvas.
-If the browser supports MP4 MediaRecorder,
-MP4 is selected automatically. Otherwise the
-studio falls back to WebM.
-</div>
-
-</div>
-</div>
-
-<div class="previewArea">
-
-<div class="canvasWrap">
-
-<canvas id="canvas"
-        width="1080"
-        height="1920">
-</canvas>
-
-<div class="badge">1080 × 1920 · 9:16</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
+<div class="toast" id="toast"></div>
 
 <script>
+"use strict";
 
-/* =========================================================
-   PREMIUM 9:16 MOTION BACKGROUND STUDIO
-   ========================================================= */
+/* ============================================================
+   PREMIUM 9:16 MOTION BACKGROUND STUDIO V2
+   ------------------------------------------------------------
+   Architecture:
+   Preview:
+      requestAnimationFrame() → low-resolution canvas
 
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d", {
-    alpha:false,
-    desynchronized:true
+   Export:
+      deterministic frameIndex → renderFrame(time)
+      → VideoFrame → VideoEncoder
+      → custom ISO-BMFF MP4 muxer
+
+   No captureStream() is used.
+   No MediaRecorder is used for the primary MP4 path.
+   ============================================================ */
+
+const FINAL_W = 1080;
+const FINAL_H = 1920;
+const PREVIEW_W = 540;
+const PREVIEW_H = 960;
+
+const $ = id => document.getElementById(id);
+
+const preview = $("preview");
+const pctx = preview.getContext("2d", {
+  alpha:false,
+  desynchronized:true
 });
 
-const W = 1080;
-const H = 1920;
+preview.width = PREVIEW_W;
+preview.height = PREVIEW_H;
 
-let scene = "aurora";
-let speed = 1;
-let glow = 1.2;
-let density = 1;
+const exportCanvas = document.createElement("canvas");
+exportCanvas.width = FINAL_W;
+exportCanvas.height = FINAL_H;
 
-let startTime = performance.now();
-let lastTime = startTime;
+const xctx = exportCanvas.getContext("2d", {
+  alpha:false,
+  willReadFrequently:false
+});
 
-let seed = Math.random()*100000;
+/* ============================================================
+   UI STATE
+   ============================================================ */
 
-const TAU = Math.PI*2;
+const state = {
+  scene:0,
+  fps:30,
+  duration:8,
+  glow:1,
+  speed:1,
+  density:1,
+  grain:false,
+  seed:47291,
+  playing:true,
+  exporting:false
+};
 
+const sceneNames = [
+  "CRIMSON AURORA",
+  "FLOATING PARTICLES",
+  "ORBITAL ENERGY",
+  "CYBER PERSPECTIVE GRID",
+  "LIQUID LIGHT",
+  "VELOCITY LIGHT",
+  "INFINITE RINGS",
+  "DEEP NEBULA",
+  "DIGITAL NETWORK",
+  "LUXURY LIGHT"
+];
 
-/* =========================================================
-   UTILITIES
-   ========================================================= */
+/* ============================================================
+   DETERMINISTIC RANDOM
+   ============================================================ */
 
-function rand(min,max){
-    return min + Math.random()*(max-min);
+function mulberry32(seed){
+  let a = seed >>> 0;
+  return function(){
+    a |= 0;
+    a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
 }
 
-function seededRandom(){
-    seed = (seed * 9301 + 49297) % 233280;
-    return seed / 233280;
+function hash01(a,b=0,c=0){
+  let x = Math.imul((a|0) ^ 0x9E3779B9, 0x85EBCA6B);
+  x ^= Math.imul((b|0) ^ 0xC2B2AE35, 0x27D4EB2F);
+  x ^= Math.imul((c|0) ^ 0x165667B1, 0x9E3779B1);
+  x ^= x >>> 16;
+  x = Math.imul(x,0x7FEB352D);
+  x ^= x >>> 15;
+  x = Math.imul(x,0x846CA68B);
+  x ^= x >>> 16;
+  return (x >>> 0) / 4294967296;
 }
 
 function clamp(v,a,b){
-    return Math.max(a,Math.min(b,v));
+  return Math.max(a,Math.min(b,v));
 }
 
 function lerp(a,b,t){
-    return a+(b-a)*t;
+  return a+(b-a)*t;
 }
 
-function hsla(h,s,l,a=1){
-    return `hsla(${h},${s}%,${l}%,${a})`;
+function smoothstep(a,b,x){
+  x=clamp((x-a)/(b-a),0,1);
+  return x*x*(3-2*x);
 }
 
-function clear(color="#030305"){
-    ctx.globalCompositeOperation="source-over";
-    ctx.fillStyle=color;
-    ctx.fillRect(0,0,W,H);
+function easeInOut(t){
+  return t<.5
+    ? 2*t*t
+    : 1-Math.pow(-2*t+2,2)/2;
 }
 
-function glowCircle(x,y,r,color,alpha=1){
+/* ============================================================
+   SCENE CACHE
+   ============================================================ */
 
-    ctx.save();
+let sceneData = {
+  seed:0,
+  particles:[],
+  nodes:[],
+  streaks:[],
+  rings:[],
+  stars:[],
+  grain:null
+};
 
-    ctx.globalCompositeOperation="lighter";
+function densityCount(base){
+  return base * (state.density===0 ? .55 : state.density===2 ? 1.65 : 1);
+}
 
-    const g=ctx.createRadialGradient(
-        x,y,0,
-        x,y,r
-    );
+function buildSceneData(){
+  const seed = Number(state.seed)||1;
+  const r = mulberry32(seed);
 
-    g.addColorStop(
-        0,
-        color.replace("ALPHA",alpha)
-    );
+  sceneData = {
+    seed,
+    particles:[],
+    nodes:[],
+    streaks:[],
+    rings:[],
+    stars:[],
+    grain:null
+  };
 
-    g.addColorStop(
-        .18,
-        color.replace("ALPHA",alpha*.65)
-    );
+  const pc = Math.floor(densityCount(190));
+  for(let i=0;i<pc;i++){
+    sceneData.particles.push({
+      x:r(),
+      y:r(),
+      z:.15+r()*.85,
+      size:.5+r()*3.2,
+      phase:r()*Math.PI*2,
+      speed:.25+r()*.8,
+      amp:.015+r()*.045,
+      drift:r()>.5?1:-1
+    });
+  }
 
-    g.addColorStop(
-        .55,
-        color.replace("ALPHA",alpha*.12)
-    );
+  const nc = Math.floor(densityCount(54));
+  for(let i=0;i<nc;i++){
+    sceneData.nodes.push({
+      x:.08+r()*.84,
+      y:.12+r()*.76,
+      z:.25+r()*.75,
+      phase:r()*Math.PI*2,
+      speed:.08+r()*.25,
+      radius:1.3+r()*3.4
+    });
+  }
 
-    g.addColorStop(
-        1,
-        color.replace("ALPHA",0)
-    );
+  const sc = Math.floor(densityCount(65));
+  for(let i=0;i<sc;i++){
+    sceneData.streaks.push({
+      x:r(),
+      y:r(),
+      len:.06+r()*.34,
+      width:.4+r()*2.2,
+      speed:.15+r()*1.1,
+      phase:r()*Math.PI*2,
+      depth:.2+r()*.8
+    });
+  }
 
-    ctx.fillStyle=g;
+  for(let i=0;i<12;i++){
+    sceneData.rings.push({
+      radius:.12+i*.075,
+      phase:r()*Math.PI*2,
+      speed:.35+r()*.35,
+      alpha:.05+r()*.09
+    });
+  }
+
+  const stars = Math.floor(densityCount(280));
+  for(let i=0;i<stars;i++){
+    sceneData.stars.push({
+      x:r(),
+      y:r(),
+      z:.1+r()*.9,
+      size:.4+r()*2.5,
+      phase:r()*Math.PI*2
+    });
+  }
+
+  /* Small reusable grain texture.
+     It is generated once, never per exported frame. */
+  const g=document.createElement("canvas");
+  g.width=128;
+  g.height=128;
+  const gc=g.getContext("2d");
+  const img=gc.createImageData(128,128);
+  for(let i=0;i<img.data.length;i+=4){
+    const v=125+Math.floor(r()*80);
+    img.data[i]=v;
+    img.data[i+1]=v;
+    img.data[i+2]=v;
+    img.data[i+3]=Math.floor(22+r()*30);
+  }
+  gc.putImageData(img,0,0);
+  sceneData.grain=g;
+}
+
+buildSceneData();
+
+/* ============================================================
+   DRAWING HELPERS
+   ============================================================ */
+
+function setupCanvas(ctx,w,h){
+  ctx.setTransform(w/FINAL_W,0,0,h/FINAL_H,0,0);
+  ctx.imageSmoothingEnabled=true;
+}
+
+function clearBackground(ctx){
+  ctx.fillStyle="#020204";
+  ctx.fillRect(0,0,FINAL_W,FINAL_H);
+}
+
+function glowCircle(ctx,x,y,r,color,alpha=1){
+  const g=ctx.createRadialGradient(x,y,0,x,y,r);
+  g.addColorStop(0,hexA(color,alpha));
+  g.addColorStop(.24,hexA(color,alpha*.34));
+  g.addColorStop(1,hexA(color,0));
+  ctx.fillStyle=g;
+  ctx.fillRect(x-r,y-r,r*2,r*2);
+}
+
+function hexA(hex,a){
+  const h=hex.replace("#","");
+  const n=parseInt(h,16);
+  const r=(n>>16)&255;
+  const g=(n>>8)&255;
+  const b=n&255;
+  return `rgba(${r},${g},${b},${clamp(a,0,1)})`;
+}
+
+function lineGradient(ctx,x1,y1,x2,y2,c1,c2){
+  const g=ctx.createLinearGradient(x1,y1,x2,y2);
+  g.addColorStop(0,c1);
+  g.addColorStop(.5,c2);
+  g.addColorStop(1,"rgba(0,0,0,0)");
+  return g;
+}
+
+function softLine(ctx,x1,y1,x2,y2,width,color,alpha=1){
+  ctx.save();
+  ctx.lineCap="round";
+  ctx.lineWidth=width;
+  ctx.strokeStyle=hexA(color,alpha);
+  ctx.beginPath();
+  ctx.moveTo(x1,y1);
+  ctx.lineTo(x2,y2);
+  ctx.stroke();
+  ctx.restore();
+}
+
+/* ============================================================
+   SCENE 01 — CRIMSON AURORA
+   ============================================================ */
+
+function sceneAurora(ctx,t){
+  clearBackground(ctx);
+
+  const glow=state.glow;
+  const s=state.speed;
+  const phase=t*s*Math.PI*2;
+
+  /* large atmospheric fields */
+  glowCircle(ctx,220,440,620,"#B71C1C",.10*glow);
+  glowCircle(ctx,860,1320,700,"#FF2638",.065*glow);
+  glowCircle(ctx,540,930,850,"#FF4A4A",.025*glow);
+
+  for(let layer=0;layer<7;layer++){
+    const base=220+layer*245;
+    const amp=95+layer*15;
+    const yOffset=Math.sin(phase*.72+layer*.7)*75;
+
     ctx.beginPath();
-    ctx.arc(x,y,r,0,TAU);
+
+    for(let x=-100;x<=1180;x+=20){
+      const nx=x/FINAL_W;
+      const y=
+        base+
+        Math.sin(nx*Math.PI*2.15+phase+layer*.72)*amp+
+        Math.sin(nx*Math.PI*5.2-phase*.55+layer)*35+
+        yOffset;
+
+      if(x===-100)ctx.moveTo(x,y);
+      else ctx.lineTo(x,y);
+    }
+
+    for(let x=1180;x>=-100;x-=20){
+      const nx=x/FINAL_W;
+      const y=
+        base+125+
+        Math.sin(nx*Math.PI*2.15+phase+layer*.72)*amp*.82+
+        Math.sin(nx*Math.PI*5.2-phase*.55+layer)*28+
+        yOffset;
+
+      ctx.lineTo(x,y);
+    }
+
+    ctx.closePath();
+
+    const grad=ctx.createLinearGradient(0,base-150,0,base+350);
+    grad.addColorStop(0,hexA("#FF2638",.015*glow));
+    grad.addColorStop(.5,hexA("#B71C1C",(.045+layer*.006)*glow));
+    grad.addColorStop(1,"rgba(0,0,0,0)");
+    ctx.fillStyle=grad;
+    ctx.fill();
+  }
+
+  /* restrained foreground ribbon */
+  ctx.beginPath();
+  for(let x=-50;x<=1130;x+=12){
+    const y=1050+
+      Math.sin(x/180+phase)*120+
+      Math.sin(x/82-phase*.4)*38;
+    if(x===-50)ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle=hexA("#FF4A4A",.18*glow);
+  ctx.lineWidth=4;
+  ctx.stroke();
+}
+
+/* ============================================================
+   SCENE 02 — FLOATING PARTICLES
+   ============================================================ */
+
+function sceneParticles(ctx,t){
+  clearBackground(ctx);
+
+  const s=state.speed;
+  const glow=state.glow;
+
+  glowCircle(ctx,540,840,780,"#B71C1C",.035*glow);
+  glowCircle(ctx,250,1500,450,"#FF2638",.025*glow);
+
+  for(let i=0;i<sceneData.particles.length;i++){
+    const p=sceneData.particles[i];
+
+    const tt=t*s*p.speed;
+    const y=(p.y+tt*.075*p.drift)%1.12-.06;
+    const x=p.x+
+      Math.sin(tt*Math.PI*2+p.phase)*p.amp+
+      Math.cos(tt*.65+p.phase)*.012;
+
+    const px=x*FINAL_W;
+    const py=y*FINAL_H;
+    const size=p.size*(.65+.55*p.z);
+
+    const a=(.13+.34*p.z)*
+      (.72+.28*Math.sin(tt*Math.PI*2+p.phase));
+
+    glowCircle(ctx,px,py,size*7,"#B71C1C",a*.12*glow);
+    ctx.fillStyle=hexA("#FF4A4A",a);
+    ctx.beginPath();
+    ctx.arc(px,py,size,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  /* subtle center-free atmospheric field */
+  const vg=ctx.createRadialGradient(540,900,100,540,900,850);
+  vg.addColorStop(0,"rgba(255,255,255,.012)");
+  vg.addColorStop(.65,"rgba(0,0,0,0)");
+  vg.addColorStop(1,"rgba(0,0,0,.32)");
+  ctx.fillStyle=vg;
+  ctx.fillRect(0,0,FINAL_W,FINAL_H);
+}
+
+/* ============================================================
+   SCENE 03 — ORBITAL ENERGY
+   ============================================================ */
+
+function sceneOrbital(ctx,t){
+  clearBackground(ctx);
+
+  const s=state.speed;
+  const glow=state.glow;
+  const cx=540,cy=950;
+
+  glowCircle(ctx,cx,cy,430,"#FF2638",.08*glow);
+  glowCircle(ctx,cx,cy,180,"#FFB56B",.035*glow);
+
+  ctx.save();
+  ctx.translate(cx,cy);
+
+  for(let i=0;i<6;i++){
+    const rot=t*s*(.12+i*.018)*Math.PI*2+i*.55;
+    ctx.save();
+    ctx.rotate(rot);
+
+    ctx.strokeStyle=hexA(i%2?"#B71C1C":"#FF4A4A",(.13-i*.012)*glow);
+    ctx.lineWidth=1.2+i*.3;
+    ctx.beginPath();
+    ctx.ellipse(
+      0,0,
+      180+i*62,
+      65+i*28,
+      0,
+      0,
+      Math.PI*2
+    );
+    ctx.stroke();
+
+    const a=(t*s*(.2+i*.04)+i*.17)%1*Math.PI*2;
+    const rx=180+i*62;
+    const ry=65+i*28;
+    const px=Math.cos(a)*rx;
+    const py=Math.sin(a)*ry;
+
+    glowCircle(ctx,px,py,30,"#FF2638",.14*glow);
+    ctx.fillStyle=hexA("#FFB56B",.8);
+    ctx.beginPath();
+    ctx.arc(px,py,3.2+i*.5,0,Math.PI*2);
     ctx.fill();
 
     ctx.restore();
+  }
+
+  ctx.restore();
+
+  glowCircle(ctx,cx,cy,60,"#FF2638",.22*glow);
+  ctx.fillStyle=hexA("#FFB56B",.85);
+  ctx.beginPath();
+  ctx.arc(cx,cy,12,0,Math.PI*2);
+  ctx.fill();
 }
 
-function vignette(){
+/* ============================================================
+   SCENE 04 — CYBER PERSPECTIVE GRID
+   ============================================================ */
 
-    const g=ctx.createRadialGradient(
-        W/2,H*.45,H*.1,
-        W/2,H*.45,H*.8
+function sceneGrid(ctx,t){
+  clearBackground(ctx);
+
+  const glow=state.glow;
+  const s=state.speed;
+  const horizon=700;
+  const vpX=540;
+  const vpY=horizon;
+
+  glowCircle(ctx,vpX,horizon,470,"#B71C1C",.075*glow);
+
+  /* horizon */
+  softLine(ctx,0,horizon,FINAL_W,horizon,2,"#FF2638",.20*glow);
+
+  /* perspective vertical rays */
+  for(let i=-12;i<=12;i++){
+    const bottomX=vpX+i*125;
+    softLine(
+      ctx,vpX,vpY,
+      bottomX,FINAL_H,
+      1,
+      "#B71C1C",
+      .13*glow
     );
+  }
 
-    g.addColorStop(0,"rgba(0,0,0,0)");
-    g.addColorStop(.65,"rgba(0,0,0,.15)");
-    g.addColorStop(1,"rgba(0,0,0,.82)");
+  /* moving horizontal planes */
+  const loop=1;
+  const u=(t*s/loop)%1;
+
+  for(let i=0;i<22;i++){
+    const q=(i+u)/22;
+    const depth=q*q;
+    const y=horizon+depth*(FINAL_H-horizon);
+
+    softLine(
+      ctx,
+      0,y,
+      FINAL_W,y,
+      1.1,
+      "#FF2638",
+      (.025+.075*(1-q))*glow
+    );
+  }
+
+  /* subtle center fade */
+  const vg=ctx.createLinearGradient(0,horizon-150,0,FINAL_H);
+  vg.addColorStop(0,"rgba(255,38,56,.035)");
+  vg.addColorStop(.35,"rgba(0,0,0,0)");
+  vg.addColorStop(1,"rgba(0,0,0,.48)");
+  ctx.fillStyle=vg;
+  ctx.fillRect(0,horizon-150,FINAL_W,FINAL_H-horizon+150);
+}
+
+/* ============================================================
+   SCENE 05 — LIQUID LIGHT
+   ============================================================ */
+
+function sceneLiquid(ctx,t){
+  clearBackground(ctx);
+
+  const phase=t*state.speed*Math.PI*2;
+  const glow=state.glow;
+
+  glowCircle(ctx,850,1050,680,"#B71C1C",.055*glow);
+
+  for(let layer=0;layer<8;layer++){
+    ctx.beginPath();
+
+    const offset=layer*185-80;
+
+    for(let x=-80;x<=1160;x+=15){
+      const y=
+        offset+
+        300+
+        Math.sin(x/170+phase*.72+layer*.48)*115+
+        Math.sin(x/73-phase*.31+layer)*42+
+        Math.cos(x/310+phase*.45)*70;
+
+      if(x===-80)ctx.moveTo(x,y);
+      else ctx.lineTo(x,y);
+    }
+
+    for(let x=1160;x>=-80;x-=15){
+      const y=
+        offset+
+        410+
+        Math.sin(x/170+phase*.72+layer*.48)*115+
+        Math.sin(x/73-phase*.31+layer)*42+
+        Math.cos(x/310+phase*.45)*70;
+
+      ctx.lineTo(x,y);
+    }
+
+    ctx.closePath();
+
+    const g=ctx.createLinearGradient(0,0,FINAL_W,FINAL_H);
+    g.addColorStop(0,hexA("#B71C1C",.025*glow));
+    g.addColorStop(.45,hexA("#FF2638",(.035+layer*.004)*glow));
+    g.addColorStop(1,"rgba(0,0,0,0)");
 
     ctx.fillStyle=g;
-    ctx.fillRect(0,0,W,H);
+    ctx.fill();
+  }
+
+  ctx.beginPath();
+  for(let x=-40;x<=1120;x+=10){
+    const y=910+
+      Math.sin(x/150+phase)*95+
+      Math.sin(x/47-phase*.5)*22;
+    if(x===-40)ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle=hexA("#FFB56B",.11*glow);
+  ctx.lineWidth=2;
+  ctx.stroke();
 }
 
-function grain(t){
+/* ============================================================
+   SCENE 06 — VELOCITY LIGHT
+   ============================================================ */
 
+function sceneVelocity(ctx,t){
+  clearBackground(ctx);
+
+  const glow=state.glow;
+  const s=state.speed;
+
+  glowCircle(ctx,680,980,700,"#B71C1C",.04*glow);
+
+  for(let i=0;i<sceneData.streaks.length;i++){
+    const p=sceneData.streaks[i];
+
+    const travel=(p.y+p.phase/(Math.PI*2)+t*s*p.speed)%1.22-.1;
+    const x=p.x*FINAL_W+
+      Math.sin(t*s*.7+p.phase)*50;
+
+    const len=p.len*FINAL_H*(.45+.75*p.depth);
+    const y=travel*FINAL_H;
+
+    const alpha=(.025+.15*p.depth)*glow;
+
+    const grad=ctx.createLinearGradient(
+      x,y-len,
+      x,y+len
+    );
+    grad.addColorStop(0,"rgba(0,0,0,0)");
+    grad.addColorStop(.5,hexA("#FF2638",alpha));
+    grad.addColorStop(1,"rgba(0,0,0,0)");
+
+    ctx.strokeStyle=grad;
+    ctx.lineWidth=p.width;
+    ctx.lineCap="round";
+    ctx.beginPath();
+    ctx.moveTo(x,y-len);
+    ctx.lineTo(x,y+len);
+    ctx.stroke();
+
+    if(i%7===0){
+      glowCircle(ctx,x,y,35*p.depth,"#FF4A4A",.08*glow);
+    }
+  }
+}
+
+/* ============================================================
+   SCENE 07 — INFINITE RINGS
+   ============================================================ */
+
+function sceneRings(ctx,t){
+  clearBackground(ctx);
+
+  const glow=state.glow;
+  const cx=540,cy=960;
+
+  glowCircle(ctx,cx,cy,560,"#B71C1C",.045*glow);
+
+  const base=0.12;
+  const count=11;
+
+  for(let i=0;i<count;i++){
+    const phase=((t*state.speed*.13+i/count)%1);
+    const radius=(base+phase*.82)*FINAL_H*.48;
+    const alpha=(1-phase)*.16*glow;
+
+    ctx.strokeStyle=hexA(
+      i%3===0 ? "#FFB56B" : "#FF2638",
+      alpha
+    );
+    ctx.lineWidth=1.5+(1-phase)*2;
+
+    ctx.beginPath();
+    ctx.arc(cx,cy,radius,0,Math.PI*2);
+    ctx.stroke();
+
+    if(i%3===0){
+      const a=phase*Math.PI*2+i;
+      const px=cx+Math.cos(a)*radius;
+      const py=cy+Math.sin(a)*radius;
+      glowCircle(ctx,px,py,24,"#FF2638",.08*glow);
+    }
+  }
+
+  glowCircle(ctx,cx,cy,55,"#FF2638",.16*glow);
+}
+
+/* ============================================================
+   SCENE 08 — DEEP NEBULA
+   ============================================================ */
+
+function sceneNebula(ctx,t){
+  clearBackground(ctx);
+
+  const glow=state.glow;
+  const s=state.speed;
+
+  /* layered clouds */
+  const clouds=[
+    [220,480,520,"#B71C1C",.065],
+    [840,780,580,"#FF2638",.042],
+    [420,1370,650,"#B71C1C",.045],
+    [920,1530,430,"#FFB56B",.018]
+  ];
+
+  for(let i=0;i<clouds.length;i++){
+    const c=clouds[i];
+    const x=c[0]+Math.sin(t*s*.08+i)*70;
+    const y=c[1]+Math.cos(t*s*.07+i*.8)*80;
+    glowCircle(ctx,x,y,c[2],c[3]*glow);
+  }
+
+  for(let i=0;i<sceneData.stars.length;i++){
+    const p=sceneData.stars[i];
+    const tt=t*s*(.025+.035*p.z);
+    const x=(p.x+.025*Math.sin(tt+p.phase))%1;
+    const y=(p.y+.018*Math.cos(tt*1.3+p.phase))%1;
+    const tw=.35+.65*Math.sin(t*s*.4+p.phase);
+    const size=p.size*(.55+.7*p.z);
+
+    ctx.fillStyle=hexA(
+      p.z>.72 ? "#FFB56B" : "#FF4A4A",
+      (.15+.42*p.z)*tw
+    );
+
+    ctx.beginPath();
+    ctx.arc(x*FINAL_W,y*FINAL_H,size,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+
+/* ============================================================
+   SCENE 09 — DIGITAL NETWORK
+   ============================================================ */
+
+function sceneNetwork(ctx,t){
+  clearBackground(ctx);
+
+  const glow=state.glow;
+  const s=state.speed;
+  const nodes=sceneData.nodes;
+
+  const pts=[];
+
+  for(let i=0;i<nodes.length;i++){
+    const p=nodes[i];
+    const tt=t*s*p.speed;
+    pts.push({
+      x:(p.x+
+        Math.sin(tt+p.phase)*.025+
+        Math.cos(tt*.37+p.phase)*.012)*FINAL_W,
+      y:(p.y+
+        Math.cos(tt*.83+p.phase)*.025+
+        Math.sin(tt*.31+p.phase)*.012)*FINAL_H,
+      z:p.z,
+      r:p.radius
+    });
+  }
+
+  for(let i=0;i<pts.length;i++){
+    const a=pts[i];
+
+    for(let j=i+1;j<pts.length;j++){
+      const b=pts[j];
+      const dx=a.x-b.x;
+      const dy=a.y-b.y;
+      const d2=dx*dx+dy*dy;
+
+      if(d2<235*235){
+        const d=Math.sqrt(d2);
+        const alpha=(1-d/235)*.09*glow*(.45+.55*Math.min(a.z,b.z));
+        softLine(ctx,a.x,a.y,b.x,b.y,.8,"#B71C1C",alpha);
+      }
+    }
+  }
+
+  for(let i=0;i<pts.length;i++){
+    const p=pts[i];
+    const pulse=.55+.45*Math.sin(t*s*.8+i*.71);
+
+    glowCircle(ctx,p.x,p.y,22+p.r*4,"#FF2638",
+      .06*glow*pulse*p.z);
+
+    ctx.fillStyle=hexA("#FF4A4A",
+      (.25+.38*p.z)*pulse);
+
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  /* occasional deterministic pulse traveling along node index */
+  const pulsePos=((t*s*.22)%1)*(pts.length-1);
+  const idx=Math.floor(pulsePos);
+  if(pts[idx]&&pts[idx+1]){
+    const f=pulsePos-idx;
+    const a=pts[idx],b=pts[idx+1];
+    const x=lerp(a.x,b.x,f);
+    const y=lerp(a.y,b.y,f);
+    glowCircle(ctx,x,y,34,"#FFB56B",.12*glow);
+  }
+}
+
+/* ============================================================
+   SCENE 10 — LUXURY LIGHT
+   ============================================================ */
+
+function sceneLuxury(ctx,t){
+  clearBackground(ctx);
+
+  const phase=t*state.speed*Math.PI*2;
+  const glow=state.glow;
+
+  glowCircle(ctx,850,500,580,"#B71C1C",.045*glow);
+  glowCircle(ctx,250,1420,560,"#FFB56B",.018*glow);
+
+  for(let layer=0;layer<5;layer++){
+    ctx.beginPath();
+
+    for(let x=-100;x<=1180;x+=12){
+      const y=
+        460+
+        layer*280+
+        Math.sin(x/240+phase*.55+layer*.9)*90+
+        Math.sin(x/91-phase*.24+layer)*24;
+
+      if(x===-100)ctx.moveTo(x,y);
+      else ctx.lineTo(x,y);
+    }
+
+    ctx.strokeStyle=hexA(
+      layer===2 ? "#FFB56B" : "#B71C1C",
+      (.055+layer*.012)*glow
+    );
+    ctx.lineWidth=1.5+layer*.8;
+    ctx.stroke();
+  }
+
+  /* Elegant diagonal light */
+  const gx=ctx.createLinearGradient(80,1600,980,300);
+  gx.addColorStop(0,"rgba(0,0,0,0)");
+  gx.addColorStop(.48,hexA("#FF2638",.10*glow));
+  gx.addColorStop(.54,hexA("#FFB56B",.07*glow));
+  gx.addColorStop(1,"rgba(0,0,0,0)");
+
+  ctx.lineWidth=38;
+  ctx.strokeStyle=gx;
+  ctx.beginPath();
+  ctx.moveTo(30,1670);
+  ctx.bezierCurveTo(350,1480,600,790,1050,260);
+  ctx.stroke();
+
+  /* thin highlight */
+  ctx.lineWidth=2;
+  ctx.strokeStyle=hexA("#FFB56B",.24*glow);
+  ctx.beginPath();
+  ctx.moveTo(80,1660);
+  ctx.bezierCurveTo(390,1450,610,780,1060,250);
+  ctx.stroke();
+
+  /* dark vignette */
+  const vg=ctx.createRadialGradient(540,960,250,540,960,1050);
+  vg.addColorStop(0,"rgba(0,0,0,0)");
+  vg.addColorStop(.7,"rgba(0,0,0,.04)");
+  vg.addColorStop(1,"rgba(0,0,0,.48)");
+  ctx.fillStyle=vg;
+  ctx.fillRect(0,0,FINAL_W,FINAL_H);
+}
+
+/* ============================================================
+   SCENE DISPATCH
+   ============================================================ */
+
+function renderScene(ctx,t){
+  setupCanvas(ctx,ctx.canvas.width,ctx.canvas.height);
+
+  switch(state.scene){
+    case 0:sceneAurora(ctx,t);break;
+    case 1:sceneParticles(ctx,t);break;
+    case 2:sceneOrbital(ctx,t);break;
+    case 3:sceneGrid(ctx,t);break;
+    case 4:sceneLiquid(ctx,t);break;
+    case 5:sceneVelocity(ctx,t);break;
+    case 6:sceneRings(ctx,t);break;
+    case 7:sceneNebula(ctx,t);break;
+    case 8:sceneNetwork(ctx,t);break;
+    case 9:sceneLuxury(ctx,t);break;
+  }
+
+  if(state.grain){
     ctx.save();
-
     ctx.globalAlpha=.035;
-
-    for(let i=0;i<900;i++){
-
-        const x=Math.random()*W;
-        const y=Math.random()*H;
-
-        const a=Math.random();
-
-        ctx.fillStyle=
-            a>.5
-            ?"rgba(255,255,255,.8)"
-            :"rgba(0,0,0,.8)";
-
-        ctx.fillRect(x,y,1,1);
-    }
-
+    const pattern=ctx.createPattern(sceneData.grain,"repeat");
+    ctx.fillStyle=pattern;
+    ctx.fillRect(0,0,FINAL_W,FINAL_H);
     ctx.restore();
+  }
 }
 
+/* ============================================================
+   PREVIEW ENGINE
+   ============================================================ */
 
-/* =========================================================
-   01 — CRIMSON AURORA
-   ========================================================= */
+let previewStart=performance.now();
+let previewRAF=0;
 
-function drawAurora(t){
+function previewLoop(now){
+  if(state.playing){
+    const cycle=Math.max(.001,state.duration);
+    const elapsed=(now-previewStart)/1000;
+    const t=(elapsed%cycle);
+    renderScene(pctx,t);
+  }
 
-    clear("#030305");
+  previewRAF=requestAnimationFrame(previewLoop);
+}
 
-    const blobs=[
-        [W*.18,H*.25,420,345],
-        [W*.8,H*.35,500,315],
-        [W*.48,H*.72,520,355],
-        [W*.18,H*.82,380,25]
-    ];
+function restartPreview(){
+  previewStart=performance.now();
+}
 
-    blobs.forEach((b,i)=>{
+previewRAF=requestAnimationFrame(previewLoop);
 
-        const x=b[0]+
-            Math.sin(t*(.35+i*.1)+i)*130;
+/* ============================================================
+   MP4 HELPERS
+   ============================================================ */
 
-        const y=b[1]+
-            Math.cos(t*(.27+i*.08)+i)*170;
+function u8(...a){return new Uint8Array(a)}
+function ascii(s){return new TextEncoder().encode(s)}
 
-        glowCircle(
-            x,
-            y,
-            b[2],
-            `hsla(${b[3]},100%,55%,ALPHA)`,
-            .30*glow
-        );
-    });
+function be16(v){
+  return u8((v>>8)&255,v&255);
+}
 
-    ctx.save();
+function be32(v){
+  return u8(
+    (v>>>24)&255,
+    (v>>>16)&255,
+    (v>>>8)&255,
+    v&255
+  );
+}
 
-    ctx.globalCompositeOperation="screen";
+function be64(v){
+  const hi=Math.floor(v/4294967296);
+  const lo=v>>>0;
+  return new Uint8Array([
+    (hi>>>24)&255,(hi>>>16)&255,(hi>>>8)&255,hi&255,
+    (lo>>>24)&255,(lo>>>16)&255,(lo>>>8)&255,lo&255
+  ]);
+}
 
-    for(let i=0;i<12;i++){
+function concatBytes(parts){
+  let n=0;
+  for(const p of parts)n+=p.byteLength;
+  const out=new Uint8Array(n);
+  let o=0;
+  for(const p of parts){
+    out.set(p,o);
+    o+=p.byteLength;
+  }
+  return out;
+}
 
-        const y=
-            H*(.15+i*.07)+
-            Math.sin(t*.7+i)*90;
+function box(type,...payloads){
+  const data=concatBytes(payloads);
+  return concatBytes([
+    be32(8+data.length),
+    ascii(type),
+    data
+  ]);
+}
 
-        const grad=ctx.createLinearGradient(
-            0,y-100,
-            W,y+100
-        );
+function fullBox(type,version,flags,...payloads){
+  const vf=u8(
+    version,
+    (flags>>>16)&255,
+    (flags>>>8)&255,
+    flags&255
+  );
+  return box(type,vf,...payloads);
+}
 
-        grad.addColorStop(
-            0,
-            "rgba(255,20,40,0)"
-        );
+function str4(s){
+  return ascii(s.padEnd(4," ").slice(0,4));
+}
 
-        grad.addColorStop(
-            .5,
-            `rgba(255,30,55,${.045*glow})`
-        );
-
-        grad.addColorStop(
-            1,
-            "rgba(255,20,40,0)"
-        );
-
-        ctx.fillStyle=grad;
-
-        ctx.beginPath();
-
-        ctx.moveTo(0,y);
-
-        for(let x=0;x<=W;x+=30){
-
-            const yy=
-                y+
-                Math.sin(x*.009+t*.8+i)*55+
-                Math.sin(x*.018-t*.3)*25;
-
-            ctx.lineTo(x,yy);
-        }
-
-        ctx.lineTo(W,H);
-        ctx.lineTo(0,H);
-
-        ctx.closePath();
-        ctx.fill();
+/*
+  Converts Annex-B H.264 to AVCC sample format.
+  If input is already AVCC, it is retained.
+*/
+function annexBToAvcc(bytes){
+  const starts=[];
+  for(let i=0;i<bytes.length-3;i++){
+    if(bytes[i]===0&&bytes[i+1]===0&&
+       ((bytes[i+2]===1)||
+        (bytes[i+2]===0&&bytes[i+3]===1))){
+      starts.push(i);
     }
+  }
 
-    ctx.restore();
+  if(!starts.length)return bytes;
 
-    vignette();
-}
-
-
-/* =========================================================
-   02 — FLOATING PARTICLES
-   ========================================================= */
-
-let particles=[];
-
-function initParticles(){
-
-    particles=[];
-
-    const count=Math.floor(190*density);
-
-    for(let i=0;i<count;i++){
-
-        particles.push({
-            x:Math.random()*W,
-            y:Math.random()*H,
-            r:rand(1,4),
-            vx:rand(-.15,.15),
-            vy:rand(-.8,-.1),
-            hue:Math.random()>.7?345:15,
-            phase:Math.random()*TAU
-        });
-    }
-}
-
-function drawParticles(t){
-
-    clear("#020204");
-
-    glowCircle(
-        W*.5,
-        H*.52,
-        700,
-        "hsla(350,100%,55%,ALPHA)",
-        .10*glow
+  const nalus=[];
+  for(let i=0;i<starts.length;i++){
+    const start=starts[i]+(
+      bytes[starts[i]+2]===1 ? 3 : 4
     );
+    const end=i+1<starts.length ? starts[i+1] : bytes.length;
+    if(end>start)nalus.push(bytes.slice(start,end));
+  }
 
-    ctx.save();
+  if(!nalus.length)return bytes;
 
-    ctx.globalCompositeOperation="lighter";
-
-    particles.forEach((p,i)=>{
-
-        const x=
-            p.x+
-            Math.sin(t*.6+p.phase)*30;
-
-        const y=
-            (p.y+
-            t*65*speed)%H;
-
-        const pulse=
-            .5+
-            .5*Math.sin(t*2+p.phase);
-
-        ctx.shadowBlur=25*glow;
-        ctx.shadowColor=
-            hsla(p.hue,100,60,.8);
-
-        ctx.fillStyle=
-            hsla(
-                p.hue,
-                100,
-                70,
-                .25+.7*pulse
-            );
-
-        ctx.beginPath();
-        ctx.arc(
-            x,
-            y,
-            p.r*(.7+pulse*.7),
-            0,
-            TAU
-        );
-        ctx.fill();
-    });
-
-    ctx.restore();
-
-    vignette();
+  const parts=[];
+  for(const n of nalus){
+    parts.push(be32(n.length),n);
+  }
+  return concatBytes(parts);
 }
 
+/* ============================================================
+   ISO-BMFF / MP4 MUXER
+   ============================================================ */
 
-/* =========================================================
-   03 — ORBITAL ENERGY
-   ========================================================= */
+function makeMvhd(timescale,duration){
+  const matrix=new Uint8Array([
+    0,1,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0
+  ]);
 
-function drawOrbital(t){
+  return fullBox(
+    "mvhd",0,0,
+    be32(0),
+    be32(0),
+    be32(timescale),
+    be32(duration),
+    be32(0x00010000),
+    be16(0x0100),
+    u8(0,0,0,0,0,0,0,0),
+    matrix,
+    new Uint8Array(24),
+    be32(2)
+  );
+}
 
-    clear("#020204");
+function makeTkhd(width,height,duration){
+  const matrix=new Uint8Array([
+    0,1,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0
+  ]);
 
-    const cx=W/2;
-    const cy=H*.5;
+  return fullBox(
+    "tkhd",0,3,
+    be32(0),
+    be32(0),
+    be32(1),
+    be32(0),
+    be32(duration),
+    new Uint8Array(8),
+    be16(0),
+    be16(0),
+    be16(0),
+    be16(0),
+    matrix,
+    be32(width<<16),
+    be32(height<<16)
+  );
+}
 
-    glowCircle(
-        cx,
-        cy,
-        500,
-        "hsla(350,100%,55%,ALPHA)",
-        .18*glow
+function makeMdhd(timescale,duration){
+  return fullBox(
+    "mdhd",0,0,
+    be32(0),
+    be32(0),
+    be32(timescale),
+    be32(duration),
+    be16(0x55c4),
+    be16(0)
+  );
+}
+
+function makeHdlr(){
+  return fullBox(
+    "hdlr",0,0,
+    new Uint8Array(4),
+    str4("vide"),
+    new Uint8Array(12),
+    ascii("VideoHandler\0")
+  );
+}
+
+function makeAvcC(description){
+  /*
+    WebCodecs normally supplies AVCDecoderConfigurationRecord.
+    If unavailable, attempt to extract SPS/PPS from Annex-B.
+  */
+  if(description && description.length>=7){
+    return box("avcC",description);
+  }
+
+  throw new Error("H.264 decoder configuration was not supplied by WebCodecs.");
+}
+
+function makeAvc1(description,width,height){
+  const avcC=makeAvcC(description);
+
+  const compressor=new Uint8Array(32);
+  const name=ascii("Premium Motion Studio");
+  compressor[0]=Math.min(name.length,31);
+  compressor.set(name.slice(0,31),1);
+
+  const visualSampleEntry=concatBytes([
+    new Uint8Array(6),
+    be16(1),
+    new Uint8Array(16),
+    be16(width),
+    be16(height),
+    be32(0x00480000),
+    be32(0x00480000),
+    be32(0),
+    be16(1),
+    compressor,
+    be16(0x0018),
+    be16(0xffff),
+    avcC
+  ]);
+
+  return box("avc1",visualSampleEntry);
+}
+
+function makeStsd(description,width,height){
+  return fullBox(
+    "stsd",0,0,
+    be32(1),
+    makeAvc1(description,width,height)
+  );
+}
+
+function makeStts(frameCount,timescale,fps){
+  /*
+    Use integer timescale 90000 and distribute durations exactly.
+    Since 90000 is divisible by 24,30,60, this is exact.
+  */
+  const duration=Math.round(timescale/fps);
+
+  return fullBox(
+    "stts",0,0,
+    be32(1),
+    be32(frameCount),
+    be32(duration)
+  );
+}
+
+function makeStsc(){
+  return fullBox(
+    "stsc",0,0,
+    be32(1),
+    be32(1),
+    be32(1),
+    be32(1)
+  );
+}
+
+function makeStsz(sizes){
+  const parts=[be32(0),be32(sizes.length)];
+  for(const n of sizes)parts.push(be32(n));
+  return fullBox("stsz",0,0,...parts);
+}
+
+function makeStco(offsets){
+  const parts=[be32(offsets.length)];
+  for(const n of offsets)parts.push(be32(n));
+  return fullBox("stco",0,0,...parts);
+}
+
+function makeStss(keyframes){
+  const parts=[be32(keyframes.length)];
+  for(const n of keyframes)parts.push(be32(n));
+  return fullBox("stss",0,0,...parts);
+}
+
+function makeDinf(){
+  const url=fullBox("url ",0,1);
+  const dref=fullBox("dref",0,0,be32(1),url);
+  return box("dinf",dref);
+}
+
+function makeVmhd(){
+  return fullBox(
+    "vmhd",0,1,
+    be16(0),
+    be16(0),
+    be16(0),
+    be16(0)
+  );
+}
+
+function makeMinf(stbl){
+  return box("minf",makeVmhd(),makeDinf(),stbl);
+}
+
+function makeStbl(description,width,height,sizes,offsets,keyframes,fps,timescale){
+  return box(
+    "stbl",
+    makeStsd(description,width,height),
+    makeStts(sizes.length,timescale,fps),
+    makeStsc(),
+    makeStsz(sizes),
+    makeStco(offsets),
+    makeStss(keyframes)
+  );
+}
+
+function makeMdia(description,width,height,sizes,offsets,keyframes,fps,timescale){
+  const duration=Math.round((sizes.length*timescale)/fps);
+
+  return box(
+    "mdia",
+    makeMdhd(timescale,duration),
+    makeHdlr(),
+    makeMinf(
+      makeStbl(
+        description,
+        width,
+        height,
+        sizes,
+        offsets,
+        keyframes,
+        fps,
+        timescale
+      )
+    )
+  );
+}
+
+function makeTrak(description,width,height,sizes,offsets,keyframes,fps,timescale){
+  const duration=Math.round((sizes.length*timescale)/fps);
+
+  return box(
+    "trak",
+    makeTkhd(width,height,duration),
+    makeMdia(
+      description,
+      width,
+      height,
+      sizes,
+      offsets,
+      keyframes,
+      fps,
+      timescale
+    )
+  );
+}
+
+function makeMoov(description,width,height,sizes,offsets,keyframes,fps,timescale){
+  const duration=Math.round((sizes.length*timescale)/fps);
+
+  return box(
+    "moov",
+    makeMvhd(timescale,duration),
+    makeTrak(
+      description,
+      width,
+      height,
+      sizes,
+      offsets,
+      keyframes,
+      fps,
+      timescale
+    )
+  );
+}
+
+function muxMP4(chunks,description,width,height,fps){
+  if(!description)throw new Error("No AVC decoder configuration available.");
+
+  const timescale=90000;
+
+  const samples=chunks.map(c=>annexBToAvcc(c.data));
+
+  const mdatPayload=concatBytes(samples);
+  const mdat=box("mdat",mdatPayload);
+
+  /*
+    ftyp + moov + mdat are laid out with mdat after moov.
+    stco offsets therefore depend on moov size.
+    Solve the offset by rebuilding moov once the offset is known.
+  */
+  const ftyp=box(
+    "ftyp",
+    str4("isom"),
+    be32(0x00000200),
+    str4("isom"),
+    str4("iso2"),
+    str4("avc1"),
+    str4("mp41")
+  );
+
+  const sizes=samples.map(s=>s.length);
+
+  const keyframes=[];
+  for(let i=0;i<chunks.length;i++){
+    if(chunks[i].type==="key")keyframes.push(i+1);
+  }
+
+  if(!keyframes.length)keyframes.push(1);
+
+  /*
+    stco uses absolute file offsets.
+    moov size is independent of offsets' values.
+    Build with a temporary offset, calculate final offset,
+    then rebuild.
+  */
+  let offsets=new Array(samples.length).fill(0);
+
+  let moov=makeMoov(
+    description,
+    width,
+    height,
+    sizes,
+    offsets,
+    keyframes,
+    fps,
+    timescale
+  );
+
+  const mdatStart=ftyp.length+moov.length;
+  let pos=mdatStart+8;
+
+  offsets=[];
+  for(const sample of samples){
+    offsets.push(pos);
+    pos+=sample.length;
+  }
+
+  moov=makeMoov(
+    description,
+    width,
+    height,
+    sizes,
+    offsets,
+    keyframes,
+    fps,
+    timescale
+  );
+
+  const finalMdatStart=ftyp.length+moov.length;
+
+  if(finalMdatStart!==mdatStart){
+    pos=finalMdatStart+8;
+    offsets=[];
+    for(const sample of samples){
+      offsets.push(pos);
+      pos+=sample.length;
+    }
+
+    moov=makeMoov(
+      description,
+      width,
+      height,
+      sizes,
+      offsets,
+      keyframes,
+      fps,
+      timescale
     );
+  }
 
-    ctx.save();
-
-    ctx.translate(cx,cy);
-
-    ctx.globalCompositeOperation="lighter";
-
-    for(let i=0;i<9;i++){
-
-        const rx=
-            150+i*45;
-
-        const ry=
-            400+i*75;
-
-        ctx.save();
-
-        ctx.rotate(
-            i*.28+
-            Math.sin(t*.2+i)*.2
-        );
-
-        ctx.beginPath();
-
-        ctx.ellipse(
-            0,
-            0,
-            rx,
-            ry,
-            0,
-            0,
-            TAU
-        );
-
-        ctx.strokeStyle=
-            `rgba(255,${40+i*10},${70+i*8},${.08+.035*i})`;
-
-        ctx.lineWidth=
-            2+
-            (i%3);
-
-        ctx.shadowBlur=
-            15*glow;
-
-        ctx.shadowColor=
-            "rgba(255,30,50,.8)";
-
-        ctx.stroke();
-
-        ctx.restore();
-    }
-
-    for(let i=0;i<12;i++){
-
-        const a=
-            t*(.4+i*.025)+
-            i*.53;
-
-        const r=
-            230+
-            (i%5)*95;
-
-        const x=
-            Math.cos(a)*r;
-
-        const y=
-            Math.sin(a)*r*1.9;
-
-        ctx.fillStyle=
-            "rgba(255,70,80,.9)";
-
-        ctx.shadowBlur=
-            30*glow;
-
-        ctx.shadowColor=
-            "#ff2035";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y,
-            5+(i%3)*3,
-            0,
-            TAU
-        );
-
-        ctx.fill();
-    }
-
-    ctx.restore();
-
-    vignette();
+  return new Blob(
+    [ftyp,moov,mdat],
+    {type:"video/mp4"}
+  );
 }
 
-
-/* =========================================================
-   04 — CYBER GRID
-   ========================================================= */
-
-function drawGrid(t){
-
-    clear("#020307");
-
-    const horizon=H*.48;
-
-    glowCircle(
-        W*.5,
-        horizon,
-        600,
-        "hsla(345,100%,55%,ALPHA)",
-        .12*glow
-    );
-
-    ctx.save();
-
-    ctx.globalCompositeOperation="lighter";
-
-    /* horizon */
-
-    const hg=ctx.createLinearGradient(
-        0,horizon-100,
-        0,horizon+100
-    );
-
-    hg.addColorStop(
-        0,
-        "rgba(255,20,40,0)"
-    );
-
-    hg.addColorStop(
-        .5,
-        `rgba(255,35,55,${.5*glow})`
-    );
-
-    hg.addColorStop(
-        1,
-        "rgba(255,20,40,0)"
-    );
-
-    ctx.fillStyle=hg;
-
-    ctx.fillRect(
-        0,
-        horizon-100,
-        W,
-        200
-    );
-
-    /* vertical perspective lines */
-
-    for(let i=-15;i<=15;i++){
-
-        const bottomX=
-            W/2+
-            i*90;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            W/2,
-            horizon
-        );
-
-        ctx.lineTo(
-            bottomX,
-            H
-        );
-
-        ctx.strokeStyle=
-            `rgba(255,35,55,${.09*glow})`;
-
-        ctx.lineWidth=1.5;
-
-        ctx.stroke();
-    }
-
-    /* horizontal moving lines */
-
-    for(let i=0;i<30;i++){
-
-        const p=
-            ((i/30+
-            t*.035*speed)%1);
-
-        const y=
-            horizon+
-            Math.pow(p,2.2)*(H-horizon);
-
-        const width=
-            60+
-            p*W*.95;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            W/2-width/2,
-            y
-        );
-
-        ctx.lineTo(
-            W/2+width/2,
-            y
-        );
-
-        ctx.strokeStyle=
-            `rgba(255,40,60,${(.025+p*.10)*glow})`;
-
-        ctx.lineWidth=
-            1+
-            p*2;
-
-        ctx.stroke();
-    }
-
-    ctx.restore();
-
-    vignette();
-}
-
-
-/* =========================================================
-   05 — LIQUID WAVES
-   ========================================================= */
-
-function drawWaves(t){
-
-    clear("#030204");
-
-    for(let layer=0;layer<9;layer++){
-
-        ctx.save();
-
-        ctx.globalCompositeOperation="lighter";
-
-        ctx.beginPath();
-
-        const base=
-            H*.25+
-            layer*180;
-
-        ctx.moveTo(0,H);
-
-        ctx.lineTo(0,base);
-
-        for(let x=0;x<=W;x+=20){
-
-            const y=
-                base+
-                Math.sin(
-                    x*.008+
-                    t*.7+
-                    layer
-                )*75+
-                Math.sin(
-                    x*.019-
-                    t*.4
-                )*30;
-
-            ctx.lineTo(x,y);
-        }
-
-        ctx.lineTo(W,H);
-
-        ctx.closePath();
-
-        const g=
-            ctx.createLinearGradient(
-                0,
-                base-150,
-                0,
-                H
-            );
-
-        g.addColorStop(
-            0,
-            `rgba(255,${20+layer*5},${40+layer*4},${.025*glow})`
-        );
-
-        g.addColorStop(
-            .45,
-            `rgba(150,20,40,${.018*glow})`
-        );
-
-        g.addColorStop(
-            1,
-            "rgba(0,0,0,0)"
-        );
-
-        ctx.fillStyle=g;
-        ctx.fill();
-
-        ctx.restore();
-    }
-
-    for(let i=0;i<5;i++){
-
-        glowCircle(
-            W*.2+i*180,
-            H*.25+
-            Math.sin(t*.5+i)*100,
-            300,
-            `hsla(${345+i*4},100%,55%,ALPHA)`,
-            .045*glow
-        );
-    }
-
-    vignette();
-}
-
-
-/* =========================================================
-   06 — VELOCITY STREAKS
-   ========================================================= */
-
-let streaks=[];
-
-function initStreaks(){
-
-    streaks=[];
-
-    for(let i=0;i<150*density;i++){
-
-        streaks.push({
-            x:Math.random()*W,
-            y:Math.random()*H,
-            length:rand(50,400),
-            speed:rand(2,8),
-            width:rand(1,5),
-            alpha:rand(.05,.35),
-            angle:rand(-.2,.2)
-        });
-    }
-}
-
-function drawStreaks(t){
-
-    clear("#020204");
-
-    ctx.save();
-
-    ctx.globalCompositeOperation="lighter";
-
-    streaks.forEach((s,i)=>{
-
-        const y=
-            (s.y+
-            t*100*s.speed*speed)%H;
-
-        const x=
-            s.x+
-            Math.sin(t*.2+i)*80;
-
-        const g=
-            ctx.createLinearGradient(
-                x,
-                y,
-                x,
-                y-s.length
-            );
-
-        g.addColorStop(
-            0,
-            "rgba(255,30,45,0)"
-        );
-
-        g.addColorStop(
-            .7,
-            `rgba(255,45,60,${s.alpha*glow})`
-        );
-
-        g.addColorStop(
-            1,
-            "rgba(255,100,100,0)"
-        );
-
-        ctx.strokeStyle=g;
-        ctx.lineWidth=s.width;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            x,
-            y
-        );
-
-        ctx.lineTo(
-            x+
-            Math.sin(s.angle)*100,
-            y-s.length
-        );
-
-        ctx.stroke();
-    });
-
-    ctx.restore();
-
-    glowCircle(
-        W*.5,
-        H*.45,
-        550,
-        "hsla(350,100%,55%,ALPHA)",
-        .08*glow
-    );
-
-    vignette();
-}
-
-
-/* =========================================================
-   07 — INFINITE RINGS
-   ========================================================= */
-
-function drawRings(t){
-
-    clear("#010103");
-
-    const cx=W/2;
-    const cy=H*.5;
-
-    glowCircle(
-        cx,
-        cy,
-        550,
-        "hsla(350,100%,55%,ALPHA)",
-        .12*glow
-    );
-
-    ctx.save();
-
-    ctx.globalCompositeOperation="lighter";
-
-    for(let i=0;i<18;i++){
-
-        const p=
-            ((i/18+
-            t*.06*speed)%1);
-
-        const r=
-            30+
-            p*750;
-
-        ctx.beginPath();
-
-        ctx.arc(
-            cx,
-            cy,
-            r,
-            0,
-            TAU
-        );
-
-        ctx.strokeStyle=
-            `rgba(255,${30+80*p},${45+80*p},${(.35*(1-p))*glow})`;
-
-        ctx.lineWidth=
-            2+
-            4*(1-p);
-
-        ctx.shadowBlur=
-            25*glow;
-
-        ctx.shadowColor=
-            "rgba(255,20,40,.7)";
-
-        ctx.stroke();
-    }
-
-    ctx.restore();
-
-    vignette();
-}
-
-
-/* =========================================================
-   08 — DEEP NEBULA
-   ========================================================= */
-
-function drawNebula(t){
-
-    clear("#010104");
-
-    for(let i=0;i<20;i++){
-
-        const x=
-            W*.5+
-            Math.sin(t*.1+i*1.3)*
-            (200+i*20);
-
-        const y=
-            H*.5+
-            Math.cos(t*.13+i)*
-            (350+i*30);
-
-        const r=
-            150+
-            i*35;
-
-        glowCircle(
-            x,
-            y,
-            r,
-            `hsla(${330+i*3},100%,${45+i}%,ALPHA)`,
-            .035*glow
-        );
-    }
-
-    ctx.save();
-
-    ctx.globalCompositeOperation="lighter";
-
-    for(let i=0;i<350*density;i++){
-
-        const a=
-            seededRandom()*TAU;
-
-        const r=
-            Math.pow(seededRandom(),.55)*
-            700;
-
-        const x=
-            W*.5+
-            Math.cos(a)*r;
-
-        const y=
-            H*.5+
-            Math.sin(a)*r*1.7;
-
-        const twinkle=
-            .2+
-            .8*
-            Math.abs(
-                Math.sin(
-                    t*2+
-                    i
-                )
-            );
-
-        ctx.fillStyle=
-            `rgba(255,${50+Math.random()*100},${70+Math.random()*100},${twinkle*.5})`;
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y,
-            .7+
-            Math.random()*2,
-            0,
-            TAU
-        );
-
-        ctx.fill();
-    }
-
-    ctx.restore();
-
-    vignette();
-}
-
-
-/* =========================================================
-   09 — DIGITAL NETWORK
-   ========================================================= */
-
-let nodes=[];
-
-function initNetwork(){
-
-    nodes=[];
-
-    const count=Math.floor(70*density);
-
-    for(let i=0;i<count;i++){
-
-        nodes.push({
-            x:Math.random()*W,
-            y:Math.random()*H,
-            vx:rand(-.15,.15),
-            vy:rand(-.15,.15),
-            r:rand(2,5)
-        });
-    }
-}
-
-function drawNetwork(t){
-
-    clear("#020306");
-
-    ctx.save();
-
-    ctx.globalCompositeOperation="lighter";
-
-    nodes.forEach((n,i)=>{
-
-        n.x+=n.vx*speed;
-        n.y+=n.vy*speed;
-
-        if(n.x<0||n.x>W)n.vx*=-1;
-        if(n.y<0||n.y>H)n.vy*=-1;
-
-        for(let j=i+1;j<nodes.length;j++){
-
-            const m=nodes[j];
-
-            const dx=n.x-m.x;
-            const dy=n.y-m.y;
-
-            const d=Math.sqrt(
-                dx*dx+
-                dy*dy
-            );
-
-            if(d<240){
-
-                const a=
-                    (1-d/240)*.18*glow;
-
-                ctx.strokeStyle=
-                    `rgba(255,40,60,${a})`;
-
-                ctx.lineWidth=1;
-
-                ctx.beginPath();
-
-                ctx.moveTo(
-                    n.x,
-                    n.y
-                );
-
-                ctx.lineTo(
-                    m.x,
-                    m.y
-                );
-
-                ctx.stroke();
-            }
-        }
-
-        ctx.shadowBlur=
-            25*glow;
-
-        ctx.shadowColor=
-            "rgba(255,20,40,.8)";
-
-        ctx.fillStyle=
-            "rgba(255,70,85,.8)";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            n.x,
-            n.y,
-            n.r,
-            0,
-            TAU
-        );
-
-        ctx.fill();
-    });
-
-    ctx.restore();
-
-    vignette();
-}
-
-
-/* =========================================================
-   10 — LUXURY GLOW
-   ========================================================= */
-
-function drawLuxury(t){
-
-    clear("#030303");
-
-    /* central soft illumination */
-
-    glowCircle(
-        W*.5,
-        H*.45,
-        650,
-        "hsla(35,100%,70%,ALPHA)",
-        .08*glow
-    );
-
-    glowCircle(
-        W*.2,
-        H*.2,
-        350,
-        "hsla(345,100%,55%,ALPHA)",
-        .07*glow
-    );
-
-    glowCircle(
-        W*.8,
-        H*.7,
-        450,
-        "hsla(345,100%,55%,ALPHA)",
-        .06*glow
-    );
-
-    ctx.save();
-
-    ctx.globalCompositeOperation="lighter";
-
-    /* elegant diagonal light ribbons */
-
-    for(let i=0;i<7;i++){
-
-        const offset=
-            i*230;
-
-        ctx.beginPath();
-
-        for(let x=-200;x<W+200;x+=20){
-
-            const y=
-                H*.25+
-                offset+
-                Math.sin(
-                    x*.006+
-                    t*.25+
-                    i
-                )*100;
-
-            if(x===-200)
-                ctx.moveTo(x,y);
-            else
-                ctx.lineTo(x,y);
-        }
-
-        ctx.strokeStyle=
-            `rgba(255,${80+i*10},${90+i*8},${.025*glow})`;
-
-        ctx.lineWidth=
-            80+
-            i*15;
-
-        ctx.shadowBlur=
-            60*glow;
-
-        ctx.shadowColor=
-            "rgba(255,40,50,.25)";
-
-        ctx.stroke();
-    }
-
-    /* thin gold/red highlights */
-
-    for(let i=0;i<4;i++){
-
-        const y=
-            H*.2+
-            i*420+
-            Math.sin(t*.4+i)*30;
-
-        const g=
-            ctx.createLinearGradient(
-                0,
-                y,
-                W,
-                y
-            );
-
-        g.addColorStop(
-            0,
-            "rgba(255,30,40,0)"
-        );
-
-        g.addColorStop(
-            .5,
-            `rgba(255,180,100,${.25*glow})`
-        );
-
-        g.addColorStop(
-            1,
-            "rgba(255,30,40,0)"
-        );
-
-        ctx.strokeStyle=g;
-
-        ctx.lineWidth=2;
-
-        ctx.beginPath();
-
-        ctx.moveTo(0,y);
-        ctx.lineTo(W,y);
-
-        ctx.stroke();
-    }
-
-    ctx.restore();
-
-    vignette();
-}
-
-
-/* =========================================================
-   SCENE ROUTER
-   ========================================================= */
-
-function render(t){
-
-    switch(scene){
-
-        case "aurora":
-            drawAurora(t);
-            break;
-
-        case "particles":
-            drawParticles(t);
-            break;
-
-        case "orbital":
-            drawOrbital(t);
-            break;
-
-        case "grid":
-            drawGrid(t);
-            break;
-
-        case "waves":
-            drawWaves(t);
-            break;
-
-        case "streaks":
-            drawStreaks(t);
-            break;
-
-        case "rings":
-            drawRings(t);
-            break;
-
-        case "nebula":
-            drawNebula(t);
-            break;
-
-        case "network":
-            drawNetwork(t);
-            break;
-
-        case "luxury":
-            drawLuxury(t);
-            break;
-    }
-
-    grain(t);
-}
-
-
-/* =========================================================
-   ANIMATION LOOP
-   ========================================================= */
-
-function animate(now){
-
-    const t=
-        (now-startTime)/
-        1000;
-
-    render(t);
-
-    requestAnimationFrame(animate);
-}
-
-requestAnimationFrame(animate);
-
-
-/* =========================================================
-   INITIALIZE SYSTEMS
-   ========================================================= */
-
-initParticles();
-initStreaks();
-initNetwork();
-
-
-/* =========================================================
-   CONTROLS
-   ========================================================= */
-
-document.getElementById("scene")
-.addEventListener("change",e=>{
-
-    scene=e.target.value;
-
-    seed=Math.random()*100000;
-
-    initParticles();
-    initStreaks();
-    initNetwork();
-});
-
-document.getElementById("speed")
-.addEventListener("input",e=>{
-    speed=parseFloat(e.target.value);
-});
-
-document.getElementById("glow")
-.addEventListener("input",e=>{
-    glow=parseFloat(e.target.value);
-});
-
-document.getElementById("density")
-.addEventListener("input",e=>{
-
-    density=parseFloat(e.target.value);
-
-    initParticles();
-    initStreaks();
-    initNetwork();
-});
-
-
-/* =========================================================
-   RANDOMIZE
-   ========================================================= */
-
-document.getElementById("randomBtn")
-.addEventListener("click",()=>{
-
-    const scenes=[
-        "aurora",
-        "particles",
-        "orbital",
-        "grid",
-        "waves",
-        "streaks",
-        "rings",
-        "nebula",
-        "network",
-        "luxury"
-    ];
-
-    scene=
-        scenes[
-            Math.floor(
-                Math.random()*scenes.length
-            )
-        ];
-
-    document.getElementById("scene").value=
-        scene;
-
-    speed=
-        rand(.5,1.7);
-
-    glow=
-        rand(.8,1.8);
-
-    density=
-        rand(.7,1.7);
-
-    document.getElementById("speed").value=
-        speed;
-
-    document.getElementById("glow").value=
-        glow;
-
-    document.getElementById("density").value=
-        density;
-
-    seed=Math.random()*100000;
-
-    initParticles();
-    initStreaks();
-    initNetwork();
-});
-
-
-/* =========================================================
-   PNG SNAPSHOT
-   ========================================================= */
-
-document.getElementById("snapshotBtn")
-.addEventListener("click",()=>{
-
-    const link=
-        document.createElement("a");
-
-    link.download=
-        `motion-background-${scene}-1080x1920.png`;
-
-    link.href=
-        canvas.toDataURL(
-            "image/png",
-            1
-        );
-
-    link.click();
-
-    setStatus(
-        "PNG frame exported successfully."
-    );
-});
-
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
-function setStatus(message){
-
-    document.getElementById("status")
-        .textContent=message;
-}
-
-
-/* =========================================================
-   VIDEO FORMAT DETECTION
-   ========================================================= */
-
-function getVideoMime(){
-
-    const formats=[
-        "video/mp4;codecs=avc1.42E01E",
-        "video/mp4",
-        "video/webm;codecs=vp9",
-        "video/webm;codecs=vp8",
-        "video/webm"
-    ];
-
-    if(
-        typeof MediaRecorder ===
-        "undefined"
-    ){
-        return null;
-    }
-
-    for(const format of formats){
-
-        if(
-            MediaRecorder.isTypeSupported(
-                format
-            )
-        ){
-            return format;
-        }
-    }
-
-    return null;
-}
-
-
-/* =========================================================
-   VIDEO EXPORT
-   ========================================================= */
-
-document.getElementById("recordBtn")
-.addEventListener("click",async()=>{
-
-    if(
-        typeof MediaRecorder ===
-        "undefined"
-    ){
-
-        setStatus(
-            "This browser does not support video recording."
-        );
-
+/* ============================================================
+   WEB CODECS DETECTION
+   ============================================================ */
+
+let webCodecsAvailable=false;
+let selectedCodec=null;
+
+async function detectEncoder(){
+  if(!("VideoEncoder" in window) || !("VideoFrame" in window)){
+    $("engineStatus").textContent="WebCodecs unavailable";
+    $("engineDetail").textContent=
+      "This browser cannot create deterministic H.264 MP4 exports.";
+    return;
+  }
+
+  const candidates=[
+    "avc1.640028",
+    "avc1.64001F",
+    "avc1.4D4028",
+    "avc1.4D401F",
+    "avc1.42E028",
+    "avc1.42E01F"
+  ];
+
+  for(const codec of candidates){
+    try{
+      const support=await VideoEncoder.isConfigSupported({
+        codec,
+        width:FINAL_W,
+        height:FINAL_H,
+        bitrate:16_000_000,
+        framerate:state.fps,
+        hardwareAcceleration:"prefer-hardware",
+        latencyMode:"quality"
+      });
+
+      if(support.supported){
+        selectedCodec=codec;
+        webCodecsAvailable=true;
+        $("engineStatus").textContent="H.264 WebCodecs ready";
+        $("engineDetail").textContent=
+          `${codec} · deterministic MP4 path available`;
         return;
+      }
+    }catch(e){}
+  }
+
+  $("engineStatus").textContent="H.264 unavailable";
+  $("engineDetail").textContent=
+    "WebCodecs exists, but this browser does not expose a supported 1080×1920 H.264 encoder.";
+}
+
+detectEncoder();
+
+/* ============================================================
+   EXPORT ENGINE
+   ============================================================ */
+
+function sleep0(){
+  return new Promise(resolve=>{
+    setTimeout(resolve,0);
+  });
+}
+
+function getBitrate(fps){
+  if(fps===60)return 24_000_000;
+  if(fps===24)return 14_000_000;
+  return 16_000_000;
+}
+
+async function exportMP4(){
+  if(state.exporting)return;
+
+  if(!webCodecsAvailable){
+    showToast(
+      "H.264 WebCodecs is unavailable in this browser. MP4 export cannot be created here."
+    );
+    return;
+  }
+
+  state.exporting=true;
+
+  const button=$("export");
+  button.disabled=true;
+  $("png").disabled=true;
+  $("play").disabled=true;
+
+  const fps=Number($("fps").value);
+  const duration=Number($("duration").value);
+  const totalFrames=fps*duration;
+
+  state.fps=fps;
+  state.duration=duration;
+
+  /*
+    Rebuild deterministic scene data before export.
+    No random values are generated in the frame loop.
+  */
+  buildSceneData();
+
+  const chunks=[];
+  let decoderDescription=null;
+  let encoderError=null;
+
+  const config={
+    codec:selectedCodec,
+    width:FINAL_W,
+    height:FINAL_H,
+    bitrate:getBitrate(fps),
+    framerate:fps,
+    hardwareAcceleration:"prefer-hardware",
+    latencyMode:"quality",
+    avc:{
+      format:"avc"
+    }
+  };
+
+  let encoder;
+
+  try{
+    encoder=new VideoEncoder({
+      output:(chunk,metadata)=>{
+        try{
+          if(metadata &&
+             metadata.decoderConfig &&
+             metadata.decoderConfig.description){
+            decoderDescription=
+              new Uint8Array(
+                metadata.decoderConfig.description
+              );
+          }
+
+          const data=new Uint8Array(chunk.byteLength);
+          chunk.copyTo(data);
+
+          chunks.push({
+            data,
+            type:chunk.type,
+            timestamp:chunk.timestamp,
+            duration:chunk.duration
+          });
+        }catch(err){
+          encoderError=err;
+        }
+      },
+      error:err=>{
+        encoderError=err;
+      }
+    });
+
+    encoder.configure(config);
+
+    for(let i=0;i<totalFrames;i++){
+
+      if(encoderError)throw encoderError;
+
+      const t=i/fps;
+
+      /*
+        THE CRITICAL ARCHITECTURE:
+        frame timing is determined only by i/fps.
+        It is not derived from wall-clock rendering speed.
+      */
+      renderScene(xctx,t);
+
+      const timestamp=Math.round(
+        i*1_000_000/fps
+      );
+
+      const durationUs=Math.round(
+        1_000_000/fps
+      );
+
+      const frame=new VideoFrame(
+        exportCanvas,
+        {
+          timestamp,
+          duration:durationUs
+        }
+      );
+
+      encoder.encode(frame,{
+        keyFrame:i===0 || i%Math.max(1,fps*2)===0
+      });
+
+      frame.close();
+
+      /*
+        Prevent unbounded encoder queue growth.
+        This controls memory/backpressure only.
+        It NEVER changes timestamps or skips frames.
+      */
+      if(encoder.encodeQueueSize>4){
+        await encoder.flush();
+      }
+
+      const pct=Math.floor(((i+1)/totalFrames)*100);
+
+      $("progressBar").style.width=pct+"%";
+      $("progressPercent").textContent=pct+"%";
+      $("progressText").textContent=
+        `Rendering ${i+1} / ${totalFrames}`;
+
+      /*
+        Yield periodically so Android browsers can keep
+        painting the progress interface.
+      */
+      if(i%3===0){
+        await sleep0();
+      }
     }
 
-    const duration=
-        parseInt(
-            document.getElementById(
-                "duration"
-            ).value
-        );
+    $("progressText").textContent="Finalizing H.264 stream…";
 
-    const fps=
-        parseInt(
-            document.getElementById(
-                "fps"
-            ).value
-        );
+    await encoder.flush();
 
-    const mime=
-        getVideoMime();
+    if(encoderError)throw encoderError;
 
-    if(!mime){
-
-        setStatus(
-            "No supported video encoder was found."
-        );
-
-        return;
+    if(!chunks.length){
+      throw new Error("Encoder produced no video samples.");
     }
 
-    const isMP4=
-        mime.includes("mp4");
+    if(!decoderDescription){
+      throw new Error(
+        "The H.264 encoder did not return an AVC decoder configuration."
+      );
+    }
 
-    const extension=
-        isMP4
-        ?"mp4"
-        :"webm";
+    $("progressText").textContent="Building MP4 container…";
+    $("progressBar").style.width="99%";
+    $("progressPercent").textContent="99%";
 
-    const bitrate=
-        fps>=60
-        ?18000000
-        :14000000;
+    const mp4=muxMP4(
+      chunks,
+      decoderDescription,
+      FINAL_W,
+      FINAL_H,
+      fps
+    );
 
-    const stream=
-        canvas.captureStream(fps);
+    /*
+      Basic container sanity checks.
+    */
+    if(mp4.type!=="video/mp4"){
+      throw new Error("Generated container is not video/mp4.");
+    }
 
-    let recorder;
+    if(mp4.size<1024){
+      throw new Error("Generated MP4 is unexpectedly small.");
+    }
+
+    const sceneSlug=[
+      "crimson-aurora",
+      "floating-particles",
+      "orbital-energy",
+      "cyber-grid",
+      "liquid-light",
+      "velocity-light",
+      "infinite-rings",
+      "deep-nebula",
+      "digital-network",
+      "luxury-light"
+    ][state.scene];
+
+    const filename=
+      `premium-motion-${String(state.scene+1).padStart(2,"0")}`+
+      `-${sceneSlug}-${FINAL_W}x${FINAL_H}-${fps}fps.mp4`;
+
+    const url=URL.createObjectURL(mp4);
+    const a=document.createElement("a");
+    a.href=url;
+    a.download=filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(()=>URL.revokeObjectURL(url),15000);
+
+    $("progressBar").style.width="100%";
+    $("progressPercent").textContent="100%";
+    $("progressText").textContent=
+      `MP4 ready · ${totalFrames} frames encoded`;
+
+    showToast(
+      `Export complete: ${filename}`
+    );
+
+  }catch(err){
+
+    console.error(err);
+
+    $("progressText").textContent=
+      "Export failed: "+(err?.message||"Unknown encoder error");
+
+    showToast(
+      "Export failed. "+(err?.message||"Check WebCodecs/H.264 support.")
+    );
+
+  }finally{
 
     try{
-
-        recorder=
-            new MediaRecorder(
-                stream,
-                {
-                    mimeType:mime,
-                    videoBitsPerSecond:
-                        bitrate
-                }
-            );
-
-    }catch(error){
-
-        setStatus(
-            "Could not initialize the video encoder."
-        );
-
-        return;
-    }
-
-    const chunks=[];
-
-    recorder.ondataavailable=e=>{
-
-        if(e.data && e.data.size>0){
-            chunks.push(e.data);
+      if(encoder){
+        if(encoder.state!=="closed"){
+          encoder.close();
         }
-    };
+      }
+    }catch(e){}
 
-    recorder.onerror=e=>{
+    state.exporting=false;
 
-        setStatus(
-            "Video recording error."
-        );
-    };
+    button.disabled=false;
+    $("png").disabled=false;
+    $("play").disabled=false;
+  }
+}
 
-    recorder.onstop=()=>{
+/* ============================================================
+   PNG EXPORT
+   ============================================================ */
 
-        const blob=
-            new Blob(
-                chunks,
-                {
-                    type:mime
-                }
-            );
+async function exportPNG(){
+  if(state.exporting)return;
 
-        const url=
-            URL.createObjectURL(blob);
+  buildSceneData();
 
-        const link=
-            document.createElement("a");
+  const t=
+    ((performance.now()-previewStart)/1000)%
+    Math.max(.001,state.duration);
 
-        link.href=url;
+  renderScene(xctx,t);
 
-        link.download=
-            `premium-${scene}-1080x1920.${extension}`;
-
-        document.body.appendChild(link);
-
-        link.click();
-
-        link.remove();
-
-        setTimeout(
-            ()=>URL.revokeObjectURL(url),
-            5000
-        );
-
-        setStatus(
-            `${extension.toUpperCase()} exported · `+
-            `${duration}s · ${fps} FPS · `+
-            `1080×1920`
-        );
-    };
-
-    setStatus(
-        `Rendering ${duration}s ${extension.toUpperCase()}...`
+  const blob=await new Promise(resolve=>{
+    exportCanvas.toBlob(
+      resolve,
+      "image/png"
     );
+  });
 
-    recorder.start(250);
+  if(!blob){
+    showToast("PNG creation failed.");
+    return;
+  }
 
-    const start=
-        performance.now();
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
 
-    function monitor(){
+  a.href=url;
+  a.download=
+    `premium-motion-${String(state.scene+1).padStart(2,"0")}`+
+    `-${sceneNames[state.scene].toLowerCase().replace(/\s+/g,"-")}`+
+    `-${FINAL_W}x${FINAL_H}.png`;
 
-        const elapsed=
-            (performance.now()-start)/
-            1000;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 
-        const percent=
-            Math.min(
-                100,
-                elapsed/duration*100
-            );
+  setTimeout(()=>URL.revokeObjectURL(url),5000);
 
-        setStatus(
-            `Rendering ${extension.toUpperCase()} · `+
-            `${percent.toFixed(0)}% · `+
-            `${fps} FPS`
-        );
+  showToast("1080×1920 PNG exported.");
+}
 
-        if(elapsed<duration){
+/* ============================================================
+   UI
+   ============================================================ */
 
-            requestAnimationFrame(
-                monitor
-            );
+function updateSceneLabel(){
+  $("sceneBadge").textContent=
+    `${String(state.scene+1).padStart(2,"0")} · ${sceneNames[state.scene]}`;
+}
 
-        }else{
+function showToast(msg){
+  const el=$("toast");
+  el.textContent=msg;
+  el.classList.add("show");
 
-            recorder.stop();
-        }
-    }
+  clearTimeout(showToast.timer);
+  showToast.timer=setTimeout(()=>{
+    el.classList.remove("show");
+  },4200);
+}
 
-    requestAnimationFrame(monitor);
+$("scene").addEventListener("change",e=>{
+  state.scene=Number(e.target.value);
+  buildSceneData();
+  restartPreview();
+  updateSceneLabel();
 });
 
+$("fps").addEventListener("change",e=>{
+  state.fps=Number(e.target.value);
+});
 
-/* =========================================================
-   KEYBOARD SHORTCUTS
-   ========================================================= */
+$("duration").addEventListener("change",e=>{
+  state.duration=Number(e.target.value);
+  restartPreview();
+});
 
-document.addEventListener(
-    "keydown",
-    e=>{
+$("glow").addEventListener("input",e=>{
+  state.glow=Number(e.target.value)/100;
+  $("glowValue").textContent=e.target.value+"%";
+});
 
-        if(e.code==="Space"){
+$("speed").addEventListener("input",e=>{
+  state.speed=Number(e.target.value)/100;
+  $("speedValue").textContent=e.target.value+"%";
+});
 
-            e.preventDefault();
+$("density").addEventListener("change",()=>{
+  state.density=Number($("density").value);
+  buildSceneData();
+});
 
-            document
-                .getElementById(
-                    "recordBtn"
-                )
-                .click();
-        }
-    }
-);
+$("grain").addEventListener("change",()=>{
+  state.grain=$("grain").value==="1";
+});
 
+$("seed").addEventListener("change",()=>{
+  state.seed=Number($("seed").value)||1;
+  buildSceneData();
+  restartPreview();
+});
+
+$("randomSeed").addEventListener("click",()=>{
+  state.seed=
+    Math.floor(1+Math.random()*999999999);
+
+  $("seed").value=state.seed;
+
+  buildSceneData();
+  restartPreview();
+
+  showToast(
+    "New deterministic seed generated."
+  );
+});
+
+$("play").addEventListener("click",()=>{
+  state.playing=!state.playing;
+
+  $("play").textContent=
+    state.playing ? "PAUSE PREVIEW" : "PLAY PREVIEW";
+
+  if(state.playing)restartPreview();
+});
+
+$("png").addEventListener("click",exportPNG);
+$("export").addEventListener("click",exportMP4);
+
+/* ============================================================
+   RESIZE / VISUAL INITIALIZATION
+   ============================================================ */
+
+function resizePreviewCanvas(){
+  /*
+    The preview canvas remains fixed at 540×960.
+    CSS scales it visually. Export canvas is always 1080×1920.
+  */
+  preview.width=PREVIEW_W;
+  preview.height=PREVIEW_H;
+}
+
+window.addEventListener("resize",resizePreviewCanvas);
+
+resizePreviewCanvas();
+updateSceneLabel();
+
+/* Initial deterministic frame */
+renderScene(pctx,0);
+
+/* ============================================================
+   BROWSER SAFETY / PAGE EXIT
+   ============================================================ */
+
+window.addEventListener("beforeunload",()=>{
+  cancelAnimationFrame(previewRAF);
+});
+
+/*
+  Prevent accidental browser scrolling while dragging sliders
+  from causing strange mobile preview interactions.
+*/
+document.addEventListener("touchmove",e=>{
+  if(e.target.matches("input[type=range]")){
+    e.stopPropagation();
+  }
+},{passive:true});
+
+/* ============================================================
+   DEVELOPMENT SANITY NOTES
+
+   1. Export timing:
+      timestamp = round(frameIndex * 1,000,000 / FPS)
+
+   2. No performance.now() is used for encoded timestamps.
+
+   3. No captureStream() is used.
+
+   4. Every frame is rendered exactly once.
+
+   5. VideoFrame objects are closed immediately after encode().
+
+   6. Encoder backpressure never drops frames.
+
+   7. Scene random data is generated before export.
+
+   8. No random particle generation occurs inside the
+      deterministic export loop.
+
+   9. Frames are not stored as PNGs.
+
+   10. MP4 is created as an actual ISO-BMFF container and
+       WebM is never renamed to MP4.
+
+   11. The MP4 uses H.264/AVC samples returned by WebCodecs.
+
+   12. 24/30/60 FPS are represented by exact 90,000 Hz
+       MP4 sample timing.
+
+   13. Final resolution is always 1080×1920.
+
+   14. Preview resolution is always 540×960.
+
+   15. The animation's wall-clock export speed has no effect
+       on the mathematical frame timeline.
+   ============================================================ */
 </script>
-
 </body>
-  </html>
+                </html>
